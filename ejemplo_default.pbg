@@ -1,0 +1,41 @@
+{
+  "frente": 10.0,
+  "fondo": 24.0,
+  "usar_lote_real": false,
+  "pisos_tipo": 6,
+  "altura_pb": 3.5,
+  "altura_tipo": 2.8,
+  "tiene_subsuelo": false,
+  "cant_subsuelos": 0,
+  "tiene_azotea": true,
+  "tipo_pb": "porteria",
+  "tiene_cochera": false,
+  "cochera_ubicacion": "pb",
+  "cant_ascensores": 1,
+  "cant_cajas_escalera": 1,
+  "sala_maquinas": "azotea",
+  "cant_depto_tipo": 2,
+  "mix_tipologias": [
+    {
+      "tipo": "2amb",
+      "cantidad": 1,
+      "superficie_m2": 55.0
+    },
+    {
+      "tipo": "3amb",
+      "cantidad": 1,
+      "superficie_m2": 75.0
+    }
+  ],
+  "sistema_estructural": "porticos",
+  "hormigon_tipo": "H-21",
+  "acero_tipo": "ADN 420",
+  "instalacion_sanitaria": true,
+  "instalacion_electrica": true,
+  "instalacion_gas": true,
+  "instalacion_incendio": true,
+  "instalacion_termomecanica": false,
+  "incluir_honorarios": true,
+  "incluir_gastos_generales": true,
+  "moneda": "ARS"
+}

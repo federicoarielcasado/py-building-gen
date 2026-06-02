@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "name": "parcela_caballito_placeholder",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::5347"
+    }
+  },
+  "note": "Geometría sintética representativa de lote típico Caballito 10x24m. Reemplazar con datos reales de data.buenosaires.gob.ar/dataset/parcelas",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "smp": "12-2-34",
+        "barrio": "CABALLITO",
+        "frente_m": 10.0,
+        "fondo_m": 24.0,
+        "superficie_m2": 240.0,
+        "nomenclatura": "Av. Rivadavia 5234"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [5357823.45, 6176412.30],
+            [5357833.45, 6176412.30],
+            [5357833.45, 6176436.30],
+            [5357823.45, 6176436.30],
+            [5357823.45, 6176412.30]
+          ]
+        ]
+      }
+    }
+  ]
+}

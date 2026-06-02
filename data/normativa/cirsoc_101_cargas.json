@@ -1,0 +1,32 @@
+{
+  "fuente": "CIRSOC 101 - Cargas y sobrecargas mínimas",
+  "version": "2005",
+  "peso_propio": {
+    "hormigon_armado_kN_m3": 25.0,
+    "mamposteria_ceramica_kN_m3": 18.0,
+    "mamposteria_portland_kN_m3": 20.0,
+    "mortero_kN_m3": 21.0,
+    "acero_kN_m3": 78.5,
+    "vidrio_kN_m3": 25.0
+  },
+  "cargas_permanentes_kN_m2": {
+    "losa_h=0.20m": 5.0,
+    "carpeta_nivelacion": 0.8,
+    "contrapiso_h=0.08m": 1.6,
+    "piso_ceramico": 0.5,
+    "tabiques_livianos": 1.0,
+    "cielorraso": 0.3,
+    "impermeabilizacion_azotea": 0.5
+  },
+  "sobrecargas_uso_kN_m2": {
+    "vivienda": 2.0,
+    "comercio_planta_baja": 4.0,
+    "cochera": 2.5,
+    "azotea_no_transitable": 1.0,
+    "azotea_transitable": 2.0,
+    "escaleras": 3.0,
+    "corredores_pasillos": 3.0,
+    "sala_maquinas": 5.0
+  },
+  "tabla_4_1_referencia": "Tabla 4.1 CIRSOC 101"
+}

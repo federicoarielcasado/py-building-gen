@@ -1,0 +1,559 @@
+{
+  "Uuid": "72dd045b-eaa8-47b5-b1a4-f5585fce6177",
+  "IsCustomNode": false,
+  "Description": "Crea materiales, wall types, floor types y tipos estructurales. Ejecutar PRIMERO, antes de 01_niveles_grilla.dyn.",
+  "Name": "00_familias",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"H-21\"",
+      "Id": "b254acd9-9345-48c3-9827-b96c98df0576",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "13247af4-db38-4fd0-9058-1d1872ded20f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"ADN 420\"",
+      "Id": "5b364640-9219-4a76-8a45-0d25f4d37324",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3fbba5b8-bdb2-4d45-bbfa-be87efb62c3e",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Material, Color, FillPatternElement,\n    FilteredElementCollector,\n    BuiltInParameter, ElementId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ntipo_hormigon = str(IN[0])   # \"H-21\" | \"H-25\" | \"H-30\"\ntipo_acero    = str(IN[1])   # \"ADN 420\" | \"AL 220\"\n\ndef color(r, g, b):\n    return Color(r, g, b)\n\ndef get_or_create_material(nombre, r, g, b):\n    col = FilteredElementCollector(doc).OfClass(Material).ToElements()\n    mat = next((m for m in col if m.Name == nombre), None)\n    if mat:\n        return mat\n    mat_id = Material.Create(doc, nombre)\n    mat = doc.GetElement(mat_id)\n    mat.Color = color(r, g, b)\n    return mat\n\nmateriales_creados = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\n# Hormigones según tipo seleccionado (+ los otros para referencia)\nfor nombre, rgb in [\n    (\"Hormigón H-21\",  (180, 180, 180)),\n    (\"Hormigón H-25\",  (160, 160, 160)),\n    (\"Hormigón H-30\",  (140, 140, 140)),\n]:\n    m = get_or_create_material(nombre, *rgb)\n    materiales_creados.append(m.Name)\n\n# Aceros\nfor nombre, rgb in [\n    (\"Acero ADN 420\", (80,  80,  80)),\n    (\"Acero AL 220\",  (100, 100, 100)),\n]:\n    m = get_or_create_material(nombre, *rgb)\n    materiales_creados.append(m.Name)\n\n# Mampostería y terminaciones\nfor nombre, rgb in [\n    (\"Ladrillo cerámico\",    (195, 100,  60)),\n    (\"Mortero de cemento\",   (220, 210, 200)),\n    (\"Revoque grueso\",       (230, 220, 210)),\n    (\"Revoque fino / yeso\",  (245, 240, 235)),\n    (\"Pintura látex blanca\", (255, 255, 255)),\n    (\"Cámara de aire\",       (200, 230, 255)),\n    (\"Membrana asfáltica\",   ( 30,  30,  30)),\n]:\n    m = get_or_create_material(nombre, *rgb)\n    materiales_creados.append(m.Name)\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = {\n    \"materiales_creados\": materiales_creados,\n    \"tipo_hormigon_proyecto\": tipo_hormigon,\n    \"tipo_acero_proyecto\": tipo_acero,\n}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "e3a0f402-f64e-44ef-ab59-354d24e6bc9b",
+      "Inputs": [
+        {
+          "Id": "f345e10c-2915-4536-8378-427d8b9cd322",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "359a8d4b-7f0e-4f64-91f4-c6ae9a6a3a4e",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "894f4335-badc-49ad-8516-af054013dbae",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    WallType, CompoundStructure, CompoundStructureLayer,\n    MaterialFunctionAssignment, Material, ElementId,\n    FilteredElementCollector, ShellLayerType,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_material_id(nombre):\n    col = FilteredElementCollector(doc).OfClass(Material).ToElements()\n    mat = next((m for m in col if m.Name == nombre), None)\n    return mat.Id if mat else ElementId.InvalidElementId\n\ndef get_or_duplicate_wall_type(nombre_base, nombre_nuevo):\n    \"\"\"Duplica un tipo de muro existente o devuelve el nuevo si ya existe.\"\"\"\n    wts = FilteredElementCollector(doc).OfClass(WallType).ToElements()\n    existente = next((wt for wt in wts if wt.Name == nombre_nuevo), None)\n    if existente:\n        return existente\n    base = next((wt for wt in wts if nombre_base.lower() in wt.Name.lower()), wts[0])\n    return base.Duplicate(nombre_nuevo)\n\ndef build_compound_structure(capas, n_ext=1, n_int=1):\n    \"\"\"\n    capas: lista de (espesor_m, MaterialFunctionAssignment, nombre_material)\n    Orden: de exterior a interior.\n    n_ext / n_int: shell layers exterior e interior (muros: 1/1; medianera: 0/1)\n    \"\"\"\n    layers = []\n    for espesor_m, funcion, nombre_mat in capas:\n        mat_id = get_material_id(nombre_mat)\n        layer = CompoundStructureLayer(m_to_ft(espesor_m), funcion, mat_id)\n        layers.append(layer)\n    cs = CompoundStructure.CreateSimpleCompoundStructure(layers)\n    cs.SetNumberOfShellLayers(ShellLayerType.Exterior, n_ext)\n    cs.SetNumberOfShellLayers(ShellLayerType.Interior, n_int)\n    return cs\n\nFA = MaterialFunctionAssignment  # alias\ntipos_creados = []\n\n# Buscar keyword para muro genérico en español e inglés\n_kw_muro = (\"generic\", \"genérico\", \"generico\", \"basic\", \"básico\", \"basico\")\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\n# 1. Muro exterior 200mm\nwt_ext = get_or_duplicate_wall_type(\"genér\", \"Muro exterior - 200mm\")\ncapas_ext = [\n    (0.015, FA.Finish1,    \"Revoque fino / yeso\"),\n    (0.170, FA.Structure,  \"Ladrillo cerámico\"),\n    (0.015, FA.Finish2,    \"Revoque grueso\"),\n]\nwt_ext.SetCompoundStructure(build_compound_structure(capas_ext))\ntipos_creados.append(\"Muro exterior - 200mm\")\n\n# 2. Tabique interior 100mm\nwt_tab = get_or_duplicate_wall_type(\"genér\", \"Tabique interior - 100mm\")\ncapas_tab = [\n    (0.013, FA.Finish1,    \"Revoque fino / yeso\"),\n    (0.074, FA.Structure,  \"Ladrillo cerámico\"),\n    (0.013, FA.Finish2,    \"Revoque fino / yeso\"),\n]\nwt_tab.SetCompoundStructure(build_compound_structure(capas_tab))\ntipos_creados.append(\"Tabique interior - 100mm\")\n\n# 3. Medianera 200mm (sin revoque exterior — va contra pared lindante)\nwt_med = get_or_duplicate_wall_type(\"genér\", \"Medianera - 200mm\")\ncapas_med = [\n    (0.185, FA.Structure,  \"Ladrillo cerámico\"),\n    (0.015, FA.Finish2,    \"Revoque grueso\"),\n]\nwt_med.SetCompoundStructure(build_compound_structure(capas_med, n_ext=0, n_int=1))\ntipos_creados.append(\"Medianera - 200mm\")\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = tipos_creados\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "e79344ca-178c-4528-8274-e47ed2884e1b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cc91be96-3d57-43e3-b665-5b9c604af783",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "30.0",
+      "Id": "e407f4ac-aae5-4f75-a1b9-dff7842e2a4d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ff7795fc-92db-4edd-9bff-55ba3746f719",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"H-21\"",
+      "Id": "10e56b48-8a63-4777-9746-7041f1b1ba0f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "30d37b8b-dcb6-4aa5-9c0f-a766fec0956f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FloorType, CompoundStructure, CompoundStructureLayer,\n    MaterialFunctionAssignment, Material, ElementId,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId, ShellLayerType,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nespesor_losa_cm = float(IN[0]) if IN[0] is not None else 30.0\ntipo_hormigon   = str(IN[1])   if IN[1] is not None else \"H-21\"\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_material_id(nombre):\n    col = FilteredElementCollector(doc).OfClass(Material).ToElements()\n    mat = next((m for m in col if m.Name == nombre), None)\n    return mat.Id if mat else ElementId.InvalidElementId\n\ndef get_or_duplicate_floor_type(nombre_nuevo):\n    fts = FilteredElementCollector(doc).OfClass(FloorType).ToElements()\n    existente = next((ft for ft in fts if ft.Name == nombre_nuevo), None)\n    if existente:\n        return existente\n    base = fts[0]\n    return base.Duplicate(nombre_nuevo)\n\ndef try_set_compound_structure(ft, capas):\n    FA = MaterialFunctionAssignment\n    layers = []\n    for esp, func, mat_nombre in capas:\n        mat_id = get_material_id(mat_nombre)\n        layers.append(CompoundStructureLayer(m_to_ft(esp), func, mat_id))\n    try:\n        cs = CompoundStructure.CreateSimpleCompoundStructure(layers)\n        cs.SetNumberOfShellLayers(ShellLayerType.Exterior, 0)\n        cs.SetNumberOfShellLayers(ShellLayerType.Interior, 0)\n        ft.SetCompoundStructure(cs)\n        return True\n    except Exception:\n        return False\n\nFA = MaterialFunctionAssignment\ntipos_creados = []\ntipos_sin_capas = []\n\nespesor_m = espesor_losa_cm / 100.0\nnombre_mat_ha = f\"Hormig\\u00f3n {tipo_hormigon}\"\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\nnombre = f\"Losa HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm\"\nft = get_or_duplicate_floor_type(nombre)\ncapas = [\n    (0.030,     FA.Substrate, \"Mortero de cemento\"),\n    (espesor_m, FA.Structure, nombre_mat_ha),\n]\nif try_set_compound_structure(ft, capas):\n    tipos_creados.append(nombre + \" [capas OK]\")\nelse:\n    tipos_creados.append(nombre)\n    tipos_sin_capas.append(nombre)\n\nnombre_azo = f\"Losa azotea HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm\"\nft_azo = get_or_duplicate_floor_type(nombre_azo)\ncapas_azo = [\n    (0.004,     FA.Membrane,  \"Membrana asf\\u00e1ltica\"),\n    (0.020,     FA.Substrate, \"Mortero de cemento\"),\n    (espesor_m, FA.Structure, nombre_mat_ha),\n]\nif try_set_compound_structure(ft_azo, capas_azo):\n    tipos_creados.append(nombre_azo + \" [capas OK]\")\nelse:\n    tipos_creados.append(nombre_azo)\n    tipos_sin_capas.append(nombre_azo)\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = {\n    \"tipos_creados\": tipos_creados,\n    \"configurar_manualmente\": tipos_sin_capas if tipos_sin_capas else \"ninguno\",\n}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "f1f117b4-4c08-4741-9c78-05ade82345ea",
+      "Inputs": [
+        {
+          "Id": "4630c0f2-2563-4678-8cde-edbe5f7ef36b",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "52934642-1f38-4a14-85b3-f64f9bba63e6",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fc13b7b4-7405-4fa8-a8a6-3d1ce0e3a167",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "35.0",
+      "Id": "60ea1d2f-6b34-4ade-808c-437826e6b2bf",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "17100c6c-e7d2-4f71-821f-e20a759be43d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "45.0",
+      "Id": "305d70d5-aa44-4ef2-b67f-d66190dc657a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8973a210-6b3c-4cae-982d-4b9adeb5cc1a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "85.0",
+      "Id": "ad5be071-7268-428e-b363-eaf5b24d66b1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "43218479-bc05-4360-a144-2643f0d6adc4",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"H-21\"",
+      "Id": "465b8897-12a2-4e69-8891-85e5319ea337",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b3c82e26-5ddb-4a2a-aa26-895e119a0de9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Material, ElementId,\n    FilteredElementCollector, BuiltInCategory,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nlado_col_cm   = float(IN[0]) if IN[0] is not None else 35.0\nancho_viga_cm = float(IN[1]) if IN[1] is not None else 45.0\nalto_viga_cm  = float(IN[2]) if IN[2] is not None else 85.0\ntipo_hormigon = str(IN[3])   if IN[3] is not None else \"H-21\"\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_material_id(nombre):\n    col = FilteredElementCollector(doc).OfClass(Material).ToElements()\n    mat = next((m for m in col if m.Name == nombre), None)\n    return mat.Id if mat else ElementId.InvalidElementId\n\n_KW_COL  = (\"concrete\", \"hormigon\", \"hormigón\", \"pilar\", \"column\", \"ha \", \"rectangular\")\n_KW_VIGA = (\"concrete\", \"hormigon\", \"hormigón\", \"viga\",  \"beam\",   \"ha \", \"rectangular\")\n\ndef find_symbol(categoria, keywords):\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(categoria)\n           .ToElements())\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in keywords)), None)\n    return match or (col[0] if col else None)\n\ndef set_param(symbol, nombres, valor_m):\n    \"\"\"Intenta asignar un parámetro de sección por múltiples nombres posibles.\"\"\"\n    for nombre in nombres:\n        p = symbol.LookupParameter(nombre)\n        if p and not p.IsReadOnly:\n            try:\n                p.Set(m_to_ft(valor_m))\n                return True\n            except Exception:\n                pass\n    return False\n\nmat_id_ha = get_material_id(f\"Hormigón {tipo_hormigon}\")\ntipos_creados = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\n# --- Columnas ---\nsym_col = find_symbol(BuiltInCategory.OST_StructuralColumns, _KW_COL)\nif sym_col:\n    if not sym_col.IsActive:\n        sym_col.Activate()\n\n    nombre_col = f\"Columna HA {lado_col_cm:.0f}x{lado_col_cm:.0f}cm\"\n    try:\n        nuevo_col = sym_col.Duplicate(nombre_col)\n    except Exception:\n        nuevo_col = sym_col\n\n    # Parámetros de sección (nombres varían según familia y versión)\n    lado = lado_col_cm / 100.0\n    set_param(nuevo_col, [\"b\", \"Ancho\", \"Width\", \"w\"],  lado)\n    set_param(nuevo_col, [\"h\", \"Alto\",  \"Depth\", \"d\"],  lado)\n\n    # Material estructural\n    p_mat = nuevo_col.LookupParameter(\"Material estructural\") or \\\n            nuevo_col.LookupParameter(\"Structural Material\") or \\\n            nuevo_col.LookupParameter(\"Material\")\n    if p_mat and mat_id_ha != ElementId.InvalidElementId:\n        try:\n            p_mat.Set(mat_id_ha)\n        except Exception:\n            pass\n\n    tipos_creados.append(nombre_col)\n\n# --- Vigas ---\nsym_viga = find_symbol(BuiltInCategory.OST_StructuralFraming, _KW_VIGA)\nif sym_viga:\n    if not sym_viga.IsActive:\n        sym_viga.Activate()\n\n    nombre_viga = f\"Viga HA {ancho_viga_cm:.0f}x{alto_viga_cm:.0f}cm\"\n    try:\n        nuevo_viga = sym_viga.Duplicate(nombre_viga)\n    except Exception:\n        nuevo_viga = sym_viga\n\n    ancho = ancho_viga_cm / 100.0\n    alto  = alto_viga_cm  / 100.0\n    set_param(nuevo_viga, [\"b\", \"Ancho\", \"Width\",  \"w\"], ancho)\n    set_param(nuevo_viga, [\"h\", \"Alto\",  \"Depth\",  \"d\"], alto)\n\n    p_mat = nuevo_viga.LookupParameter(\"Material estructural\") or \\\n            nuevo_viga.LookupParameter(\"Structural Material\") or \\\n            nuevo_viga.LookupParameter(\"Material\")\n    if p_mat and mat_id_ha != ElementId.InvalidElementId:\n        try:\n            p_mat.Set(mat_id_ha)\n        except Exception:\n            pass\n\n    tipos_creados.append(nombre_viga)\n\nTransactionManager.Instance.TransactionTaskDone()\n\nif not tipos_creados:\n    OUT = {\n        \"resultado\": \"No se encontraron familias estructurales en el template.\",\n        \"accion_requerida\": (\n            \"Cargar manualmente una familia de columna y viga de HA \"\n            \"desde Insertar → Cargar familia, luego volver a correr este script.\"\n        ),\n    }\nelse:\n    OUT = {\n        \"tipos_creados\": tipos_creados,\n        \"nota\": \"Verificar secciones en Propiedades de tipo antes de correr 04_estructura.dyn\",\n    }\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+      "Inputs": [
+        {
+          "Id": "913e33e7-fbd1-4110-ab28-51825b735982",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2e4fef6c-8248-4b69-92ce-922d60cd15c2",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e496bdb5-fd20-4ac7-a4b8-1b2876c52abb",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7c42bd7a-13bd-486d-afe8-c8a14247670a",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cba91a98-1151-4414-b3ee-e3544ff17e6c",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b254acd9-9345-48c3-9827-b96c98df0576",
+      "End": "e3a0f402-f64e-44ef-ab59-354d24e6bc9b",
+      "Id": "485226e9-61f0-4c1c-939e-ca69bf650be4",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "5b364640-9219-4a76-8a45-0d25f4d37324",
+      "End": "e3a0f402-f64e-44ef-ab59-354d24e6bc9b",
+      "Id": "335bdbdf-e547-4ee3-b2ca-9a97aa71344b",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "e407f4ac-aae5-4f75-a1b9-dff7842e2a4d",
+      "End": "f1f117b4-4c08-4741-9c78-05ade82345ea",
+      "Id": "7554731e-c7fa-4ad8-b586-b5d3d8cc8c67",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "10e56b48-8a63-4777-9746-7041f1b1ba0f",
+      "End": "f1f117b4-4c08-4741-9c78-05ade82345ea",
+      "Id": "5172c6a5-fa79-4de6-bf94-04de6fdde3fb",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "60ea1d2f-6b34-4ade-808c-437826e6b2bf",
+      "End": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+      "Id": "b546909f-824f-4be9-8c63-a6841330e7d0",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "305d70d5-aa44-4ef2-b67f-d66190dc657a",
+      "End": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+      "Id": "16792b38-e868-4daf-bae2-cd3fa2f2e609",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "ad5be071-7268-428e-b363-eaf5b24d66b1",
+      "End": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+      "Id": "085d8e33-b0c7-472d-b6d5-4389c69d0114",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "465b8897-12a2-4e69-8891-85e5319ea337",
+      "End": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+      "Id": "527f38da-31b3-4a35-b437-5b638544e0aa",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b254acd9-9345-48c3-9827-b96c98df0576",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tipo_hormigon",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "5b364640-9219-4a76-8a45-0d25f4d37324",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tipo_acero",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "e3a0f402-f64e-44ef-ab59-354d24e6bc9b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Materiales",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "e79344ca-178c-4528-8274-e47ed2884e1b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Wall Types",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "e407f4ac-aae5-4f75-a1b9-dff7842e2a4d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "espesor_losa_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "10e56b48-8a63-4777-9746-7041f1b1ba0f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tipo_hormigon",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "f1f117b4-4c08-4741-9c78-05ade82345ea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Floor Types",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "60ea1d2f-6b34-4ade-808c-437826e6b2bf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "lado_col_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1040.0
+      },
+      {
+        "Id": "305d70d5-aa44-4ef2-b67f-d66190dc657a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "ancho_viga_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1170.0
+      },
+      {
+        "Id": "ad5be071-7268-428e-b363-eaf5b24d66b1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "alto_viga_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1300.0
+      },
+      {
+        "Id": "465b8897-12a2-4e69-8891-85e5319ea337",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tipo_hormigon",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1430.0
+      },
+      {
+        "Id": "557f78ae-dd2d-400e-84a4-088ce8a735eb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Tipos Estructurales",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 1040.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

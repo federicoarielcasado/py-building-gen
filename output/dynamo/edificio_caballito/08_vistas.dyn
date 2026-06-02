@@ -1,0 +1,384 @@
+﻿{
+  "Uuid": "6eeb4cc2-5298-4134-989a-b037091443b1",
+  "IsCustomNode": false,
+  "Description": "Crea plantas, cortes, alzados y vista 3D para documentación técnica.",
+  "Name": "08_vistas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "3cbc2d6c-eb46-4e21-bf0f-34f8de0fdf18",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2a9efe40-c4e6-49e7-b4c7-bddb2d4f0d46",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "5374e539-cd42-4898-9591-925908f4c242",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "eb169b0a-4b9c-45e4-8d5f-2d78b44b2541",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector,\n    ElementId, XYZ, UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = int(IN[0])  if IN[0] is not None else 6\ntiene_azotea = bool(IN[1]) if IN[1] is not None else True\n\ndef get_view_family_type(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_planta = get_view_family_type(ViewFamily.FloorPlan)\nplantas = []\n\nif vft_planta:\n    TransactionManager.Instance.EnsureInTransaction(doc)\n\n    nombres_nivel = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n    if tiene_azotea:\n        nombres_nivel.append(\"AZO\")\n\n    margen_ft = UnitUtils.ConvertToInternalUnits(1.0,  UnitTypeId.Meters)\n    frente_ft = UnitUtils.ConvertToInternalUnits(10.0, UnitTypeId.Meters)\n    fondo_ft  = UnitUtils.ConvertToInternalUnits(24.0, UnitTypeId.Meters)\n\n    for nombre in nombres_nivel:\n        lvl = get_level(nombre)\n        if lvl:\n            vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)\n            vista.Name = f\"PLANTA {nombre}\"\n            vista.Scale = 100\n            try:\n                bbox = vista.CropBox\n                bbox.Min = XYZ(-margen_ft, -margen_ft, bbox.Min.Z)\n                bbox.Max = XYZ(frente_ft + margen_ft, fondo_ft + margen_ft, bbox.Max.Z)\n                vista.CropBox = bbox\n                vista.CropBoxActive = True\n            except Exception:\n                pass\n            plantas.append({\"nivel\": nombre, \"id\": vista.Id.Value})\n\n    TransactionManager.Instance.TransactionTaskDone()\n\nOUT = plantas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "2323ef0d-9e5d-4960-8696-becc14ddd4c4",
+      "Inputs": [
+        {
+          "Id": "24f1af34-84fe-4cd9-a4ef-a49dccd2fd9a",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "07b4a14f-aecd-42f8-8108-4176bbda240c",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "498d7769-f3ab-4f78-b350-f9ab67b78aca",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "556002ab-e1a7-472f-9405-f2bac5864f30",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "32b8364c-9420-4a52-89cb-ecde50816409",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "bbe6625a-0989-4c87-b442-3ad416d8ba5c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "02698e11-473f-4894-8c93-cb903e36783a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "20.299999999999997",
+      "Id": "337742a4-26dd-40a7-be29-1574a9bd0e53",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "18d3ad26-b3f3-49d0-96b9-3c399b74d3b1",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSection, ViewFamilyType, ViewFamily, BoundingBoxXYZ,\n    XYZ, Transform, FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m    = float(IN[0]) if IN[0] is not None else 10.0\nfondo_m     = float(IN[1]) if IN[1] is not None else 24.0\naltura_total = float(IN[2]) if IN[2] is not None else 20.3\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_vft_section():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.Section), None)\n\nvft = get_vft_section()\nvistas = []\n\nif vft:\n    TransactionManager.Instance.EnsureInTransaction(doc)\n\n    margen = m_to_ft(1.0)\n    h      = m_to_ft(altura_total + 1.0)\n\n    # Corte transversal — a mitad del fondo, mirando hacia frente (eje X)\n    bbox_trans = BoundingBoxXYZ()\n    xform = Transform.Identity\n    xform.BasisX = XYZ(1, 0, 0)\n    xform.BasisY = XYZ(0, 0, 1)\n    xform.BasisZ = XYZ(0, -1, 0)\n    xform.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(fondo_m / 2), 0)\n    bbox_trans.Transform = xform\n    bbox_trans.Min = XYZ(-m_to_ft(frente_m / 2) - margen, 0, -margen)\n    bbox_trans.Max = XYZ( m_to_ft(frente_m / 2) + margen, h,  margen)\n    v = ViewSection.CreateSection(doc, vft.Id, bbox_trans)\n    v.Name = \"CORTE A-A\"\n    v.Scale = 100\n    vistas.append({\"tipo\": \"corte_transversal\", \"id\": v.Id.Value})\n\n    # Corte longitudinal — a mitad del frente, mirando hacia el fondo (eje Y)\n    bbox_long = BoundingBoxXYZ()\n    xform2 = Transform.Identity\n    xform2.BasisX = XYZ(0, 1, 0)\n    xform2.BasisY = XYZ(0, 0, 1)\n    xform2.BasisZ = XYZ(1, 0, 0)\n    xform2.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(fondo_m / 2), 0)\n    bbox_long.Transform = xform2\n    bbox_long.Min = XYZ(-m_to_ft(fondo_m / 2) - margen, 0, -margen)\n    bbox_long.Max = XYZ( m_to_ft(fondo_m / 2) + margen, h,  margen)\n    v2 = ViewSection.CreateSection(doc, vft.Id, bbox_long)\n    v2.Name = \"CORTE B-B\"\n    v2.Scale = 100\n    vistas.append({\"tipo\": \"corte_longitudinal\", \"id\": v2.Id.Value})\n\n    # Alzado frontal (fachada principal)\n    bbox_fach = BoundingBoxXYZ()\n    xform3 = Transform.Identity\n    xform3.BasisX = XYZ(1, 0, 0)\n    xform3.BasisY = XYZ(0, 0, 1)\n    xform3.BasisZ = XYZ(0, 1, 0)\n    xform3.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(-1.5), 0)\n    bbox_fach.Transform = xform3\n    bbox_fach.Min = XYZ(-m_to_ft(frente_m / 2) - margen, 0, -margen)\n    bbox_fach.Max = XYZ( m_to_ft(frente_m / 2) + margen, h,  m_to_ft(fondo_m + 2))\n    v3 = ViewSection.CreateSection(doc, vft.Id, bbox_fach)\n    v3.Name = \"FACHADA PRINCIPAL\"\n    v3.Scale = 100\n    vistas.append({\"tipo\": \"fachada\", \"id\": v3.Id.Value})\n\n    TransactionManager.Instance.TransactionTaskDone()\n\nOUT = vistas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "fa44953d-9dad-415a-ae5a-98e018eb96a6",
+      "Inputs": [
+        {
+          "Id": "98402eeb-07c1-4a73-84d3-e9f4edb50452",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4e2a3f66-269d-4fea-bf54-6a094972029e",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8b4063ed-f766-4f46-9d85-64a422827bd6",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb6a2cfc-29a5-4d2e-811e-2fca9860de37",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    View3D, ViewFamilyType, ViewFamily,\n    FilteredElementCollector,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ndef get_vft_3d():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.ThreeDimensional), None)\n\nvft = get_vft_3d()\nresultado = []\n\nif vft:\n    TransactionManager.Instance.EnsureInTransaction(doc)\n    v3d = View3D.CreateIsometric(doc, vft.Id)\n    v3d.Name = \"3D - Vista General\"\n    resultado.append({\"tipo\": \"3d_isometrica\", \"id\": v3d.Id.Value})\n    TransactionManager.Instance.TransactionTaskDone()\n\nOUT = resultado\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "c077945d-acc1-46e8-854f-e1b1a8aaf638",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "22a375b4-1f3a-4873-87c0-d016870d6ef7",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "3cbc2d6c-eb46-4e21-bf0f-34f8de0fdf18",
+      "End": "2323ef0d-9e5d-4960-8696-becc14ddd4c4",
+      "Id": "9e361e1a-e3c6-4c32-9dc0-c88ce182b294",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "5374e539-cd42-4898-9591-925908f4c242",
+      "End": "2323ef0d-9e5d-4960-8696-becc14ddd4c4",
+      "Id": "96db51a8-bdd8-4f1b-91b7-cf5b68df4113",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "556002ab-e1a7-472f-9405-f2bac5864f30",
+      "End": "fa44953d-9dad-415a-ae5a-98e018eb96a6",
+      "Id": "5dc954bb-e094-43f1-b8b0-dd62c981cca8",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "bbe6625a-0989-4c87-b442-3ad416d8ba5c",
+      "End": "fa44953d-9dad-415a-ae5a-98e018eb96a6",
+      "Id": "b0565614-9b82-448f-bde8-1fdac2370e28",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "337742a4-26dd-40a7-be29-1574a9bd0e53",
+      "End": "fa44953d-9dad-415a-ae5a-98e018eb96a6",
+      "Id": "3be14371-9f3f-4170-961c-58d3ade32078",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "3cbc2d6c-eb46-4e21-bf0f-34f8de0fdf18",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "5374e539-cd42-4898-9591-925908f4c242",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tiene_azotea",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "2323ef0d-9e5d-4960-8696-becc14ddd4c4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Plantas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "556002ab-e1a7-472f-9405-f2bac5864f30",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "bbe6625a-0989-4c87-b442-3ad416d8ba5c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "337742a4-26dd-40a7-be29-1574a9bd0e53",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "altura_total_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "fa44953d-9dad-415a-ae5a-98e018eb96a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Cortes y Alzados",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "c077945d-acc1-46e8-854f-e1b1a8aaf638",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Vista 3D",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 910.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

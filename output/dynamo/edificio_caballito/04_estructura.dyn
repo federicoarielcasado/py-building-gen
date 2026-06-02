@@ -1,0 +1,633 @@
+﻿{
+  "Uuid": "46d65301-7c05-41ad-98b1-b4aa2dff22c1",
+  "IsCustomNode": false,
+  "Description": "Crea columnas y vigas de H° A° según predimensionado CIRSOC 201-2005.",
+  "Name": "04_estructura",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "5f239e9f-c81c-4f84-bf98-ca74a167276f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "09e27a33-be6f-47e3-9e09-948fdfa6c4c8",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "e3072da5-5eb2-49bd-9c02-b925d25f9c8b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3a14adcf-9c34-4d20-af71-9edddd583a51",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "35",
+      "Id": "26d979a3-612c-47f1-9417-27ba3ab95d95",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4e75722c-befb-4412-97e6-6feb056ea6f5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "19aab7ab-8f03-45d0-8582-e7dcc1c92888",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c4fcdccf-6d97-4915-aef7-83effba54818",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Columna HA 35x35cm\"",
+      "Id": "78e5123b-739e-4c5d-b5d0-f3093577d511",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "32b1a3ec-d043-41d2-9571-8c35f59cd802",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ,\n    FilteredElementCollector, BuiltInCategory,\n    UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m       = float(IN[0]) if IN[0] is not None else 10.0\nfondo_m        = float(IN[1]) if IN[1] is not None else 24.0\nlado_col_cm    = float(IN[2]) if IN[2] is not None else 35.0  # sección cuadrada en cm (predimensionado)\npisos_tipo     = int(IN[3])   if IN[3] is not None else 6\nnombre_col_tipo = str(IN[4])  if IN[4] is not None else \"Columna HA 35x35cm\"  # creado por 00_familias.dyn\npaso_m         = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_col_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralColumns)\n           .ToElements())\n    # 1° intento: tipo exacto creado por 00_familias.dyn\n    match = next((s for s in col if s.Name == nombre_col_tipo), None)\n    if match:\n        return match\n    # 2° intento: familia con keyword de hormigón\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"h.a\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_col_symbol()\ncolumnas = []\n\nif sym:\n    # Ajustar parámetro de sección si el tipo lo permite\n    TransactionManager.Instance.EnsureInTransaction(doc)\n    try:\n        lado_ft = m_to_ft(lado_col_cm / 100)\n        sym.LookupParameter(\"b\").Set(lado_ft)\n        sym.LookupParameter(\"h\").Set(lado_ft)\n    except Exception:\n        pass\n\n    if not sym.IsActive:\n        sym.Activate()\n\n    for nombre_nivel in [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]:\n        lvl = get_level(nombre_nivel)\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y <= fondo_m + 0.001:\n                pt = XYZ(m_to_ft(x), m_to_ft(y), 0)\n                inst = doc.Create.NewFamilyInstance(pt, sym, lvl, StructuralType.Column)\n                columnas.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n\n    TransactionManager.Instance.TransactionTaskDone()\n\nOUT = f\"{len(columnas)} columnas {lado_col_cm:.0f}x{lado_col_cm:.0f}cm creadas\"\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Inputs": [
+        {
+          "Id": "e80abeb3-960e-41d1-9236-61b3e115a942",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f147d170-0605-4b30-a25d-f9035afaff4c",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e131992c-11f2-41ab-855d-a1a61663b98e",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6fbd246c-73a8-429b-9daf-fb9f27f523ca",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2ca7e1cd-1b41-4a59-a839-e0b31acbc5e9",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c9639665-a449-4ecf-8747-f18a8a7e3450",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "28f671d5-85c8-4488-9600-1a1022e383ef",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "779ee531-a457-49cc-a023-51cbf118602f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "c37f51e0-3ddb-4413-bf68-17c8399c15e6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "22452482-d489-4d98-b6e5-958cd1633862",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "45",
+      "Id": "cd7e8b51-870b-4306-b332-7a9ceaf7482a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a6783287-e538-4d27-acfb-e0ac57e5fae3",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "85",
+      "Id": "757d0bce-3082-41b0-870d-d1c1dcf1423c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "304fc5a1-1803-4b66-a57e-284dadf22392",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "1ec86412-5a18-4dbe-861f-8482a832a180",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "80dfcf9f-e2f1-4f86-b5cb-77193a5edf89",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Viga HA 45x85cm\"",
+      "Id": "d1256619-69c2-4670-9da9-bfa3874962be",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "aec48c1a-ada0-4ca9-9b41-9f95a068f5e2",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ, Line,\n    FilteredElementCollector, BuiltInCategory,\n    UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = float(IN[0]) if IN[0] is not None else 10.0\nfondo_m         = float(IN[1]) if IN[1] is not None else 24.0\nancho_cm        = float(IN[2]) if IN[2] is not None else 45.0\nalto_cm         = float(IN[3]) if IN[3] is not None else 85.0\npisos_tipo      = int(IN[4])   if IN[4] is not None else 6\nnombre_viga_tipo = str(IN[5])  if IN[5] is not None else \"Viga HA 45x85cm\"  # creado por 00_familias.dyn\npaso_m          = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_beam_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFraming)\n           .ToElements())\n    # 1° intento: tipo exacto creado por 00_familias.dyn\n    match = next((s for s in col if s.Name == nombre_viga_tipo), None)\n    if match:\n        return match\n    # 2° intento: familia con keyword de hormigón\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"h.a\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_beam_symbol()\nvigas = []\n\nif sym:\n    TransactionManager.Instance.EnsureInTransaction(doc)\n    try:\n        sym.LookupParameter(\"b\").Set(m_to_ft(ancho_cm / 100))\n        sym.LookupParameter(\"h\").Set(m_to_ft(alto_cm  / 100))\n    except Exception:\n        pass\n\n    if not sym.IsActive:\n        sym.Activate()\n\n    for nombre_nivel in [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]:\n        lvl = get_level(nombre_nivel)\n\n        # Vigas en dirección X (paralelas al frente) — una por eje Y\n        y = 0.0\n        while y <= fondo_m + 0.001:\n            x = 0.0\n            while x + paso_m <= frente_m + 0.001:\n                p1 = XYZ(m_to_ft(x),        m_to_ft(y), 0)\n                p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), 0)\n                inst = doc.Create.NewFamilyInstance(\n                    Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                )\n                vigas.append(inst.Id.Value)\n                x += paso_m\n            y += paso_m\n\n        # Vigas en dirección Y (paralelas al fondo)\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y + paso_m <= fondo_m + 0.001:\n                p1 = XYZ(m_to_ft(x), m_to_ft(y),        0)\n                p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), 0)\n                inst = doc.Create.NewFamilyInstance(\n                    Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                )\n                vigas.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n\n    TransactionManager.Instance.TransactionTaskDone()\n\nOUT = f\"{len(vigas)} vigas {ancho_cm:.0f}x{alto_cm:.0f}cm creadas\"\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Inputs": [
+        {
+          "Id": "90114121-273c-4321-8ffe-defbbe12c622",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a24e0e2f-ff1d-4d75-9f7e-bf7fd7a25868",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "49eb6fe6-2907-47ea-aa96-54f771028a2a",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "61d7dfdc-f91d-41a3-a21d-6278aa6ec841",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e60acbe3-3857-4db1-8736-634d82d83f1c",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9921af7a-18e6-431a-b175-481dd26ac3df",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "36e5c526-4b4b-44c7-9a48-dc1f11409930",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5f239e9f-c81c-4f84-bf98-ca74a167276f",
+      "End": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Id": "27801aef-3cfe-450c-8474-11107eebde31",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "e3072da5-5eb2-49bd-9c02-b925d25f9c8b",
+      "End": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Id": "cc400560-0cbb-4598-b532-f8b69f03d3a9",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "26d979a3-612c-47f1-9417-27ba3ab95d95",
+      "End": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Id": "6de00764-6f91-452f-868d-31e79afa86be",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "19aab7ab-8f03-45d0-8582-e7dcc1c92888",
+      "End": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Id": "8af4519d-7af7-4311-8337-7b7dcdc255b9",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "78e5123b-739e-4c5d-b5d0-f3093577d511",
+      "End": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+      "Id": "768729fa-fc4f-450c-adc0-2e3811f4f8a2",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "28f671d5-85c8-4488-9600-1a1022e383ef",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "b24c4971-7cb5-490e-a538-039755834ae9",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "c37f51e0-3ddb-4413-bf68-17c8399c15e6",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "866ef0b6-60a8-4802-82c1-3be3c948fb59",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "cd7e8b51-870b-4306-b332-7a9ceaf7482a",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "027c8fdd-3acf-43c1-97aa-8665884b3fa6",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "757d0bce-3082-41b0-870d-d1c1dcf1423c",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "faf6176a-88a3-41c7-aa18-f6ca42c0f187",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "1ec86412-5a18-4dbe-861f-8482a832a180",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "b668a1fa-475c-45eb-acc6-6815816439b7",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "d1256619-69c2-4670-9da9-bfa3874962be",
+      "End": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+      "Id": "b09aa22e-3cd9-48b0-8612-c7404ea60569",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "5f239e9f-c81c-4f84-bf98-ca74a167276f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "e3072da5-5eb2-49bd-9c02-b925d25f9c8b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "26d979a3-612c-47f1-9417-27ba3ab95d95",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "lado_col_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "19aab7ab-8f03-45d0-8582-e7dcc1c92888",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "78e5123b-739e-4c5d-b5d0-f3093577d511",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_col",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "23a3b721-f490-4aab-91ed-7685a575f4d5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Columnas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "28f671d5-85c8-4488-9600-1a1022e383ef",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "c37f51e0-3ddb-4413-bf68-17c8399c15e6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 910.0
+      },
+      {
+        "Id": "cd7e8b51-870b-4306-b332-7a9ceaf7482a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "ancho_viga_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1040.0
+      },
+      {
+        "Id": "757d0bce-3082-41b0-870d-d1c1dcf1423c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "alto_viga_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1170.0
+      },
+      {
+        "Id": "1ec86412-5a18-4dbe-861f-8482a832a180",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1300.0
+      },
+      {
+        "Id": "d1256619-69c2-4670-9da9-bfa3874962be",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_viga",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1430.0
+      },
+      {
+        "Id": "c6498781-9de6-46f7-b6e7-2263c29044a0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Vigas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 780.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "fuente": "UOCRA - Unión Obrera de la Construcción de la República Argentina",
+  "zona": "Zona A (CABA y GBA)",
+  "fecha": "2026-05-01",
+  "nota": "Valores de referencia - actualizar mensualmente desde miobra.com.ar",
+  "categorias": {
+    "oficial_especializado": {
+      "jornal_diario_ARS": 28500,
+      "jornal_hora_ARS": 3562,
+      "descripcion": "Albañil oficial, plomero oficial, electricista oficial"
+    },
+    "oficial": {
+      "jornal_diario_ARS": 25800,
+      "jornal_hora_ARS": 3225,
+      "descripcion": "Oficial albañil, carpintero"
+    },
+    "ayudante": {
+      "jornal_diario_ARS": 21500,
+      "jornal_hora_ARS": 2687,
+      "descripcion": "Medio oficial y peón"
+    }
+  },
+  "cargas_sociales_pct": 0.75,
+  "rendimientos_m2_jornada": {
+    "mamposteria_ladrillo_ceramico": 3.5,
+    "revoque_grueso": 12.0,
+    "revoque_fino": 10.0,
+    "contrapiso": 15.0,
+    "colocacion_ceramica": 8.0,
+    "pintura_latex": 25.0,
+    "encofrado_losa": 8.0,
+    "armadura_kg": 150.0,
+    "hormigon_colocado_m3": 4.0
+  }
+}

@@ -1,0 +1,223 @@
+﻿{
+  "Uuid": "acb83452-0d7f-4556-ac69-580b1d49f8c9",
+  "IsCustomNode": false,
+  "Description": "Crea láminas A3 con title block IRAM 4505 y coloca las vistas de documentación.",
+  "Name": "09_sheets",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Edificio Caballito\"",
+      "Id": "ce0fc395-25d2-46cd-98df-0be6be426856",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6482fb4f-1795-4bd0-850b-341114bb408d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Federico A. Casado\"",
+      "Id": "3ba41632-5313-4b06-83ed-e3f1a60dd6b0",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "42446601-0a14-4b09-8049-4b23052888ba",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "100",
+      "Id": "c3cf5403-9eb6-4038-8f61-a0b7ae0a125f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "10303c99-b815-4854-819c-377e9d7f393d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSheet, FamilySymbol, ViewPlan, ViewSection, View3D,\n    FilteredElementCollector, BuiltInCategory,\n    Viewport, XYZ,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nproyecto   = str(IN[0]) if IN[0] is not None else \"Edificio Caballito\"\nautor      = str(IN[1]) if IN[1] is not None else \"Federico A. Casado\"\nescala_planta = int(IN[2]) if IN[2] is not None else 100\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_title_block():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_TitleBlocks)\n           .ToElements())\n    # Buscar IRAM A3 primero, luego A3 genérico\n    for keyword in [\"iram\", \"A3\", \"a3\"]:\n        match = next((s for s in col if keyword.lower() in s.Name.lower()), None)\n        if match:\n            return match\n    return col[0] if col else None\n\ndef get_views_by_type(cls):\n    return FilteredElementCollector(doc).OfClass(cls).ToElements()\n\ntb = get_title_block()\nsheets_creados = []\n\nif not tb:\n    OUT = {\"error\": \"No se encontró title block en la plantilla. Cargar familia IRAM A3.\"}\nelse:\n    TransactionManager.Instance.EnsureInTransaction(doc)\n\n    if not tb.IsActive:\n        tb.Activate()\n\n    # Organización de láminas según portfolio\n    config_laminas = [\n        {\"numero\": \"A-01\", \"titulo\": \"PLANTA BAJA\",             \"filtro\": \"PB\"},\n        {\"numero\": \"A-02\", \"titulo\": \"PLANTAS TIPO\",            \"filtro\": \"P01\"},\n        {\"numero\": \"A-03\", \"titulo\": \"PLANTA AZOTEA\",           \"filtro\": \"AZO\"},\n        {\"numero\": \"A-04\", \"titulo\": \"CORTES\",                  \"filtro\": \"CORTE\"},\n        {\"numero\": \"A-05\", \"titulo\": \"FACHADA PRINCIPAL\",       \"filtro\": \"FACHADA\"},\n        {\"numero\": \"E-01\", \"titulo\": \"ESTRUCTURA - PLANTA TIPO\",\"filtro\": \"P01\"},\n        {\"numero\": \"M-01\", \"titulo\": \"VISTA 3D GENERAL\",        \"filtro\": \"3D\"},\n    ]\n\n    # Obtener todas las vistas disponibles\n    todas_vistas = (\n        list(get_views_by_type(ViewPlan)) +\n        list(get_views_by_type(ViewSection)) +\n        list(get_views_by_type(View3D))\n    )\n\n    sheets_existentes = {s.SheetNumber: s for s in FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()}\n\n    for cfg in config_laminas:\n        if cfg[\"numero\"] in sheets_existentes:\n            sheet = sheets_existentes[cfg[\"numero\"]]\n        else:\n            sheet = ViewSheet.Create(doc, tb.Id)\n            sheet.SheetNumber = cfg[\"numero\"]\n            sheet.Name = cfg[\"titulo\"]\n\n        # Metadatos del sheet — nombres en inglés y español según idioma de Revit\n        _meta = [\n            ([\"Drawn By\",    \"Dibujado por\",   \"Elaborado por\"], autor),\n            ([\"Designed By\", \"Diseñado por\",   \"Proyectado por\"], autor),\n            ([\"Project Name\",\"Nombre del proyecto\", \"Proyecto\"], proyecto),\n        ]\n        for nombres_param, valor in _meta:\n            for nombre in nombres_param:\n                p = sheet.LookupParameter(nombre)\n                if p:\n                    p.Set(valor)\n                    break\n\n        # Colocar vista correspondiente (centrada en A3)\n        filtro = cfg[\"filtro\"].lower()\n        vista_match = next(\n            (v for v in todas_vistas\n             if filtro in v.Name.lower()\n             and Viewport.CanAddViewToSheet(doc, sheet.Id, v.Id)),\n            None,\n        )\n        if vista_match:\n            # Centrar en el área real de la lámina usando Outline\n            try:\n                ol = sheet.Outline\n                centro = XYZ(\n                    (ol.Min.U + ol.Max.U) / 2.0,\n                    (ol.Min.V + ol.Max.V) / 2.0,\n                    0,\n                )\n            except Exception:\n                centro = XYZ(m_to_ft(0.210), m_to_ft(0.148), 0)\n            Viewport.Create(doc, sheet.Id, vista_match.Id, centro)\n\n        sheets_creados.append({\n            \"numero\": cfg[\"numero\"],\n            \"titulo\": cfg[\"titulo\"],\n            \"id\": sheet.Id.Value,\n        })\n\n    TransactionManager.Instance.TransactionTaskDone()\n\n    OUT = sheets_creados\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "7b910c9e-5485-4cac-8e05-84305a17ed65",
+      "Inputs": [
+        {
+          "Id": "157ed812-6ebe-4bc0-9b0c-6ec9291209c3",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8c85a1bc-00af-4e5f-84ba-d24623dcb9eb",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "940f6fd4-673c-4e93-86b7-b8434a0997e6",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fbec2888-7a02-4be6-8fa3-616ba5ab1e5f",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ce0fc395-25d2-46cd-98df-0be6be426856",
+      "End": "7b910c9e-5485-4cac-8e05-84305a17ed65",
+      "Id": "cd751cf2-e816-4d45-8b81-9e3fd0be265c",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "3ba41632-5313-4b06-83ed-e3f1a60dd6b0",
+      "End": "7b910c9e-5485-4cac-8e05-84305a17ed65",
+      "Id": "5a87d1e3-a4dc-4492-ac28-50641477d5f3",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "c3cf5403-9eb6-4038-8f61-a0b7ae0a125f",
+      "End": "7b910c9e-5485-4cac-8e05-84305a17ed65",
+      "Id": "4787977b-0e79-45ae-afc1-3f53f6e8c547",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "ce0fc395-25d2-46cd-98df-0be6be426856",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_proyecto",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "3ba41632-5313-4b06-83ed-e3f1a60dd6b0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "autor",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "c3cf5403-9eb6-4038-8f61-a0b7ae0a125f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "escala_planta",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "7b910c9e-5485-4cac-8e05-84305a17ed65",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Sheets",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

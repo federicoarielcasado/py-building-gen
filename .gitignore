@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Entorno virtual
+venv/
+.venv/
+env/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Outputs generados
+output/computo/*.xlsx
+output/computo/*.pdf
+output/portfolio/
+
+# Scripts Dynamo generados: se versionan (son el output principal)
+# output/dynamo/  ← incluido intencionalmente
+
+# Archivos de proyecto Revit (binarios pesados)
+*.rvt
+*.rfa
+*.rte
+*.rvg
+
+# Proyectos guardados: excluir todos salvo los de ejemplo
+*.pbg
+!ejemplo_default.pbg
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Datos geoespaciales grandes
+data/lote/*.shp
+data/lote/*.dbf
+data/lote/*.shx
+data/lote/*.prj
+
+# Archivos temporales
+*.tmp
+*.bak
+check_*.py

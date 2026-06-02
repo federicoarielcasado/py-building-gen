@@ -1,0 +1,411 @@
+﻿{
+  "Uuid": "3f3ae053-5110-4fc5-8f4d-7b5e85f7bef0",
+  "IsCustomNode": false,
+  "Description": "Crea losas de hormigón armado por nivel.",
+  "Name": "03_losas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "a3060847-3897-4320-a26f-7a9a6f2fca5f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5f2eee19-4de3-4863-af64-fbbebbdce235",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "6e1f1682-6e36-41dc-be87-634c44f697e7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "92f2c8be-ae72-4b18-b45f-a0f890552ba5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "39022e7e-1e00-4645-9b82-ad259e249522",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "617bed72-5183-402a-ba47-34a3a9bdff5e",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "386ad7ad-db8c-4fa9-b0df-882f8b00838f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a74954aa-9fc5-42d1-ba99-afa998bdd747",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "30.0",
+      "Id": "9fbd83b1-5b6c-4467-bba0-c6d1c10c1063",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c5e99b65-c4bc-4c23-80bb-c647c76c5198",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Losa HA H-21 - 30cm\"",
+      "Id": "edd5a4f6-1d00-428d-a1c9-1c23f5c370e7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "719a8ae1-119c-4787-a685-86fb6a95b1a1",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Losa azotea HA H-21 - 30cm\"",
+      "Id": "b59ceb58-550b-424e-8374-f39375d75b62",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d36f9ec8-8f18-426c-b569-9e931e224917",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Floor, FloorType, Level, CurveLoop, Line, XYZ,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m      = float(IN[0]) if IN[0] is not None else 10.0\nfondo_m       = float(IN[1]) if IN[1] is not None else 24.0\npisos_tipo    = int(IN[2])   if IN[2] is not None else 6\ntiene_azotea  = bool(IN[3])  if IN[3] is not None else True\nespesor_cm    = float(IN[4]) if IN[4] is not None else 30.0\nnombre_losa   = str(IN[5])   if IN[5] is not None else \"Losa HA H-21 - 30cm\"\nnombre_losa_azo = str(IN[6]) if IN[6] is not None else \"Losa azotea HA H-21 - 30cm\"\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_floor_type(nombre_exacto):\n    tipos = FilteredElementCollector(doc).OfClass(FloorType).ToElements()\n    # 1° intento: nombre exacto creado por 00_familias.dyn\n    match = next((t for t in tipos if t.Name == nombre_exacto), None)\n    if match:\n        return match\n    # fallback: búsqueda por keyword\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"losa\")\n    match = next((t for t in tipos if any(k in t.Name.lower() for k in _kw)), None)\n    return match or tipos[0]\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef contorno_losa():\n    loop = CurveLoop()\n    pts = [\n        XYZ(m_to_ft(0),          m_to_ft(0),          0),\n        XYZ(m_to_ft(frente_m),   m_to_ft(0),          0),\n        XYZ(m_to_ft(frente_m),   m_to_ft(fondo_m),    0),\n        XYZ(m_to_ft(0),          m_to_ft(fondo_m),    0),\n    ]\n    for i in range(len(pts)):\n        loop.Append(Line.CreateBound(pts[i], pts[(i + 1) % len(pts)]))\n    return loop\n\nft_tipo = get_floor_type(nombre_losa)\nft_azo  = get_floor_type(nombre_losa_azo)\nlosas_creadas = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\nfor i in range(1, pisos_tipo + 1):\n    nom = f\"P{i:02d}\"\n    lvl = get_level(nom)\n    losa = Floor.Create(doc, [contorno_losa()], ft_tipo.Id, lvl.Id)\n    losas_creadas.append({\"nivel\": nom, \"id\": losa.Id.Value})\nif tiene_azotea:\n    lvl = get_level(\"AZO\")\n    losa = Floor.Create(doc, [contorno_losa()], ft_azo.Id, lvl.Id)\n    losas_creadas.append({\"nivel\": \"AZO\", \"id\": losa.Id.Value})\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = losas_creadas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Inputs": [
+        {
+          "Id": "3a4897bf-3919-4570-bdb5-d5876b99da68",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ae99d28b-6df6-4374-a320-c2b0edca2dad",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5a4b6781-abaa-4f4f-8a89-bcbff4014fb1",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8af76787-c75d-411d-81ce-1367bc41fad5",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "006ee244-8960-498d-b91a-c320cbac3df9",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8be72eff-1434-4e2a-a0d1-187c08769eb3",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6aa7a0e0-cbf4-4cce-9755-6239c18c9495",
+          "Name": "IN[6]",
+          "Description": "Input 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d1d6bf41-2e69-4719-bef1-98c37028006b",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a3060847-3897-4320-a26f-7a9a6f2fca5f",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "f4c8ed2c-0d36-42ac-9fab-811b5e42a56f",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "6e1f1682-6e36-41dc-be87-634c44f697e7",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "55ffa46a-8e5e-4cb7-9e03-9a907a4b3e07",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "39022e7e-1e00-4645-9b82-ad259e249522",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "aca4c509-c0db-4009-a7fd-793e2e85cf44",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "386ad7ad-db8c-4fa9-b0df-882f8b00838f",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "e6a19f45-9f3e-46d4-912c-b4ed9e7b276a",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "9fbd83b1-5b6c-4467-bba0-c6d1c10c1063",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "547aae89-5fb2-4ad5-8718-3368d7df6f9e",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "edd5a4f6-1d00-428d-a1c9-1c23f5c370e7",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "8783c9f4-a4f4-40ea-95dd-4103a0f6487b",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    },
+    {
+      "Start": "b59ceb58-550b-424e-8374-f39375d75b62",
+      "End": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+      "Id": "3c76d9ea-8c11-4004-be19-8d157f76c787",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 6
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a3060847-3897-4320-a26f-7a9a6f2fca5f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "6e1f1682-6e36-41dc-be87-634c44f697e7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "39022e7e-1e00-4645-9b82-ad259e249522",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "386ad7ad-db8c-4fa9-b0df-882f8b00838f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tiene_azotea",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "9fbd83b1-5b6c-4467-bba0-c6d1c10c1063",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "espesor_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "edd5a4f6-1d00-428d-a1c9-1c23f5c370e7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_losa",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "b59ceb58-550b-424e-8374-f39375d75b62",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_losa_azo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "c76331dd-47c8-40ed-b673-bfc9c5bde6f2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Losas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

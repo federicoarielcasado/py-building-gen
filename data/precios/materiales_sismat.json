@@ -1,0 +1,55 @@
+{
+  "fuente": "Sismat - Sistema de Materiales de Construcción",
+  "fecha": "2026-05-01",
+  "nota": "Valores de referencia - actualizar desde sismat.com.ar",
+  "materiales": {
+    "hormigon_elaborado": {
+      "H-21_m3": 125000,
+      "H-25_m3": 138000,
+      "H-30_m3": 155000,
+      "unidad": "ARS/m³"
+    },
+    "acero": {
+      "ADN_420_kg": 2100,
+      "AL_220_kg": 1900,
+      "malla_Q188_m2": 8500,
+      "unidad": "ARS/kg o ARS/m²"
+    },
+    "mamposteria": {
+      "ladrillo_ceramico_18_9_6_unidad": 320,
+      "ladrillo_cercon_18_18_33_unidad": 850,
+      "bloque_hormigon_20_20_40_unidad": 950,
+      "unidad": "ARS/unidad"
+    },
+    "morteros_kg": {
+      "cemento_portland_40kg": 8500,
+      "cal_hidratada_30kg": 4200,
+      "arena_m3": 45000,
+      "unidad": "ARS/bolsa o ARS/m³"
+    },
+    "impermeabilizacion": {
+      "membrana_asfaltica_4mm_m2": 12500,
+      "pintura_asfaltica_lt": 3800,
+      "unidad": "ARS"
+    },
+    "carpinterias": {
+      "puerta_interior_90x200_unidad": 85000,
+      "puerta_blindex_90x210_unidad": 145000,
+      "ventana_aluminio_1x1_unidad": 95000,
+      "ventana_aluminio_1_5x1_2_unidad": 125000,
+      "unidad": "ARS/unidad colocada"
+    },
+    "instalaciones": {
+      "caño_pvc_dn63_m": 3200,
+      "caño_pvc_dn110_m": 5800,
+      "caño_polipropileno_dn25_m": 2800,
+      "cañeria_electrica_dn20_m": 850,
+      "unidad": "ARS/m colocado"
+    },
+    "ascensores": {
+      "ascensor_6_personas_hidraulico": 12500000,
+      "ascensor_6_personas_electrico": 15000000,
+      "unidad": "ARS/unidad instalada"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "fuente": "CIRSOC 201-2005 - Estructuras de Hormigón Armado",
+  "hormigones": {
+    "H-21": {
+      "fc_MPa": 21.0,
+      "fc_kgf_cm2": 214.3,
+      "E_MPa": 22408,
+      "descripcion": "Uso general, vigas y losas"
+    },
+    "H-25": {
+      "fc_MPa": 25.0,
+      "fc_kgf_cm2": 255.1,
+      "E_MPa": 24434,
+      "descripcion": "Columnas edificios medianos"
+    },
+    "H-30": {
+      "fc_MPa": 30.0,
+      "fc_kgf_cm2": 306.1,
+      "E_MPa": 26760,
+      "descripcion": "Columnas edificios altos, fundaciones especiales"
+    }
+  },
+  "aceros": {
+    "ADN 420": {
+      "fy_MPa": 420.0,
+      "fu_MPa": 540.0,
+      "E_MPa": 200000,
+      "descripcion": "Acero corrugado de alta adherencia, uso estándar"
+    },
+    "AL 220": {
+      "fy_MPa": 220.0,
+      "fu_MPa": 340.0,
+      "E_MPa": 200000,
+      "descripcion": "Acero liso, estribos y mallas"
+    }
+  },
+  "recubrimientos_cm": {
+    "losa_interior": 2.0,
+    "viga_interior": 3.0,
+    "columna_interior": 3.0,
+    "fundacion": 7.5,
+    "ambiente_agresivo": 4.0
+  },
+  "coeficientes_resistencia": {
+    "phi_flexion": 0.90,
+    "phi_cortante": 0.75,
+    "phi_compresion": 0.65
+  },
+  "predimensionado": {
+    "losa_maciza_h_min_L": 0.0286,
+    "losa_maciza_h_min_m": 0.12,
+    "viga_h_min_L": 0.0833,
+    "viga_b_h_relacion": 0.5,
+    "viga_b_min_m": 0.20,
+    "viga_h_min_m": 0.40,
+    "columna_A_factor": 0.45,
+    "columna_dim_min_m": 0.25,
+    "zapata_sigma_adm_kgf_cm2": {
+      "suelo_blando_CABA": 1.5,
+      "suelo_medio_CABA": 1.8,
+      "suelo_duro_CABA": 2.0
+    }
+  }
+}

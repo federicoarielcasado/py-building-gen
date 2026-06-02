@@ -1,0 +1,317 @@
+﻿{
+  "Uuid": "5149d91a-f20f-4948-99bf-2a310bb01103",
+  "IsCustomNode": false,
+  "Description": "Crea shafts de escaleras y ascensores.",
+  "Name": "06_escaleras_ascensores",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "a1445231-f862-47b9-8854-3529862ba2d6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8998e38d-2950-4cea-a9ea-cb88c00e3c06",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "9dd36a10-e741-44af-a06f-42cc108724b1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d4b8aa5c-5412-4bc2-9fb6-29cc78e6f5e5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "06c7c333-56d9-483f-8984-054b32656738",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3242c912-8600-44bd-9923-63b282472bde",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "e5bdb0dd-14af-426f-8644-180e6c76bad8",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "89274730-3b98-43d7-8459-3dbf32eb6631",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "770d4847-19e3-4f35-9259-308a23612b38",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e9fb7c2a-c327-4231-b2e3-3a4bb9a0be50",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Opening, CurveArray, Level, XYZ, Line,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m      = float(IN[0]) if IN[0] is not None else 10.0\nfondo_m       = float(IN[1]) if IN[1] is not None else 24.0\npisos_tipo    = int(IN[2])   if IN[2] is not None else 6\ncant_asc      = int(IN[3])   if IN[3] is not None else 1\ncant_esc      = int(IN[4])   if IN[4] is not None else 1\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_levels():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(levels, key=lambda l: l.Elevation)\n\ndef rect_curve_array(x0, y0, ancho, largo):\n    arr = CurveArray()\n    pts = [\n        XYZ(m_to_ft(x0),         m_to_ft(y0),         0),\n        XYZ(m_to_ft(x0 + ancho), m_to_ft(y0),         0),\n        XYZ(m_to_ft(x0 + ancho), m_to_ft(y0 + largo), 0),\n        XYZ(m_to_ft(x0),         m_to_ft(y0 + largo), 0),\n    ]\n    for i in range(len(pts)):\n        arr.Append(Line.CreateBound(pts[i], pts[(i + 1) % len(pts)]))\n    return arr\n\nnucleos = []\nlevels = get_levels()\nlvl_pb = next((l for l in levels if l.Name == \"PB\"), levels[0])\nlvl_techo = levels[-1]\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\n# Caja(s) de escalera — esquina posterior derecha del edificio\nfor i in range(cant_esc):\n    x0 = frente_m - 3.0 - i * 3.5\n    arr = rect_curve_array(x0, fondo_m * 0.65, 2.80, 5.50)\n    op = doc.Create.NewOpening(lvl_pb, lvl_techo, arr)\n    nucleos.append({\"tipo\": f\"escalera_{i+1}\", \"id\": op.Id.Value})\n\n# Caja(s) de ascensor — al lado de la escalera\nfor i in range(cant_asc):\n    x0 = frente_m - 3.0 - cant_esc * 3.5 - i * 2.2\n    arr = rect_curve_array(x0, fondo_m * 0.65, 1.80, 2.10)\n    op = doc.Create.NewOpening(lvl_pb, lvl_techo, arr)\n    nucleos.append({\"tipo\": f\"ascensor_{i+1}\", \"id\": op.Id.Value})\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = nucleos\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Inputs": [
+        {
+          "Id": "4abae207-19b9-497c-ac63-47dcc58273f5",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "21266386-0351-4385-ad55-bcd756aa41d5",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8b4f6a33-b8c3-420a-9939-3ea837faa99d",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0dd60cac-f5de-4bd1-9212-e0ca04e03cf1",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "49d02dc0-7f27-497f-a101-fabee10fbabf",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6e9b7554-c8cd-41f4-baf2-1d6f39481546",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a1445231-f862-47b9-8854-3529862ba2d6",
+      "End": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Id": "fa97aab7-a9d7-4676-a412-ec40b3927a87",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "9dd36a10-e741-44af-a06f-42cc108724b1",
+      "End": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Id": "4ad25b38-50a1-4e5a-880a-d565fba111f1",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "06c7c333-56d9-483f-8984-054b32656738",
+      "End": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Id": "4da7f92e-1785-485c-b619-5b4b2c265b67",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "e5bdb0dd-14af-426f-8644-180e6c76bad8",
+      "End": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Id": "9029e5b4-97bc-4cd8-9837-399b1c9313de",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "770d4847-19e3-4f35-9259-308a23612b38",
+      "End": "42cef377-1dcf-4112-a619-bb2546e02962",
+      "Id": "1e56c2ea-bd1a-4e29-af3c-cfa8cd819421",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a1445231-f862-47b9-8854-3529862ba2d6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "9dd36a10-e741-44af-a06f-42cc108724b1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "06c7c333-56d9-483f-8984-054b32656738",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "e5bdb0dd-14af-426f-8644-180e6c76bad8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_asc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "770d4847-19e3-4f35-9259-308a23612b38",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_esc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "42cef377-1dcf-4112-a619-bb2546e02962",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Circulación",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

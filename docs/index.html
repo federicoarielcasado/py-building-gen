@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>py-building-gen — Federico A. Casado</title>
+  <style>
+    :root {
+      --azul:    #1a4f7a;
+      --azul-lt: #cce0f5;
+      --gris:    #f5f7fa;
+      --texto:   #222;
+      --borde:   #dee2e6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: var(--texto); background: #fff; }
+
+    /* ── Header ── */
+    header { background: var(--azul); color: #fff; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    header h1 { font-size: 2rem; letter-spacing: 1px; }
+    header p  { font-size: 1rem; opacity: .85; margin-top: .5rem; }
+    .badge-row { display: flex; gap: .5rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+    .badge { background: rgba(255,255,255,.15); border-radius: 20px; padding: .25rem .75rem; font-size: .8rem; }
+
+    /* ── Nav ── */
+    nav { background: var(--azul); border-top: 1px solid rgba(255,255,255,.2); }
+    nav ul { display: flex; list-style: none; justify-content: center; gap: 0; flex-wrap: wrap; }
+    nav a  { display: block; padding: .6rem 1.2rem; color: rgba(255,255,255,.85);
+              text-decoration: none; font-size: .9rem; }
+    nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    /* ── Layout ── */
+    main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+    section { margin-bottom: 3rem; }
+    h2 { color: var(--azul); font-size: 1.4rem; border-bottom: 2px solid var(--azul-lt);
+         padding-bottom: .4rem; margin-bottom: 1.2rem; }
+    h3 { font-size: 1.05rem; margin: 1rem 0 .4rem; }
+    p, li { line-height: 1.65; font-size: .95rem; }
+    ul { padding-left: 1.4rem; }
+    li { margin-bottom: .3rem; }
+
+    /* ── Cards ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid var(--borde); border-radius: 8px; padding: 1.1rem 1.2rem;
+            background: var(--gris); transition: box-shadow .2s; }
+    .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    .card-num  { font-size: 1.6rem; font-weight: 700; color: var(--azul); }
+    .card-titulo { font-weight: 600; margin: .25rem 0; }
+    .card-tools  { font-size: .78rem; color: #666; }
+
+    /* ── Stack ── */
+    .stack-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip { background: var(--azul-lt); color: var(--azul); border-radius: 16px;
+            padding: .25rem .75rem; font-size: .82rem; font-weight: 500; }
+
+    /* ── Pipeline ── */
+    .pipeline { display: flex; flex-direction: column; gap: .5rem; }
+    .step { display: flex; align-items: flex-start; gap: .9rem; }
+    .step-num { background: var(--azul); color: #fff; border-radius: 50%;
+                width: 28px; height: 28px; display: flex; align-items: center;
+                justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+    .step-body { flex: 1; }
+    .step-body code { background: #eef2f5; border-radius: 4px; padding: .1rem .4rem; font-size: .85rem; }
+
+    /* ── Footer ── */
+    footer { background: var(--gris); border-top: 1px solid var(--borde);
+             text-align: center; padding: 1.5rem; font-size: .85rem; color: #666; }
+    footer a { color: var(--azul); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>py-building-gen</h1>
+  <p>Generador paramétrico de scripts Dynamo para Revit 2027<br>
+     Edificio residencial multifamiliar · Caballito, CABA</p>
+  <div class="badge-row">
+    <span class="badge">Python 3.12</span>
+    <span class="badge">PyQt6</span>
+    <span class="badge">Revit 2027</span>
+    <span class="badge">Dynamo 3.x</span>
+    <span class="badge">CIRSOC 201-2005</span>
+    <span class="badge">UOCRA · INDEC ICC</span>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#descripcion">Descripción</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#normativa">Normativa</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- Descripción -->
+  <section id="descripcion">
+    <h2>Descripción del proyecto</h2>
+    <p>
+      <strong>py-building-gen</strong> es una aplicación de escritorio en PyQt6 que automatiza la generación
+      de scripts Dynamo para Autodesk Revit 2027, permitiendo modelar un edificio residencial
+      multifamiliar completo a partir de parámetros ingresados por el usuario.
+    </p>
+    <p style="margin-top:.8rem">
+      El sistema produce 10 scripts <code>.dyn</code> en formato JSON que, ejecutados en orden dentro de
+      Revit, construyen automáticamente la arquitectura, estructura, instalaciones MEP, vistas de
+      documentación y láminas con title block IRAM A3. El módulo de cómputo genera el presupuesto
+      completo con análisis de precios unitarios, exportable a Excel y PDF.
+    </p>
+
+    <h3>Características principales</h3>
+    <ul>
+      <li>Interfaz PyQt6 con 5 tabs paramétricos y previsualización en tiempo real (planta + alzado)</li>
+      <li>Predimensionado estructural automático según CIRSOC 201-2005 y CIRSOC 101</li>
+      <li>10 scripts Dynamo (CPython 3) para Revit 2027: niveles, muros, losas, estructura, aberturas, MEP, vistas y sheets</li>
+      <li>Cómputo métrico por rubro (62 ítems en 15 rubros) con análisis de precios unitarios</li>
+      <li>Precios de referencia: UOCRA Zona A 2026 + ICC INDEC + Sismat</li>
+      <li>Exportación a Excel (hoja por rubro + curva de inversión) y PDF</li>
+      <li>Serialización del proyecto (<code>.pbg</code>) para guardar y reutilizar configuraciones</li>
+      <li>49 tests automatizados (pytest)</li>
+    </ul>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <h2>Capítulos del portfolio</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-titulo">Arquitectura</div>
+        <p>Plantas, cortes, fachadas, renders, detalles constructivos</p>
+        <div class="card-tools">Revit 2027 · Blender</div>
+      </div>
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-titulo">Estructura</div>
+        <p>Predimensionado CIRSOC, planos estructurales, detalles de armadura</p>
+        <div class="card-tools">Revit 2027 · AutoCAD</div>
+      </div>
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-titulo">Inst. Sanitaria</div>
+        <p>Agua fría/caliente, desagüe cloacal, pluviales, isométricos</p>
+        <div class="card-tools">Revit MEP · AutoCAD · Norma AySA 2023</div>
+      </div>
+      <div class="card">
+        <div class="card-num">04</div>
+        <div class="card-titulo">Inst. Eléctrica</div>
+        <p>Tableros, circuitos, iluminación, diagrama unifilar</p>
+        <div class="card-tools">Revit MEP · AutoCAD · AEA / IRAM 2281</div>
+      </div>
+      <div class="card">
+        <div class="card-num">05</div>
+        <div class="card-titulo">Inst. Gas</div>
+        <p>Distribución gas natural, medidores, esquema de planta</p>
+        <div class="card-tools">AutoCAD · NAG 200/211 (ENARGAS)</div>
+      </div>
+      <div class="card">
+        <div class="card-num">06</div>
+        <div class="card-titulo">Inst. Incendio</div>
+        <p>Detección, rociadores, bocas de incendio equipadas</p>
+        <div class="card-tools">Revit MEP · NFPA 13 / NFPA 72</div>
+      </div>
+      <div class="card">
+        <div class="card-num">07</div>
+        <div class="card-titulo">Clash Detection</div>
+        <p>Reporte de interferencias entre sistemas MEP y estructura</p>
+        <div class="card-tools">Navisworks Manage 2027</div>
+      </div>
+      <div class="card">
+        <div class="card-num">08</div>
+        <div class="card-titulo">Cómputo y Presupuesto</div>
+        <p>Planillas por rubro, análisis de precios unitarios, curva de inversión</p>
+        <div class="card-tools">Python · Excel · PDF</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline -->
+  <section id="pipeline">
+    <h2>Pipeline de generación</h2>
+    <div class="pipeline">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Ingreso de parámetros</strong> — UI PyQt6 con validación en tiempo real,
+          previsualización de planta y alzado esquemáticos.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Predimensionado estructural</strong> — <code>core/predimensionado.py</code>
+          calcula secciones de losas, vigas, columnas y zapatas según CIRSOC 201-2005.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Generación de scripts Dynamo</strong> — 10 archivos <code>.dyn</code> (JSON)
+          con nodos Python (CPython 3) y Code Blocks parametrizados con los valores del proyecto.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Ejecución en Revit 2027</strong> — Scripts corridos en orden:
+          niveles → muros → losas → estructura → aberturas → circulación → MEP → vistas → sheets → schedules.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Cómputo y presupuesto</strong> — <code>core/computo/</code> genera mediciones,
+          aplica precios UOCRA + INDEC + Sismat y exporta a Excel (con curva de inversión) y PDF.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <strong>Clash Detection</strong> — Exportación a Navisworks Manage 2027 vía NWC
+          para detección de interferencias MEP-estructura.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <strong>Portfolio</strong> — Láminas A3 con title block IRAM 4505 exportadas desde Revit,
+          renders desde Blender, documentación completa por capítulo.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section id="stack">
+    <h2>Stack tecnológico</h2>
+    <div class="stack-grid">
+      <span class="chip">Python 3.12</span>
+      <span class="chip">PyQt6</span>
+      <span class="chip">matplotlib</span>
+      <span class="chip">openpyxl</span>
+      <span class="chip">reportlab</span>
+      <span class="chip">pandas</span>
+      <span class="chip">numpy</span>
+      <span class="chip">pytest (49 tests)</span>
+      <span class="chip">Revit 2027</span>
+      <span class="chip">Dynamo 3.x</span>
+      <span class="chip">CPython 3</span>
+      <span class="chip">Revit API</span>
+      <span class="chip">Navisworks 2027</span>
+      <span class="chip">Blender</span>
+      <span class="chip">AutoCAD</span>
+      <span class="chip">QGis</span>
+    </div>
+  </section>
+
+  <!-- Normativa -->
+  <section id="normativa">
+    <h2>Normativa de referencia</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-titulo">Estructural</div>
+        <ul>
+          <li>CIRSOC 201-2005 — Hormigón Armado</li>
+          <li>CIRSOC 101 — Cargas mínimas</li>
+          <li>CIRSOC 102 — Acción del viento</li>
+          <li>INPRES-CIRSOC 103 — Sismorresistente</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-titulo">Instalaciones</div>
+        <ul>
+          <li>Norma AySA 2023 — Sanitaria</li>
+          <li>AEA + IRAM 2281 — Eléctrica</li>
+          <li>NAG 200/211 ENARGAS — Gas</li>
+          <li>NFPA 13 / NFPA 72 — Incendio</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-titulo">Documentación</div>
+        <ul>
+          <li>IRAM 4505 — Title block A3</li>
+          <li>Código de Edificación CABA</li>
+          <li>Buenos Aires Data — Parcelas GeoJSON</li>
+          <li>POSGAR 2007 / Faja 5 (EPSG:5347)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-titulo">Precios</div>
+        <ul>
+          <li>UOCRA Zona A 2026</li>
+          <li>ICC INDEC — índice mensual</li>
+          <li>Sismat — materiales</li>
+          <li>CAC — actualización mensual</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Federico Ariel Casado</strong> —
+    <a href="mailto:federicoarielcasado@gmail.com">federicoarielcasado@gmail.com</a> —
+    <a href="https://github.com/federicoarielcasado/py-building-gen" target="_blank">GitHub</a> —
+    <a href="https://www.linkedin.com/in/federicoarielcasado" target="_blank">LinkedIn</a>
+  </p>
+  <p style="margin-top:.4rem; font-size:.8rem; opacity:.7">
+    py-building-gen · Generado con Python 3.12 + PyQt6 · Datos de referencia: mayo 2026
+  </p>
+</footer>
+
+</body>
+</html>

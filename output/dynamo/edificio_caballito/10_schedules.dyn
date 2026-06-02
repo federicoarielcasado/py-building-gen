@@ -1,0 +1,129 @@
+﻿{
+  "Uuid": "3285bbb6-cd3e-43f4-bf6f-e842a28c4287",
+  "IsCustomNode": false,
+  "Description": "Crea tablas de cómputo (áreas, puertas, ventanas, estructura) para documentación y presupuesto.",
+  "Name": "10_schedules",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "bb5f18e4-26be-469b-bfa6-b4db337fad13",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fde00046-6484-40cb-8c56-dc0ae6832953",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSchedule, ScheduleFieldType, BuiltInParameter,\n    ScheduleDefinition, FilteredElementCollector,\n    BuiltInCategory, ScheduleSortGroupField,\n    ElementId,\n)\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo = int(IN[0]) if IN[0] is not None else 6\n\ndef crear_schedule(nombre, categoria):\n    try:\n        sch = ViewSchedule.CreateSchedule(doc, ElementId(categoria))\n        sch.Name = nombre\n        return sch\n    except Exception:\n        return None\n\nschedules_creados = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\nconfig = [\n    (\"CÓMPUTO - ÁREAS POR NIVEL\",    int(BuiltInCategory.OST_Rooms)),\n    (\"CÓMPUTO - PUERTAS\",            int(BuiltInCategory.OST_Doors)),\n    (\"CÓMPUTO - VENTANAS\",           int(BuiltInCategory.OST_Windows)),\n    (\"CÓMPUTO - COLUMNAS\",           int(BuiltInCategory.OST_StructuralColumns)),\n    (\"CÓMPUTO - VIGAS\",              int(BuiltInCategory.OST_StructuralFraming)),\n    (\"CÓMPUTO - MUROS\",              int(BuiltInCategory.OST_Walls)),\n    (\"CÓMPUTO - LOSAS\",              int(BuiltInCategory.OST_Floors)),\n]\n\nfor nombre, cat_id in config:\n    sch = crear_schedule(nombre, cat_id)\n    if sch:\n        schedules_creados.append({\"nombre\": nombre, \"id\": sch.Id.Value})\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = schedules_creados\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "283b0949-c8ad-4b51-9393-a5087e3e131a",
+      "Inputs": [
+        {
+          "Id": "db4d9847-9f02-405a-ba00-3b53f8833dbd",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d4ce3ce8-d262-40c8-974d-c4871b07ec5a",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "bb5f18e4-26be-469b-bfa6-b4db337fad13",
+      "End": "283b0949-c8ad-4b51-9393-a5087e3e131a",
+      "Id": "476d36ef-a2fc-401d-9176-be75cd1cf340",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "bb5f18e4-26be-469b-bfa6-b4db337fad13",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "283b0949-c8ad-4b51-9393-a5087e3e131a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Schedules",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

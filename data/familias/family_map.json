@@ -1,0 +1,45 @@
+{
+  "fuente": "Revit 2020 - Familias de sistema y familias cargables por defecto",
+  "muros": {
+    "muro_exterior_25cm": "Basic Wall: Exterior - Brick on CMU",
+    "muro_interior_15cm": "Basic Wall: Interior - 135mm Partition",
+    "muro_medianera_25cm": "Basic Wall: Exterior - Brick on CMU",
+    "muro_estructura_20cm": "Basic Wall: Concrete"
+  },
+  "losas": {
+    "losa_maciza_20cm": "Floor: Concrete 200mm",
+    "losa_maciza_22cm": "Floor: Concrete 220mm",
+    "losa_maciza_25cm": "Floor: Concrete 250mm",
+    "contrapiso_10cm": "Floor: Concrete 100mm"
+  },
+  "columnas": {
+    "columna_rectangular": "Concrete-Rectangular-Column",
+    "columna_circular": "Concrete-Round-Column"
+  },
+  "vigas": {
+    "viga_rectangular": "Concrete-Rectangular Beam"
+  },
+  "puertas": {
+    "puerta_simple_90": "Single-Flush: 0915 x 2134mm",
+    "puerta_doble_180": "Double-Flush: 1830 x 2134mm",
+    "puerta_blindex": "Single-Glass: 0915 x 2134mm"
+  },
+  "ventanas": {
+    "ventana_simple_1x1": "Fixed: 1000 x 1000mm",
+    "ventana_corrediza_1.5x1.2": "Sliding: 1500 x 1200mm",
+    "ventana_corrediza_2x1.2": "Sliding: 2000 x 1200mm"
+  },
+  "escaleras": {
+    "escalera_recta": "Assembled Stair: Stair",
+    "escalera_en_l": "Assembled Stair: Stair"
+  },
+  "title_blocks": {
+    "A3_IRAM": "A3 Metric - Title Block IRAM 4505"
+  },
+  "niveles": {
+    "prefijo_pb": "PB",
+    "prefijo_piso": "P",
+    "prefijo_subsuelo": "SS",
+    "prefijo_azotea": "AZO"
+  }
+}

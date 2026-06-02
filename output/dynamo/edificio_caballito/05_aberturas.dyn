@@ -1,0 +1,176 @@
+﻿{
+  "Uuid": "9e1958da-3cf0-44e5-b08e-28a51870c26c",
+  "IsCustomNode": false,
+  "Description": "Coloca puertas y ventanas en muros exteriores.",
+  "Name": "05_aberturas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "948e4315-9184-44f8-854f-dea09fb96532",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c421fa37-b3e0-4632-956d-7d5ca37714bd",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "205851b0-f75c-48e1-b91f-7098f90670a4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b7529206-d271-475a-8ac4-be058f0ce812",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, FamilyInstance, Wall, Level,\n    FilteredElementCollector, BuiltInCategory,\n    XYZ, BuiltInParameter,\n    UnitUtils, UnitTypeId,\n    FailureHandlingOptions, FailureSeverity,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"System\")\nfrom System.Collections.Generic import List\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m   = float(IN[0]) if IN[0] is not None else 10.0\npisos_tipo = int(IN[1])   if IN[1] is not None else 6\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\n_KW_PUERTAS  = (\"door\", \"puerta\", \"single\", \"simple\")\n_KW_VENTANAS = (\"window\", \"ventana\", \"fixed\", \"fija\", \"doble\", \"double\")\n\ndef get_symbol(categoria, keyword):\n    col = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(categoria).ToElements()\n    # Buscar con keyword original y sus equivalentes en español/inglés\n    kw_map = {\n        \"door\":   _KW_PUERTAS,\n        \"window\": _KW_VENTANAS,\n    }\n    keywords = kw_map.get(keyword.lower(), (keyword.lower(),))\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in keywords)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef get_muro_frente(nivel_id):\n    \"\"\"Busca el muro de fachada principal: corre en X a Y≈0.\"\"\"\n    col = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    muros_nivel = [w for w in col if w.LevelId == nivel_id]\n    for w in muros_nivel:\n        try:\n            curve = w.Location.Curve\n            p1 = curve.GetEndPoint(0)\n            p2 = curve.GetEndPoint(1)\n            # Fachada frente: ambos extremos en Y≈0, corre en X\n            if abs(p1.Y) < 0.5 and abs(p2.Y) < 0.5 and abs(p2.X - p1.X) > 1.0:\n                return w\n        except Exception:\n            continue\n    return muros_nivel[0] if muros_nivel else None\n\ndef midpoint_on_wall(muro):\n    \"\"\"Punto central sobre la curva del muro, a ras del nivel.\"\"\"\n    curve = muro.Location.Curve\n    pt = curve.Evaluate(0.5, True)   # 0.5 normalizado = punto medio\n    return XYZ(pt.X, pt.Y, 0.0)\n\nsym_puerta  = get_symbol(BuiltInCategory.OST_Doors,   \"door\")\nsym_ventana = get_symbol(BuiltInCategory.OST_Windows, \"window\")\n\naberturas = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\nfor sym in [sym_puerta, sym_ventana]:\n    if sym and not sym.IsActive:\n        sym.Activate()\n\ndef place_hosted(symbol, muro, lvl, sill_h_m=None):\n    \"\"\"Coloca una abertura hosteada en el punto medio del muro con Z=0.\"\"\"\n    mid_pt = muro.Location.Curve.Evaluate(0.5, True)\n    pos = XYZ(mid_pt.X, mid_pt.Y, 0.0)\n    inst = doc.Create.NewFamilyInstance(pos, symbol, muro, lvl, ST.NonStructural)\n    if sill_h_m is not None:\n        for pname in (BuiltInParameter.INSTANCE_SILL_HEIGHT_PARAM,):\n            p = inst.get_Parameter(pname)\n            if p and not p.IsReadOnly:\n                p.Set(m_to_ft(sill_h_m))\n                break\n        # fallback por nombre\n        for nombre in (\"Altura inferior\", \"Sill Height\", \"Alfeizar\"):\n            p = inst.LookupParameter(nombre)\n            if p and not p.IsReadOnly:\n                p.Set(m_to_ft(sill_h_m))\n                break\n    return inst\n\n# Puerta de entrada en PB\nif sym_puerta:\n    lvl_pb = get_level(\"PB\")\n    muro_pb = get_muro_frente(lvl_pb.Id)\n    if muro_pb:\n        try:\n            inst = place_hosted(sym_puerta, muro_pb, lvl_pb)\n            aberturas.append({\"tipo\": \"puerta_entrada\", \"id\": inst.Id.Value})\n        except Exception as e:\n            aberturas.append({\"tipo\": \"puerta_entrada\", \"error\": str(e)})\n\n# Ventanas en pisos tipo (una por fachada principal)\nif sym_ventana:\n    for i in range(1, pisos_tipo + 1):\n        lvl = get_level(f\"P{i:02d}\")\n        muro = get_muro_frente(lvl.Id)\n        if muro:\n            try:\n                inst = place_hosted(sym_ventana, muro, lvl, sill_h_m=0.90)\n                aberturas.append({\"tipo\": f\"ventana_P{i:02d}\", \"id\": inst.Id.Value})\n            except Exception as e:\n                aberturas.append({\"tipo\": f\"ventana_P{i:02d}\", \"error\": str(e)})\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = aberturas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "3657b948-615c-43fb-a58d-dfef42aaca9b",
+      "Inputs": [
+        {
+          "Id": "3012b0bd-2b98-41cf-aba8-18febb505f1e",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d9f22b69-3947-4cea-9e9e-f5edcc46c050",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "77004c51-d096-43b4-850e-1843a4968d6e",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "948e4315-9184-44f8-854f-dea09fb96532",
+      "End": "3657b948-615c-43fb-a58d-dfef42aaca9b",
+      "Id": "5a2df51b-c6b5-4e4b-b6b6-da6ef31238d7",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "205851b0-f75c-48e1-b91f-7098f90670a4",
+      "End": "3657b948-615c-43fb-a58d-dfef42aaca9b",
+      "Id": "45ab0a49-d11b-410d-b142-ddc87911ced1",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "948e4315-9184-44f8-854f-dea09fb96532",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "205851b0-f75c-48e1-b91f-7098f90670a4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "3657b948-615c-43fb-a58d-dfef42aaca9b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Aberturas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

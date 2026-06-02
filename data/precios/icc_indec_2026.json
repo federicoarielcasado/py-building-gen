@@ -1,0 +1,29 @@
+{
+  "fuente": "ICC INDEC - Índice del Costo de la Construcción",
+  "fecha": "2026-05-01",
+  "nota": "Valores de referencia - actualizar mensualmente desde indec.gob.ar",
+  "nivel_general": {
+    "base_2016_100": 98450.3,
+    "variacion_mensual_pct": 2.8,
+    "variacion_anual_pct": 48.2
+  },
+  "capitulos": {
+    "materiales": {
+      "indice": 95210.5,
+      "peso": 0.637
+    },
+    "mano_de_obra": {
+      "indice": 104830.2,
+      "peso": 0.323
+    },
+    "gastos_generales": {
+      "indice": 99100.0,
+      "peso": 0.040
+    }
+  },
+  "costo_m2_referencia_ARS": {
+    "vivienda_multifamiliar_media": 850000,
+    "vivienda_multifamiliar_alta": 1200000,
+    "local_comercial_pb": 950000
+  }
+}
