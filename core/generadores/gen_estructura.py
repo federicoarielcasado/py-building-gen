@@ -190,7 +190,7 @@ if sym:
                     inst = doc.Create.NewFamilyInstance(
                         Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam
                     )
-                    vigas.append(inst.Id.IntegerValue)
+                    vigas.append(inst.Id.Value)
                     x += paso_m
                 y += paso_m
 
@@ -204,7 +204,7 @@ if sym:
                     inst = doc.Create.NewFamilyInstance(
                         Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam
                     )
-                    vigas.append(inst.Id.IntegerValue)
+                    vigas.append(inst.Id.Value)
                     y += paso_m
                 x += paso_m
 

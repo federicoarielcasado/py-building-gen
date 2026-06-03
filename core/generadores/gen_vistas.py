@@ -61,7 +61,7 @@ if vft_planta:
             if lvl:
                 vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)
                 vista.Name = f"PLANTA {nombre}"
-                plantas.append({"nivel": nombre, "id": vista.Id.IntegerValue})
+                plantas.append({"nivel": nombre, "id": vista.Id.Value})
 
         t.Commit()
 
@@ -195,7 +195,7 @@ if vft:
         t.Start()
         v3d = View3D.CreateIsometric(doc, vft.Id)
         v3d.Name = "3D - Vista General"
-        resultado.append({"tipo": "3d_isometrica", "id": v3d.Id.IntegerValue})
+        resultado.append({"tipo": "3d_isometrica", "id": v3d.Id.Value})
         t.Commit()
 
 OUT = resultado
