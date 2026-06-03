@@ -192,6 +192,35 @@ with Transaction(doc, "py-building-gen: Tipos de muro") as t:
     wt_med.SetCompoundStructure(build_compound_structure(capas_med))
     tipos_creados.append("Medianera - 200mm")
 
+    # 4. Muro cortafuego 200mm (REI-120 — divisoria entre departamentos, CABA Art. 6.1)
+    wt_cf = get_or_duplicate_wall_type("genér", "Muro cortafuego - 200mm")
+    capas_cf = [
+        (0.020, FA.Finish1,   "Revoque fino / yeso"),
+        (0.160, FA.Structure, "Ladrillo cerámico"),
+        (0.020, FA.Finish2,   "Revoque fino / yeso"),
+    ]
+    wt_cf.SetCompoundStructure(build_compound_structure(capas_cf))
+    tipos_creados.append("Muro cortafuego - 200mm")
+
+    # 5. Muro shaft HA 300mm (REI-180 — caja escalera y ascensor)
+    wt_sh = get_or_duplicate_wall_type("genér", "Muro shaft HA - 300mm")
+    capas_sh = [
+        (0.300, FA.Structure, "Hormigón H-25"),
+    ]
+    wt_sh.SetCompoundStructure(build_compound_structure(capas_sh))
+    tipos_creados.append("Muro shaft HA - 300mm")
+
+    # 6. Tabique de baño 100mm (ladrillo + membrana hidrófuga)
+    wt_ban = get_or_duplicate_wall_type("genér", "Tabique baño - 100mm")
+    capas_ban = [
+        (0.010, FA.Finish1,   "Revoque fino / yeso"),
+        (0.074, FA.Structure, "Ladrillo cerámico"),
+        (0.010, FA.Substrate, "Mortero de cemento"),
+        (0.006, FA.Finish2,   "Membrana asfáltica"),
+    ]
+    wt_ban.SetCompoundStructure(build_compound_structure(capas_ban))
+    tipos_creados.append("Tabique baño - 100mm")
+
     t.Commit()
 
 OUT = tipos_creados
@@ -435,13 +464,16 @@ def nombres_tipos(params: "ParametrosEdificio") -> dict[str, str]:
     ha = params.hormigon_tipo
 
     return {
-        "muro_ext":   "Muro exterior - 200mm",
-        "tabique":    "Tabique interior - 100mm",
-        "medianera":  "Medianera - 200mm",
-        "losa":       f"Losa HA {ha} - {espesor_cm:.0f}cm",
-        "losa_azo":   f"Losa azotea HA {ha} - {espesor_cm:.0f}cm",
-        "columna":    f"Columna HA {lado_col_cm:.0f}x{lado_col_cm:.0f}cm",
-        "viga":       f"Viga HA {ancho_viga_cm:.0f}x{alto_viga_cm:.0f}cm",
+        "muro_ext":     "Muro exterior - 200mm",
+        "tabique":      "Tabique interior - 100mm",
+        "medianera":    "Medianera - 200mm",
+        "cortafuego":   "Muro cortafuego - 200mm",
+        "shaft":        "Muro shaft HA - 300mm",
+        "tabique_bano": "Tabique baño - 100mm",
+        "losa":         f"Losa HA {ha} - {espesor_cm:.0f}cm",
+        "losa_azo":     f"Losa azotea HA {ha} - {espesor_cm:.0f}cm",
+        "columna":      f"Columna HA {lado_col_cm:.0f}x{lado_col_cm:.0f}cm",
+        "viga":         f"Viga HA {ancho_viga_cm:.0f}x{alto_viga_cm:.0f}cm",
     }
 
 

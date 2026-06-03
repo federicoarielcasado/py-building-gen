@@ -1,0 +1,411 @@
+{
+  "Uuid": "cb45d688-9afe-4f4e-bed8-a707f430a768",
+  "IsCustomNode": false,
+  "Description": "Crea Room objects en Revit para cada local de cada departamento. Ejecutar después de 02_muros y 01_niveles.",
+  "Name": "11_habitaciones",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "e633d460-5411-4780-b517-68aad915867c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e94ff2ce-36ef-4b31-bfb5-469a0e691fb6",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "19c6eaae-679e-4977-b4ef-f3a175f8fc23",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "835945ea-e56f-4bcc-8d5d-f714ad8df838",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "6287e2a9-7e8f-4696-b7a1-4819ba721e8c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "316fe653-fa25-4847-8bdb-2f409a68a5ab",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "2",
+      "Id": "978c0131-7fb6-4a13-bf13-63865edb7871",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "59fed8d2-097e-4fb8-baaa-5a41750ac1f2",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"[{\"tipo\": \"2amb\", \"cantidad\": 1}, {\"tipo\": \"3amb\", \"cantidad\": 1}]\"",
+      "Id": "4efff85d-9f60-4dcd-b188-d69421c58ec8",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ad7c87f3-4c91-4ab1-94df-d0def67a68f3",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "7a4fe063-6d21-4e0f-86eb-3bda85de26e6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5ec9226d-16fa-4f81-a850-3b910e67b342",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "e3f1af82-0c0c-4912-bb3c-1137412b71c7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "276b1fe3-62a7-4e32-8f19-21a069eaf3bc",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, UV, FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Architecture import Room\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = float(IN[0])\nfondo_m         = float(IN[1])\npisos_tipo      = int(IN[2])\ncant_depto_tipo = int(IN[3])\ntipologias_json = str(IN[4])\ncant_escaleras  = int(IN[5])\ncant_ascensores = int(IN[6])\n\ntipologias_raw = json.loads(tipologias_json)\napts = []\nfor t_item in tipologias_raw:\n    for _ in range(int(t_item.get(\"cantidad\", 1))):\n        apts.append(t_item.get(\"tipo\", \"2amb\"))\n\n# ── Layout geometry (identical constants to Scripts 02 y 05) ─────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20\n_n_apts      = max(cant_depto_tipo, 1)\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\ny_nucleo     = fondo_m - ESC_FONDO\ny_pasillo    = y_nucleo - PASILLO_PROF\napt_ancho    = frente_m / _n_apts\n\n_PROP_LIVING = {\"1amb\":0.00,\"estudio\":0.00,\"2amb\":0.40,\"3amb\":0.38,\"4amb\":0.35,\"duplex\":0.35}\n_PROP_SERV   = {\"1amb\":0.65,\"estudio\":0.70,\"2amb\":0.70,\"3amb\":0.68,\"4amb\":0.65,\"duplex\":0.65}\n_NOMBRES = {\n    \"living\":    \"Living-Comedor\",\n    \"dorm_p\":    \"Dormitorio Principal\",\n    \"dorm\":      \"Dormitorio\",\n    \"dorm1\":     \"Dormitorio 1\",\n    \"dorm2\":     \"Dormitorio 2\",\n    \"dorm3\":     \"Dormitorio 3\",\n    \"living_d\":  \"Living-Dormitorio\",\n    \"cocina\":    \"Cocina\",\n    \"bano\":      \"Baño\",\n    \"bano1\":     \"Baño 1\",\n    \"bano2\":     \"Baño 2\",\n    \"pasillo\":   \"Pasillo\",\n}\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\ndef zonas_apt(apt_idx, tipo):\n    \"\"\"Retorna lista de (nombre, x_centroid, y_centroid) para cada zona del depto.\"\"\"\n    x0 = apt_ancho * apt_idx\n    x1 = x0 + apt_ancho\n    pct_l = _PROP_LIVING.get(tipo, 0.40)\n    pct_s = _PROP_SERV.get(tipo, 0.70)\n    y_l   = y_pasillo * pct_l\n    y_s   = y_pasillo * pct_s\n\n    cx = (x0 + x1) / 2       # centro X del depto\n    xcoc = x0 + apt_ancho * 0.55 / 2        # centro X cocina\n    xban = x0 + apt_ancho * 0.55 + apt_ancho * 0.45 / 2  # centro X baño\n\n    zonas = []\n\n    if tipo in (\"1amb\", \"estudio\"):\n        zonas.append((_NOMBRES[\"living_d\"], cx, y_s / 2))\n        zonas.append((_NOMBRES[\"cocina\"],   xcoc, y_s + (y_pasillo - y_s) / 2))\n        zonas.append((_NOMBRES[\"bano\"],     xban, y_s + (y_pasillo - y_s) / 2))\n\n    elif tipo == \"2amb\":\n        zonas.append((_NOMBRES[\"living\"],  cx, y_l / 2))\n        zonas.append((_NOMBRES[\"dorm_p\"],  cx, y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"cocina\"],  xcoc, y_s + (y_pasillo - y_s) / 2))\n        zonas.append((_NOMBRES[\"bano\"],    xban, y_s + (y_pasillo - y_s) / 2))\n\n    elif tipo == \"3amb\":\n        x_mid = x0 + apt_ancho * 0.50\n        zonas.append((_NOMBRES[\"living\"],  cx, y_l / 2))\n        zonas.append((_NOMBRES[\"dorm1\"],   (x0 + x_mid) / 2,  y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"dorm2\"],   (x_mid + x1) / 2,  y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"cocina\"],  xcoc, y_s + (y_pasillo - y_s) / 2))\n        zonas.append((_NOMBRES[\"bano1\"],   xban, y_s + (y_pasillo - y_s) / 2))\n\n    elif tipo in (\"4amb\", \"duplex\"):\n        x_13 = x0 + apt_ancho * 0.33\n        x_23 = x0 + apt_ancho * 0.67\n        zonas.append((_NOMBRES[\"living\"],  cx, y_l / 2))\n        zonas.append((_NOMBRES[\"dorm_p\"],  (x0 + x_13) / 2,  y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"dorm1\"],   (x_13 + x_23) / 2, y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"dorm2\"],   (x_23 + x1) / 2,  y_l + (y_s - y_l) / 2))\n        zonas.append((_NOMBRES[\"cocina\"],  xcoc, y_s + (y_pasillo - y_s) / 2))\n        zonas.append((_NOMBRES[\"bano1\"],   xban, y_s + (y_pasillo - y_s) / 2))\n\n    return zonas\n\nrooms_creados = []\n\nwith Transaction(doc, \"py-building-gen: Rooms\") as t:\n    t.Start()\n    for i_piso in range(1, pisos_tipo + 1):\n        nombre_nivel = f\"P{i_piso:02d}\"\n        lvl = get_level(nombre_nivel)\n        if lvl is None:\n            continue\n        for apt_idx in range(_n_apts):\n            tipo = apts[apt_idx] if apt_idx < len(apts) else \"2amb\"\n            letra_depto = chr(ord(\"A\") + apt_idx)\n            for i_zona, (nombre_zona, cx, cy) in enumerate(zonas_apt(apt_idx, tipo)):\n                try:\n                    room = doc.Create.NewRoom(lvl, UV(m_to_ft(cx), m_to_ft(cy)))\n                    room.Name = nombre_zona\n                    room.Number = f\"{i_piso}{letra_depto}{i_zona+1:02d}\"\n                    rooms_creados.append({\n                        \"nivel\": nombre_nivel,\n                        \"depto\": letra_depto,\n                        \"nombre\": nombre_zona,\n                        \"numero\": room.Number,\n                        \"id\": room.Id.Value,\n                    })\n                except Exception as e:\n                    rooms_creados.append({\"nivel\": nombre_nivel, \"error\": str(e)})\n    t.Commit()\n\nOUT = {\"total\": len(rooms_creados), \"rooms\": rooms_creados}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Inputs": [
+        {
+          "Id": "a2996c43-be4a-4eb8-8adc-0c40d391f24c",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "438caebc-201e-462b-a1f7-bd8c39f8ed1e",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b9ed40d1-45f9-4eed-8d2f-a95766bd0402",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "565ae4d4-7408-4026-abf1-744afea02059",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2b977a3e-a92d-47c9-a3e5-4271907c1312",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9104d51d-8bf1-48b5-8003-3f35892df66a",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d2e1d87-f230-452a-8a64-cc1b48e1bf73",
+          "Name": "IN[6]",
+          "Description": "Input 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "30ca4c26-913f-4f05-881d-de88b2dad49a",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e633d460-5411-4780-b517-68aad915867c",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "353ce602-652f-4cd6-94ee-c772c76d16fa",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "19c6eaae-679e-4977-b4ef-f3a175f8fc23",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "0e4d9d2c-bf50-42fe-9e8a-5353f1877eb3",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "6287e2a9-7e8f-4696-b7a1-4819ba721e8c",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "dd426ca8-5d51-4a25-9060-106567b2b5df",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "978c0131-7fb6-4a13-bf13-63865edb7871",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "e40512c4-aa89-4ba8-ba95-c11495e40ca8",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "4efff85d-9f60-4dcd-b188-d69421c58ec8",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "4f55681a-3263-4f47-8488-17caa805adc5",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "7a4fe063-6d21-4e0f-86eb-3bda85de26e6",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "2fffdc7c-ca60-4772-b3d0-a17138cc99f2",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    },
+    {
+      "Start": "e3f1af82-0c0c-4912-bb3c-1137412b71c7",
+      "End": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+      "Id": "dac1f117-da65-445f-a1fc-55f4c410d651",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 6
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "e633d460-5411-4780-b517-68aad915867c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "19c6eaae-679e-4977-b4ef-f3a175f8fc23",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "6287e2a9-7e8f-4696-b7a1-4819ba721e8c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "978c0131-7fb6-4a13-bf13-63865edb7871",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_depto_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "4efff85d-9f60-4dcd-b188-d69421c58ec8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tipologias_json",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "7a4fe063-6d21-4e0f-86eb-3bda85de26e6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_escaleras",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "e3f1af82-0c0c-4912-bb3c-1137412b71c7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_ascensores",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "c5290410-2b69-4010-a667-0b2a38fa21ac",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Rooms",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

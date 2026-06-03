@@ -1,0 +1,505 @@
+{
+  "Uuid": "a03036e3-b4bf-4e03-9c26-c00c3d5b1abe",
+  "IsCustomNode": false,
+  "Description": "Crea losas HA por nivel con hueco de shaft para escalera y ascensor.",
+  "Name": "03_losas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "170667df-22b5-4fe1-b1cf-fa2d827a4371",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9a5b99c0-65ee-4014-b96f-f5db85cdc4c0",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "1a2c12f8-a02c-4dae-bd8a-c32d87fdfeea",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4b063565-d4d1-4a67-9196-b3b120b4ab21",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "c8fe2ae4-88af-4a3f-8709-a382faa18873",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "39bfd547-7ac5-4907-a9e6-3e2bbbead032",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "56e1635b-ca73-4481-840f-84a120800d07",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fc84d4f6-0af4-4b5e-9191-0961a837e426",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "30.0",
+      "Id": "f0c1ba1a-a338-4966-8c8b-9fd806ac3d24",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "877c63a4-975a-46f2-be9a-ce24a6203415",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Losa HA H-21 - 30cm\"",
+      "Id": "07986535-0ffa-43b5-ac9b-26738f8ba8a6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "09a60c16-8daf-4203-bf03-a0ad6aa26585",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Losa azotea HA H-21 - 30cm\"",
+      "Id": "9a2436ef-a68e-44a8-b96c-8de2c54695bb",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2fa93436-d8cb-4bff-b9f8-57e6da312fbf",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "f778bdf0-2133-48d2-ab11-e007a0698ca4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5def25cb-cbf0-4f6c-a8c4-0e4c7888bfe7",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "c9eb09ae-4879-4679-b402-44ffe67c9888",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "30e124b3-14fa-4747-8be5-2a539a5e0d61",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Floor, FloorType, Level, CurveLoop, Line, XYZ,\n    FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = float(IN[0])\nfondo_m         = float(IN[1])\npisos_tipo      = int(IN[2])\ntiene_azotea    = bool(IN[3])\nespesor_cm      = float(IN[4])\nnombre_losa     = str(IN[5])\nnombre_losa_azo = str(IN[6])\ncant_escaleras  = int(IN[7])\ncant_ascensores = int(IN[8])\n\n# ── Shaft geometry (same constants as Script 02) ──────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_floor_type(nombre_exacto):\n    tipos = FilteredElementCollector(doc).OfClass(FloorType).ToElements()\n    match = next((t for t in tipos if t.Name == nombre_exacto), None)\n    if match:\n        return match\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"losa\")\n    match = next((t for t in tipos if any(k in t.Name.lower() for k in _kw)), None)\n    return match or tipos[0]\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef curve_loops_losa():\n    \"\"\"Contorno exterior + hueco de shaft (contra-horario + horario).\"\"\"\n    # Outer boundary — counter-clockwise\n    outer = CurveLoop()\n    pts_out = [\n        XYZ(m_to_ft(0),        m_to_ft(0),       0),\n        XYZ(m_to_ft(frente_m), m_to_ft(0),       0),\n        XYZ(m_to_ft(frente_m), m_to_ft(fondo_m), 0),\n        XYZ(m_to_ft(0),        m_to_ft(fondo_m), 0),\n    ]\n    for i in range(4):\n        outer.Append(Line.CreateBound(pts_out[i], pts_out[(i+1)%4]))\n\n    loops = [outer]\n\n    # Shaft hole — clockwise (inner loop)\n    if ancho_nucleo > 0.1:\n        x0 = m_to_ft(x_nucleo)\n        x1 = m_to_ft(x_nucleo + ancho_nucleo)\n        y0 = m_to_ft(y_nucleo)\n        y1 = m_to_ft(fondo_m)\n        shaft = CurveLoop()\n        pts_sh = [XYZ(x0,y0,0), XYZ(x0,y1,0), XYZ(x1,y1,0), XYZ(x1,y0,0)]\n        for i in range(4):\n            shaft.Append(Line.CreateBound(pts_sh[i], pts_sh[(i+1)%4]))\n        loops.append(shaft)\n\n    return loops\n\nft_tipo = get_floor_type(nombre_losa)\nft_azo  = get_floor_type(nombre_losa_azo)\nlosas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Losas v2\") as t:\n    t.Start()\n    for i in range(1, pisos_tipo + 1):\n        nom = f\"P{i:02d}\"\n        lvl = get_level(nom)\n        losa = Floor.Create(doc, curve_loops_losa(), ft_tipo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": nom, \"id\": losa.Id.Value})\n    if tiene_azotea:\n        lvl = get_level(\"AZO\")\n        losa = Floor.Create(doc, curve_loops_losa(), ft_azo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": \"AZO\", \"id\": losa.Id.Value})\n    t.Commit()\n\nOUT = {\"total\": len(losas_creadas), \"detalle\": losas_creadas}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Inputs": [
+        {
+          "Id": "0f66c227-ef12-4a73-a901-c27682e3bbf0",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5296de32-19f1-4fb0-b50d-98882fd88f7a",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0eca379d-be0c-4482-8f5f-77d63f932827",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ce28654d-47ef-4f14-84db-38e61f2cc187",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f3ac282a-e5f6-4c5d-b3a9-28d4d07b0402",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f502bc63-2b71-4279-9307-1fe3bd565d86",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c178d874-1a12-4122-af4c-5b725653a933",
+          "Name": "IN[6]",
+          "Description": "Input 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f698356a-c131-49c6-ba3e-5f43e380eb99",
+          "Name": "IN[7]",
+          "Description": "Input 7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "46581c7a-93bf-4f3d-8af5-d7d2b4ffe4ea",
+          "Name": "IN[8]",
+          "Description": "Input 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "75785d37-2315-4ec7-b9bc-bd4208e8e458",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "170667df-22b5-4fe1-b1cf-fa2d827a4371",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "1ebc64ff-a767-4880-9f9f-00c9fade7620",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "1a2c12f8-a02c-4dae-bd8a-c32d87fdfeea",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "64a8d7c6-1ed6-4acd-9ac8-1224d8bfab48",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "c8fe2ae4-88af-4a3f-8709-a382faa18873",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "d6adef31-bc0b-41aa-922d-76c024ad2229",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "56e1635b-ca73-4481-840f-84a120800d07",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "394e1852-bbab-4eb1-987e-1de129ed9745",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "f0c1ba1a-a338-4966-8c8b-9fd806ac3d24",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "c225691f-daee-4302-a6ac-8da8403cdcb5",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "07986535-0ffa-43b5-ac9b-26738f8ba8a6",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "80865545-1403-4e98-bc84-40be87cdd688",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    },
+    {
+      "Start": "9a2436ef-a68e-44a8-b96c-8de2c54695bb",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "913d1023-8ac2-4491-94fc-d0e88845ae5a",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 6
+    },
+    {
+      "Start": "f778bdf0-2133-48d2-ab11-e007a0698ca4",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "d12ca71f-b2b6-4531-b80e-dd7c1a8803cb",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 7
+    },
+    {
+      "Start": "c9eb09ae-4879-4679-b402-44ffe67c9888",
+      "End": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+      "Id": "d1ccb8ea-a8b5-4a13-97a0-0a8efc2a23ee",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 8
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "170667df-22b5-4fe1-b1cf-fa2d827a4371",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "1a2c12f8-a02c-4dae-bd8a-c32d87fdfeea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "c8fe2ae4-88af-4a3f-8709-a382faa18873",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "56e1635b-ca73-4481-840f-84a120800d07",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tiene_azotea",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "f0c1ba1a-a338-4966-8c8b-9fd806ac3d24",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "espesor_cm",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "07986535-0ffa-43b5-ac9b-26738f8ba8a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_losa",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "9a2436ef-a68e-44a8-b96c-8de2c54695bb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_losa_azo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "f778bdf0-2133-48d2-ab11-e007a0698ca4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_escaleras",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 910.0
+      },
+      {
+        "Id": "c9eb09ae-4879-4679-b402-44ffe67c9888",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_ascensores",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1040.0
+      },
+      {
+        "Id": "1b042903-e78d-42f5-8237-351bd8d3a9fd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Losas v2",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

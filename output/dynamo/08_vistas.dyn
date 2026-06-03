@@ -1,0 +1,417 @@
+{
+  "Uuid": "5626956b-539c-40a0-9a20-38221d9a0d7d",
+  "IsCustomNode": false,
+  "Description": "Crea plantas, cortes, alzados y vista 3D para documentación técnica.",
+  "Name": "08_vistas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "06524e78-9173-45ab-8da6-4e6bf88d1d28",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d78a19fe-1493-445e-b803-55501e7021ae",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "a2038213-0c22-4a5d-a3bc-fdcdbe0ac587",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1c27a58b-6cc1-474e-ad9e-daa4cdbf537d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector, Transaction,\n    ElementId,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = int(IN[0])\ntiene_azotea = bool(IN[1])\n\ndef get_view_family_type(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_planta = get_view_family_type(ViewFamily.FloorPlan)\nplantas = []\n\nif vft_planta:\n    with Transaction(doc, \"py-building-gen: Plantas\") as t:\n        t.Start()\n\n        nombres_nivel = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n        if tiene_azotea:\n            nombres_nivel.append(\"AZO\")\n\n        for nombre in nombres_nivel:\n            lvl = get_level(nombre)\n            if lvl:\n                vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)\n                vista.Name = f\"PLANTA {nombre}\"\n                plantas.append({\"nivel\": nombre, \"id\": vista.Id.IntegerValue})\n\n        t.Commit()\n\nOUT = plantas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "77605647-a9fe-4f0f-93ff-9af55e875d61",
+      "Inputs": [
+        {
+          "Id": "db7c0402-59eb-43cb-a0a6-39d4fa16cf82",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "91722f52-9493-4701-92e0-bb508ceae8ae",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d52cc313-b4d7-4e6b-96d6-e3e1640f5af0",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "09d9ab2e-1e7d-47ad-9bd6-0fd335946fea",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3233aec2-9244-4e6b-90ea-6a2f5e29270d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "2aa52735-447d-4f74-841a-6a2c5e833baf",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0c80b5e5-b2f9-4b48-aca8-f4284a44f3b8",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "20.299999999999997",
+      "Id": "1a9fb960-d0c1-445b-a615-c912cb03a040",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cd92015c-3968-4fd7-afe6-b7c45aedf40f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSection, ViewFamilyType, ViewFamily, BoundingBoxXYZ,\n    XYZ, Transform, FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m     = float(IN[0])\nfondo_m      = float(IN[1])\naltura_total = float(IN[2])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_vft_section():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.Section), None)\n\ndef make_section(vft, origen, basis_x, basis_z, half_w, h, profundidad):\n    \"\"\"Crea una ViewSection con los vectores dados.\"\"\"\n    bbox = BoundingBoxXYZ()\n    xf = Transform.Identity\n    xf.BasisX = basis_x\n    xf.BasisY = XYZ(0, 0, 1)\n    xf.BasisZ = basis_z\n    xf.Origin = origen\n    bbox.Transform = xf\n    margen = m_to_ft(1.0)\n    bbox.Min = XYZ(-half_w - margen, 0, -margen)\n    bbox.Max = XYZ( half_w + margen, h,  profundidad + margen)\n    return ViewSection.CreateSection(doc, vft.Id, bbox)\n\nvft  = get_vft_section()\nvistas = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Cortes y Alzados v2\") as t:\n        t.Start()\n\n        h      = m_to_ft(altura_total + 1.0)\n        hf_x   = m_to_ft(frente_m / 2)\n        hf_y   = m_to_ft(fondo_m  / 2)\n        prof   = m_to_ft(fondo_m + 2.0)\n\n        # ── Corte A-A transversal (perpendicular al frente) ───────────────\n        v = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(1,0,0), XYZ(0,-1,0),\n            hf_x, h, m_to_ft(fondo_m / 2 + 1.0))\n        v.Name = \"CORTE A-A\"\n        vistas.append({\"tipo\": \"corte_transversal\", \"id\": v.Id.Value})\n\n        # ── Corte B-B longitudinal (paralelo al frente) ───────────────────\n        v2 = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(0,1,0), XYZ(1,0,0),\n            hf_y, h, m_to_ft(frente_m / 2 + 1.0))\n        v2.Name = \"CORTE B-B\"\n        vistas.append({\"tipo\": \"corte_longitudinal\", \"id\": v2.Id.Value})\n\n        # ── Fachada principal (mirando desde el frente, Y negativo) ───────\n        v3 = make_section(vft,\n            XYZ(hf_x, m_to_ft(-2.0), 0),\n            XYZ(1,0,0), XYZ(0,1,0),\n            hf_x, h, prof)\n        v3.Name = \"FACHADA PRINCIPAL\"\n        vistas.append({\"tipo\": \"fachada_principal\", \"id\": v3.Id.Value})\n\n        # ── Fachada contrafrente (mirando desde el fondo, Y positivo) ─────\n        v4 = make_section(vft,\n            XYZ(hf_x, m_to_ft(fondo_m + 2.0), 0),\n            XYZ(-1,0,0), XYZ(0,-1,0),\n            hf_x, h, prof)\n        v4.Name = \"FACHADA CONTRAFRENTE\"\n        vistas.append({\"tipo\": \"fachada_contrafrente\", \"id\": v4.Id.Value})\n\n        # ── Fachada lateral izquierda (X = 0) ────────────────────────────\n        v5 = make_section(vft,\n            XYZ(m_to_ft(-2.0), hf_y, 0),\n            XYZ(0,1,0), XYZ(-1,0,0),\n            hf_y, h, prof)\n        v5.Name = \"FACHADA LATERAL IZQ\"\n        vistas.append({\"tipo\": \"fachada_lateral_izq\", \"id\": v5.Id.Value})\n\n        # ── Fachada lateral derecha (X = frente_m) ───────────────────────\n        v6 = make_section(vft,\n            XYZ(m_to_ft(frente_m + 2.0), hf_y, 0),\n            XYZ(0,-1,0), XYZ(1,0,0),\n            hf_y, h, prof)\n        v6.Name = \"FACHADA LATERAL DER\"\n        vistas.append({\"tipo\": \"fachada_lateral_der\", \"id\": v6.Id.Value})\n\n        t.Commit()\n\nOUT = vistas\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "fd6af0b8-3750-4683-bc07-640b10b14edb",
+      "Inputs": [
+        {
+          "Id": "5402ef52-2dc5-48ef-a700-8baa448683ae",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "adaabea9-6f54-4e7c-b43e-805e1267badb",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "50470d10-291f-4e9d-b131-2ff06434b7ad",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "50716a42-bff1-43a9-ae3b-ae9992cd190f",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    View3D, ViewFamilyType, ViewFamily,\n    FilteredElementCollector, Transaction,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ndef get_vft_3d():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.ThreeDimensional), None)\n\nvft = get_vft_3d()\nresultado = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Vista 3D\") as t:\n        t.Start()\n        v3d = View3D.CreateIsometric(doc, vft.Id)\n        v3d.Name = \"3D - Vista General\"\n        resultado.append({\"tipo\": \"3d_isometrica\", \"id\": v3d.Id.IntegerValue})\n        t.Commit()\n\nOUT = resultado\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "0e241b0e-c704-417b-8a21-5f5d581d78cd",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f6a5b860-300e-4540-b036-4f25feeb2224",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, View, BuiltInCategory, ElementId,\n    OverrideGraphicSettings, FilteredElementCollector,\n    Transaction,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\n# Categorías a ocultar según disciplina de la vista\nCAT_ESTRUCTURA = [\n    int(BuiltInCategory.OST_StructuralColumns),\n    int(BuiltInCategory.OST_StructuralFraming),\n    int(BuiltInCategory.OST_StructuralFoundation),\n    int(BuiltInCategory.OST_StructuralStiffener),\n]\nCAT_ARQ = [\n    int(BuiltInCategory.OST_Walls),\n    int(BuiltInCategory.OST_Floors),\n    int(BuiltInCategory.OST_Doors),\n    int(BuiltInCategory.OST_Windows),\n    int(BuiltInCategory.OST_Stairs),\n    int(BuiltInCategory.OST_Rooms),\n]\n\ndef is_arq_view(v):\n    return v.Name.startswith(\"PLANTA\") or v.Name.startswith(\"CORTE\") or v.Name.startswith(\"FACHADA\")\n\ndef is_est_view(v):\n    return v.Name.startswith(\"EST \")\n\ndef is_mep_view(v):\n    return v.Name.startswith(\"MEP \")\n\ndef set_hidden(view, cat_ids, hidden):\n    for cat_id in cat_ids:\n        eid = ElementId(cat_id)\n        try:\n            view.SetCategoryHidden(eid, hidden)\n        except Exception:\n            pass\n\nvistas_config = []\n\nwith Transaction(doc, \"py-building-gen: Visibility Overrides\") as t:\n    t.Start()\n    all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    for v in all_views:\n        if v.IsTemplate:\n            continue\n        try:\n            if is_arq_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)    # oculta estructura en ARQ\n                vistas_config.append({\"vista\": v.Name, \"config\": \"ARQ — estructura oculta\"})\n            elif is_est_view(v):\n                set_hidden(v, CAT_ARQ, True)            # oculta elementos ARQ en EST\n                vistas_config.append({\"vista\": v.Name, \"config\": \"EST — elementos ARQ ocultos\"})\n            elif is_mep_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)\n                vistas_config.append({\"vista\": v.Name, \"config\": \"MEP — estructura oculta\"})\n        except Exception as e:\n            vistas_config.append({\"vista\": v.Name, \"error\": str(e)})\n    t.Commit()\n\nOUT = {\"vistas_configuradas\": len(vistas_config), \"detalle\": vistas_config}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "b9d6a4d3-5d03-42b2-9683-65c48148d9b4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8402739d-b571-4b09-8bac-28b68fe535f8",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "06524e78-9173-45ab-8da6-4e6bf88d1d28",
+      "End": "77605647-a9fe-4f0f-93ff-9af55e875d61",
+      "Id": "de56a25b-2f94-4058-a58f-02165f5e2b1f",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "a2038213-0c22-4a5d-a3bc-fdcdbe0ac587",
+      "End": "77605647-a9fe-4f0f-93ff-9af55e875d61",
+      "Id": "69cf433c-1897-4bf9-ae44-510c61ba652b",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "09d9ab2e-1e7d-47ad-9bd6-0fd335946fea",
+      "End": "fd6af0b8-3750-4683-bc07-640b10b14edb",
+      "Id": "f70eba4f-a3ae-47eb-96b4-dea612002f65",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "2aa52735-447d-4f74-841a-6a2c5e833baf",
+      "End": "fd6af0b8-3750-4683-bc07-640b10b14edb",
+      "Id": "f86a1f67-4278-416b-8d68-bcbca29c936e",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "1a9fb960-d0c1-445b-a615-c912cb03a040",
+      "End": "fd6af0b8-3750-4683-bc07-640b10b14edb",
+      "Id": "36897a4f-b9c6-4ab9-832f-7010a57a1cce",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "06524e78-9173-45ab-8da6-4e6bf88d1d28",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "a2038213-0c22-4a5d-a3bc-fdcdbe0ac587",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "tiene_azotea",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "77605647-a9fe-4f0f-93ff-9af55e875d61",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Plantas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "09d9ab2e-1e7d-47ad-9bd6-0fd335946fea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "2aa52735-447d-4f74-841a-6a2c5e833baf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "1a9fb960-d0c1-445b-a615-c912cb03a040",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "altura_total_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "fd6af0b8-3750-4683-bc07-640b10b14edb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Cortes y Alzados",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "0e241b0e-c704-417b-8a21-5f5d581d78cd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Vista 3D",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 910.0
+      },
+      {
+        "Id": "b9d6a4d3-5d03-42b2-9683-65c48148d9b4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Visibility Overrides",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 1300.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

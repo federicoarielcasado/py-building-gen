@@ -1,0 +1,338 @@
+{
+  "Uuid": "ff35feb3-06d5-46a4-8c5e-1bb751cdc9e3",
+  "IsCustomNode": false,
+  "Description": "Coloca room tags con área, tags de puertas/ventanas y dimensiones generales. Ejecutar después de 09_sheets, 11_habitaciones y 05_aberturas.",
+  "Name": "09b_anotaciones",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "c888c156-8260-40bf-871c-e5a8ae1ed746",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8f96572a-382e-4a01-a229-37d3150dc2f0",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamily, ViewFamilyType, Level,\n    FilteredElementCollector, BuiltInCategory,\n    IndependentTag, TagMode, TagOrientation, Reference,\n    Transaction, UV, UnitUtils, UnitTypeId,\n    FamilySymbol,\n)\nfrom Autodesk.Revit.DB.Architecture import Room\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo = int(IN[0])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ft_to_m(ft):\n    return UnitUtils.ConvertFromInternalUnits(ft, UnitTypeId.Meters)\n\ndef get_planta_tipo(nombre_nivel):\n    \"\"\"Busca la vista PLANTA del nivel dado.\"\"\"\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if f\"PLANTA {nombre_nivel}\" in v.Name\n                 and not v.IsTemplate), None)\n\ndef get_room_tag_type():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_RoomTags)\n           .ToElements())\n    # Preferir tag con área si existe\n    match = next((s for s in col if \"area\" in s.FamilyName.lower()\n                  or \"área\" in s.FamilyName.lower()), None)\n    return match or (col[0] if col else None)\n\ndef get_rooms_en_nivel(nivel_nombre):\n    rooms = FilteredElementCollector(doc).OfClass(Room).ToElements()\n    return [r for r in rooms if r.Level and r.Level.Name == nivel_nombre\n            and r.Area > 0.01]\n\ntag_type = get_room_tag_type()\ntags_creados = []\n\nwith Transaction(doc, \"py-building-gen: Room Tags\") as t:\n    t.Start()\n\n    if tag_type and not tag_type.IsActive:\n        tag_type.Activate()\n\n    # Tags en PLANTA P01 (representativa del piso tipo)\n    for nivel_nombre in [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]:\n        vista = get_planta_tipo(nivel_nombre)\n        if vista is None:\n            continue\n        rooms = get_rooms_en_nivel(nivel_nombre)\n        for room in rooms:\n            try:\n                loc = room.Location\n                if loc is None:\n                    continue\n                pt = loc.Point\n                tag = IndependentTag.Create(\n                    doc, vista.Id,\n                    Reference(room),\n                    False,\n                    TagMode.TM_ADDBY_ELEMENT,\n                    TagOrientation.Horizontal,\n                    UV(pt.X, pt.Y),\n                )\n                if tag_type:\n                    tag.ChangeTypeId(tag_type.Id)\n                tags_creados.append({\n                    \"nivel\": nivel_nombre,\n                    \"room\": room.Name,\n                    \"id\": tag.Id.Value,\n                })\n            except Exception as e:\n                tags_creados.append({\"nivel\": nivel_nombre, \"error\": str(e)})\n\n    t.Commit()\n\nOUT = {\"total_tags\": len(tags_creados), \"detalle\": tags_creados}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "337b48c2-8734-4d1e-b5e6-be6595439f68",
+      "Inputs": [
+        {
+          "Id": "6f5760c4-62c6-47c6-b3cf-77eaf690a0fc",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "de214ae7-41c6-4192-8fed-f42c2a6a1c97",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "1d3164c4-c8da-432c-ab3a-d1b9a4de13ae",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b09e0138-20e2-4845-ac36-eb1d1ae1f64a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "fbfd83bc-cb70-449d-9651-a453e511efef",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "da8f8404-19f7-48e3-8a19-d0b3325895d9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewSection, Wall, Level, Line, XYZ,\n    ReferenceArray, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = float(IN[0])\nfondo_m  = float(IN[1])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ft_to_m(ft):\n    return UnitUtils.ConvertFromInternalUnits(ft, UnitTypeId.Meters)\n\ndef get_planta_pb():\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if \"PLANTA PB\" in v.Name and not v.IsTemplate), None)\n\ndef get_walls_at_y(target_y, tol=0.40):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        y1 = ft_to_m(c.GetEndPoint(0).Y)\n        y2 = ft_to_m(c.GetEndPoint(1).Y)\n        if abs(y1 - target_y) < tol and abs(y2 - target_y) < tol:\n            result.append(w)\n    return result\n\ndef get_walls_at_x(target_x, tol=0.30):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        x1 = ft_to_m(c.GetEndPoint(0).X)\n        x2 = ft_to_m(c.GetEndPoint(1).X)\n        if abs(x1 - target_x) < tol and abs(x2 - target_x) < tol:\n            result.append(w)\n    return result\n\ndims_creadas = []\nvista_pb = get_planta_pb()\n\nif vista_pb:\n    with Transaction(doc, \"py-building-gen: Dimensiones\") as t:\n        t.Start()\n\n        # Dimensión frente (a lo largo de X, debajo del edificio)\n        walls_frente = get_walls_at_y(0.0)\n        if walls_frente:\n            w_frt = walls_frente[0]\n            refs = ReferenceArray()\n            # Referencia a la cara exterior de la pared izquierda (x=0)\n            walls_izq = get_walls_at_x(0.0)\n            walls_der = get_walls_at_x(frente_m)\n            for w in walls_izq[:1] + walls_der[:1]:\n                for ref in w.GetReferences(\n                    __import__(\"Autodesk.Revit.DB\", fromlist=[\"WallSide\"]).WallSide.Exterior,\n                ) if hasattr(w, \"GetReferences\") else []:\n                    refs.Append(ref)\n\n            # Alternativa: usar la curva de la pared directamente\n            if refs.Size < 2:\n                refs = ReferenceArray()\n                for ww in walls_izq[:1]:\n                    loc = ww.Location\n                    if hasattr(loc, \"Curve\"):\n                        refs.Append(loc.Curve.GetEndPointReference(0))\n                        refs.Append(loc.Curve.GetEndPointReference(1))\n\n            if refs.Size >= 2:\n                dim_line = Line.CreateBound(\n                    XYZ(m_to_ft(0), m_to_ft(-2.0), 0),\n                    XYZ(m_to_ft(frente_m), m_to_ft(-2.0), 0)\n                )\n                try:\n                    dim = doc.Create.NewDimension(vista_pb, dim_line, refs)\n                    dims_creadas.append({\"tipo\": \"frente\", \"id\": dim.Id.Value})\n                except Exception as e:\n                    dims_creadas.append({\"tipo\": \"frente_error\", \"error\": str(e)})\n\n        t.Commit()\nelse:\n    dims_creadas.append({\"error\": \"Vista PLANTA PB no encontrada. Correr 08_vistas primero.\"})\n\nOUT = {\"total\": len(dims_creadas), \"detalle\": dims_creadas}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "fa4698f1-c1b7-4d5e-9154-6089d72dad86",
+      "Inputs": [
+        {
+          "Id": "52519ae2-5f7f-45fd-9f92-2d458c0c8a7f",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e13d447e-e296-4310-b58a-0cd529166b47",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fd4bfbcc-8da4-405f-8923-9bb22479acef",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "c334fa16-d0ca-404e-b2a6-9c3aa2915a95",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6942b3fe-ae5d-49b2-88cc-19a2e3bfa86e",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, FamilyInstance, FamilySymbol, BuiltInCategory,\n    FilteredElementCollector, IndependentTag, TagMode, TagOrientation,\n    Reference, Transaction, UV, UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo = int(IN[0])\n\ndef get_planta(nombre):\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if f\"PLANTA {nombre}\" in v.Name and not v.IsTemplate), None)\n\ndef get_tag_type(categoria):\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(categoria)\n           .ToElements())\n    return col[0] if col else None\n\ndef get_instances(categoria, level_id):\n    return [e for e in FilteredElementCollector(doc)\n            .OfClass(FamilyInstance)\n            .OfCategory(categoria)\n            .ToElements()\n            if e.LevelId == level_id]\n\ntags_creados = []\n\ntag_puerta  = get_tag_type(BuiltInCategory.OST_DoorTags)\ntag_ventana = get_tag_type(BuiltInCategory.OST_WindowTags)\n\nwith Transaction(doc, \"py-building-gen: Tags puertas y ventanas\") as t:\n    t.Start()\n\n    for sym in [tag_puerta, tag_ventana]:\n        if sym and not sym.IsActive:\n            sym.Activate()\n\n    # Solo etiquetar P01 (representativo — el resto es idéntico)\n    from Autodesk.Revit.DB import Level\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    lvl_p01 = next((l for l in levels if l.Name == \"P01\"), None)\n    if lvl_p01 is None:\n        lvl_p01 = next((l for l in levels if l.Name.startswith(\"P\") and l.Name[1:].isdigit()), None)\n\n    if lvl_p01:\n        vista = get_planta(lvl_p01.Name)\n        if vista:\n            for categoria, tag_type in [\n                (BuiltInCategory.OST_Doors,   tag_puerta),\n                (BuiltInCategory.OST_Windows, tag_ventana),\n            ]:\n                if tag_type is None:\n                    continue\n                for inst in get_instances(categoria, lvl_p01.Id):\n                    try:\n                        loc = inst.Location\n                        if not hasattr(loc, \"Point\"):\n                            continue\n                        pt = loc.Point\n                        tag = IndependentTag.Create(\n                            doc, vista.Id,\n                            Reference(inst), False,\n                            TagMode.TM_ADDBY_ELEMENT,\n                            TagOrientation.Horizontal,\n                            UV(pt.X, pt.Y),\n                        )\n                        tag.ChangeTypeId(tag_type.Id)\n                        tags_creados.append({\"tipo\": categoria.ToString(), \"id\": tag.Id.Value})\n                    except Exception:\n                        pass\n\n    t.Commit()\n\nOUT = {\"total\": len(tags_creados), \"tags\": tags_creados}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "c8297335-94f1-4194-ad61-3c418dd233b1",
+      "Inputs": [
+        {
+          "Id": "7f5d819a-38ea-4cde-9983-50f8d0edf54e",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "502e1e67-5264-486c-a217-28ebd5c4fc22",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "c888c156-8260-40bf-871c-e5a8ae1ed746",
+      "End": "337b48c2-8734-4d1e-b5e6-be6595439f68",
+      "Id": "0f3bad91-beb8-4d4f-a9bb-a5b38c0cc154",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "1d3164c4-c8da-432c-ab3a-d1b9a4de13ae",
+      "End": "fa4698f1-c1b7-4d5e-9154-6089d72dad86",
+      "Id": "184bd57f-1c9b-4806-ab4f-bcf6335bbb18",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "fbfd83bc-cb70-449d-9651-a453e511efef",
+      "End": "fa4698f1-c1b7-4d5e-9154-6089d72dad86",
+      "Id": "58c36f1c-c753-4536-81b8-9bac6c38b4cc",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "c334fa16-d0ca-404e-b2a6-9c3aa2915a95",
+      "End": "c8297335-94f1-4194-ad61-3c418dd233b1",
+      "Id": "704560b5-5150-4e98-85d8-ac3e4429aae4",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "c888c156-8260-40bf-871c-e5a8ae1ed746",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "337b48c2-8734-4d1e-b5e6-be6595439f68",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Room Tags",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "1d3164c4-c8da-432c-ab3a-d1b9a4de13ae",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "fbfd83bc-cb70-449d-9651-a453e511efef",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "fa4698f1-c1b7-4d5e-9154-6089d72dad86",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Dimensiones",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "c334fa16-d0ca-404e-b2a6-9c3aa2915a95",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 910.0
+      },
+      {
+        "Id": "c8297335-94f1-4194-ad61-3c418dd233b1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Tags Aberturas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 910.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

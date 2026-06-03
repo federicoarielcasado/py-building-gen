@@ -1,0 +1,411 @@
+{
+  "Uuid": "3802ad52-d7b4-485a-b822-97e4baee2ecb",
+  "IsCustomNode": false,
+  "Description": "Crea escaleras reales (StairsEditScope, 2 tramos + descanso, CABA) y shaft openings para ascensores.",
+  "Name": "06_escaleras_ascensores",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "64835706-54a6-4623-9b41-46ebb492e12f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "86859d3e-f7ba-4aec-a4db-d237b4a9dc9a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "5da9f6f6-7eb3-431f-8f7f-633eb1935cc1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3ea093ab-839e-4cf0-b1da-b78381fb92e9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "c5125d13-a602-474c-bab8-fc0fcaea020b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4bba5e48-6f81-4276-9c79-b2954efef121",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "015a8ebf-86fb-4bf9-a6a6-d50fbb427e7b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "48281b57-80d4-4b60-98ba-fffb73396286",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "26203421-d6e4-4729-a69d-f9c828932022",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4359abe5-18da-4bdc-a342-1edf6e556311",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "3.5",
+      "Id": "1fad051c-9aae-4c78-84f7-521e8e38c086",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "805f887a-ac2b-4793-af99-275864a4d2f9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "2.8",
+      "Id": "90bd6b54-4ce0-47b6-bf8e-1e6ca29dcc2b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6e6363cf-b925-439f-924e-8187a619aaf2",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nimport math\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, Line, XYZ, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId,\n    Opening, CurveArray, FailureHandlingOptions,\n)\nfrom Autodesk.Revit.DB.Architecture import (\n    Stairs, StairsEditScope, StairsRun, StairsType,\n    StairsRunJustification,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m    = float(IN[0])\nfondo_m     = float(IN[1])\npisos_tipo  = int(IN[2])\ncant_esc    = int(IN[3])\ncant_asc    = int(IN[4])\naltura_pb   = float(IN[5])\naltura_tipo = float(IN[6])\n\n# ── Misma geometría que Scripts 02/03/05 ──────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_esc * ESC_ANCHO + cant_asc * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\n# ── Geometría de la escalera por piso ────────────────────────────────────────\n# 2 tramos rectos + descanso intermedio, dentro del shaft ESC_ANCHO × ESC_FONDO\nMARGEN     = 0.10  # m — separación de muros de shaft\nDESCANSO   = 1.10  # m — profundidad de descanso (mínimo CABA)\nn_risers   = math.ceil(altura_tipo / 0.175)   # contrahuella ~17.5cm → 16 para 2.80m\nn_por_tramo = n_risers // 2                    # 8 por tramo\nrun_len    = (ESC_FONDO - 2 * MARGEN - DESCANSO) / 2   # 2.10m\nhuella_m   = run_len / n_por_tramo              # ~0.2625m > 25cm CABA ✓\n\ny_r1_ini = y_nucleo + MARGEN\ny_r1_fin = y_r1_ini + run_len\ny_r2_ini = y_r1_fin + DESCANSO\ny_r2_fin = y_r2_ini + run_len\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef get_levels_sorted():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(levels, key=lambda l: l.Elevation)\n\ndef get_stair_type():\n    col = FilteredElementCollector(doc).OfClass(StairsType).ToElements()\n    return col[0] if col else None\n\ndef rect_opening_shaft(x0, y0, ancho, largo):\n    arr = CurveArray()\n    pts = [\n        XYZ(m_to_ft(x0),       m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0+largo), 0),\n        XYZ(m_to_ft(x0),       m_to_ft(y0+largo), 0),\n    ]\n    for k in range(4):\n        arr.Append(Line.CreateBound(pts[k], pts[(k+1)%4]))\n    return arr\n\n# ── Escaleras ────────────────────────────────────────────────────────────────\nstair_type = get_stair_type()\nescaleras  = []\nniveles    = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n\nif stair_type:\n    for i_esc in range(cant_esc):\n        x_cen = x_nucleo + i_esc * ESC_ANCHO + ESC_ANCHO / 2.0\n        for idx in range(len(niveles) - 1):\n            lvl_bot = get_level(niveles[idx])\n            lvl_top = get_level(niveles[idx + 1])\n            if lvl_bot is None or lvl_top is None:\n                continue\n            scope = None\n            try:\n                scope = StairsEditScope(doc, f\"Esc{i_esc+1}_{niveles[idx+1]}\")\n                stair_id = Stairs.Create(doc, stair_type.Id, lvl_bot.Id, lvl_top.Id)\n                elem = doc.GetElement(stair_id)\n                elem.DesiredRisersNumber = n_risers\n                # Tramo 1\n                StairsRun.CreateStraightRun(doc, stair_id,\n                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r1_ini), 0),\n                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r1_fin), 0)),\n                    StairsRunJustification.Center)\n                # Tramo 2\n                StairsRun.CreateStraightRun(doc, stair_id,\n                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r2_ini), 0),\n                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r2_fin), 0)),\n                    StairsRunJustification.Center)\n                scope.Commit(FailureHandlingOptions())\n                scope = None\n                escaleras.append({\"tipo\": \"escalera_real\", \"nivel\": niveles[idx+1],\n                                   \"id\": stair_id.Value, \"risers\": n_risers,\n                                   \"huella_m\": round(huella_m, 3)})\n            except Exception as e:\n                if scope is not None:\n                    try: scope.Cancel()\n                    except Exception: pass\n                escaleras.append({\"tipo\": \"error\", \"nivel\": niveles[idx+1], \"msg\": str(e)})\nelse:\n    # Fallback: shaft openings si no hay StairsType en el template\n    all_lvls = get_levels_sorted()\n    lvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\n    lvl_top  = all_lvls[-1]\n    with Transaction(doc, \"py-building-gen: Escalera shaft fallback\") as t:\n        t.Start()\n        for i in range(cant_esc):\n            x0 = x_nucleo + i * ESC_ANCHO\n            arr = rect_opening_shaft(x0, y_nucleo, ESC_ANCHO, ESC_FONDO)\n            op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n            escaleras.append({\"tipo\": \"shaft_fallback\", \"id\": op.Id.Value})\n        t.Commit()\n\n# ── Ascensores: shaft opening (apropiado para cabina de ascensor) ─────────────\nascensores = []\nall_lvls = get_levels_sorted()\nlvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\nlvl_top  = all_lvls[-1]\n\nwith Transaction(doc, \"py-building-gen: Shaft ascensores\") as t:\n    t.Start()\n    for i in range(cant_asc):\n        x0 = x_nucleo + cant_esc * ESC_ANCHO + i * ASC_ANCHO\n        arr = rect_opening_shaft(x0, y_nucleo, ASC_ANCHO, ESC_FONDO)\n        op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n        ascensores.append({\"tipo\": f\"ascensor_{i+1}\", \"id\": op.Id.Value})\n    t.Commit()\n\nOUT = {\n    \"escaleras\": escaleras,\n    \"ascensores\": ascensores,\n    \"escalera_tipo\": stair_type.Name if stair_type else \"fallback_shaft\",\n    \"config\": {\"n_escalones\": n_risers, \"n_por_tramo\": n_por_tramo,\n                \"huella_m\": round(huella_m, 3), \"descanso_m\": DESCANSO},\n}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Inputs": [
+        {
+          "Id": "54dcaf65-a2f7-4b56-b361-70f164971245",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "37c4d084-3edc-46d8-9332-e4ec2a973cc8",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "656f059d-4b6f-4a21-bfa3-b317850d5a07",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dbe6d9ca-0d6f-4108-966b-183b39b1c9e8",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6a19a1e8-ad82-4183-92e4-cb27013495b3",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9ffa828d-8f64-4b6c-a929-d533a3a8f19f",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e767eb82-f029-4a4b-8102-1b77be4b175a",
+          "Name": "IN[6]",
+          "Description": "Input 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8d6f63d4-0fc1-4a42-83ad-0409f70d5c99",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "64835706-54a6-4623-9b41-46ebb492e12f",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "826f7235-610f-4017-a909-d4c15be0ead7",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "5da9f6f6-7eb3-431f-8f7f-633eb1935cc1",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "b29f4ce7-318c-4ff1-8ef6-7b8915ffaf53",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "c5125d13-a602-474c-bab8-fc0fcaea020b",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "7d0ec09c-5f51-4b71-bea5-1bcc3c68881e",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "015a8ebf-86fb-4bf9-a6a6-d50fbb427e7b",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "b75db113-e2b1-4634-ae98-26b5010bb751",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "26203421-d6e4-4729-a69d-f9c828932022",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "f7860903-783a-49b3-b33c-88676235df27",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "1fad051c-9aae-4c78-84f7-521e8e38c086",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "dc701d5e-7074-4bce-bf00-7d8a6958ea7a",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    },
+    {
+      "Start": "90bd6b54-4ce0-47b6-bf8e-1e6ca29dcc2b",
+      "End": "2a12e131-9ade-4314-a0db-300214a95a4a",
+      "Id": "41823836-0cde-4bf8-a62c-d6f0b7859569",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 6
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "64835706-54a6-4623-9b41-46ebb492e12f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "5da9f6f6-7eb3-431f-8f7f-633eb1935cc1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "c5125d13-a602-474c-bab8-fc0fcaea020b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "015a8ebf-86fb-4bf9-a6a6-d50fbb427e7b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_esc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "26203421-d6e4-4729-a69d-f9c828932022",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_asc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "1fad051c-9aae-4c78-84f7-521e8e38c086",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "altura_pb_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "90bd6b54-4ce0-47b6-bf8e-1e6ca29dcc2b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "altura_tipo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "2a12e131-9ade-4314-a0db-300214a95a4a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Escaleras y Ascensores",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

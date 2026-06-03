@@ -1,0 +1,179 @@
+{
+  "version": "2022",
+  "fuente": "Código de Edificación CABA — Ley 962/2002 y modificatorias",
+  "referencia_articulos": "Art. 4.1, 4.6, 4.7, 4.8, 5.3, 6.1 — Código de Edificación CABA",
+
+  "locales_habitables": {
+    "dormitorio_principal": {
+      "sup_min_m2": 9.0,
+      "lado_min_m": 2.80,
+      "iluminacion_min_fraccion": 0.125,
+      "ventilacion_min_fraccion": 0.0625
+    },
+    "dormitorio_simple": {
+      "sup_min_m2": 7.0,
+      "lado_min_m": 2.50,
+      "iluminacion_min_fraccion": 0.125,
+      "ventilacion_min_fraccion": 0.0625
+    },
+    "living_comedor": {
+      "sup_min_m2": 12.0,
+      "lado_min_m": 3.00,
+      "iluminacion_min_fraccion": 0.125,
+      "ventilacion_min_fraccion": 0.0625
+    },
+    "cocina": {
+      "sup_min_m2": 4.5,
+      "lado_min_m": 1.80,
+      "iluminacion_min_fraccion": 0.125,
+      "ventilacion_min_fraccion": 0.0625
+    },
+    "living_dormitorio_monoambiente": {
+      "sup_min_m2": 18.0,
+      "lado_min_m": 3.00,
+      "iluminacion_min_fraccion": 0.125,
+      "ventilacion_min_fraccion": 0.0625
+    }
+  },
+
+  "locales_no_habitables": {
+    "bano_completo": {
+      "sup_min_m2": 2.5,
+      "lado_min_m": 1.20,
+      "ventilacion": "conducto o ventana"
+    },
+    "toilette": {
+      "sup_min_m2": 1.8,
+      "lado_min_m": 1.00
+    },
+    "lavadero": {
+      "sup_min_m2": 2.0,
+      "lado_min_m": 1.00
+    },
+    "deposito": {
+      "sup_min_m2": 1.5
+    }
+  },
+
+  "alturas_minimas_m": {
+    "local_habitable": 2.60,
+    "local_no_habitable": 2.40,
+    "cochera": 2.20,
+    "galeria_cubierta": 2.10,
+    "subsuelo": 2.40
+  },
+
+  "circulaciones": {
+    "pasillo_comun_edificio_min_m": 1.20,
+    "pasillo_interior_depto_min_m": 0.90,
+    "escalera_principal_ancho_min_m": 1.10,
+    "escalera_secundaria_ancho_min_m": 0.90,
+    "contrahuella_max_cm": 18,
+    "huella_min_cm": 25,
+    "descanso_min_m": 1.10,
+    "pasamanos_altura_m": 0.90
+  },
+
+  "incendio": {
+    "distancia_max_a_salida_m": 40,
+    "resistencia_divisoria_entre_deptos": "REI-120",
+    "resistencia_caja_escalera": "REI-120",
+    "resistencia_muros_estructurales": "REI-180",
+    "matafuego_cada_pisos": 1,
+    "bie_cada_pisos": 1
+  },
+
+  "aberturas_minimas": {
+    "puerta_paso_ancho_min_m": 0.80,
+    "puerta_entrada_depto_ancho_min_m": 0.90,
+    "ventana_dormitorio_superficie_min_m2": 1.00,
+    "ventana_living_superficie_min_m2": 1.50
+  },
+
+  "tipologias": {
+    "1amb": {
+      "nombre": "Monoambiente",
+      "sup_cubierta_tipica_m2": 38,
+      "sup_minima_m2": 28,
+      "ambientes": ["living_dormitorio_monoambiente", "cocina", "bano_completo"]
+    },
+    "2amb": {
+      "nombre": "2 ambientes",
+      "sup_cubierta_tipica_m2": 55,
+      "sup_minima_m2": 42,
+      "ambientes": ["living_comedor", "dormitorio_principal", "cocina", "bano_completo"]
+    },
+    "3amb": {
+      "nombre": "3 ambientes",
+      "sup_cubierta_tipica_m2": 75,
+      "sup_minima_m2": 60,
+      "ambientes": [
+        "living_comedor", "dormitorio_principal", "dormitorio_simple",
+        "cocina", "bano_completo", "bano_completo"
+      ]
+    },
+    "4amb": {
+      "nombre": "4 ambientes",
+      "sup_cubierta_tipica_m2": 95,
+      "sup_minima_m2": 78,
+      "ambientes": [
+        "living_comedor", "dormitorio_principal", "dormitorio_simple", "dormitorio_simple",
+        "cocina", "bano_completo", "bano_completo"
+      ]
+    },
+    "estudio": {
+      "nombre": "Estudio / Loft",
+      "sup_cubierta_tipica_m2": 30,
+      "sup_minima_m2": 22,
+      "ambientes": ["living_dormitorio_monoambiente", "bano_completo"]
+    },
+    "duplex": {
+      "nombre": "Dúplex",
+      "sup_cubierta_tipica_m2": 110,
+      "sup_minima_m2": 80,
+      "ambientes": [
+        "living_comedor", "dormitorio_principal", "dormitorio_simple", "dormitorio_simple",
+        "cocina", "bano_completo", "bano_completo", "toilette"
+      ]
+    }
+  },
+
+  "urbanistica": {
+    "zona_r2b_caballito": {
+      "fot": 2.4,
+      "fos": 0.60,
+      "altura_max_m": 24.0,
+      "retiro_frente_m": 0,
+      "retiro_fondo_min_m": 3.0,
+      "espacio_libre_interno_min_pct": 33,
+      "referencia": "Código de Planeamiento Urbano CABA — Zona R2b"
+    }
+  },
+
+  "layout_nucleo_y_pasillo": {
+    "escalera_ancho_m": 3.00,
+    "escalera_fondo_m": 5.50,
+    "ascensor_ancho_m": 2.00,
+    "pasillo_comun_prof_m": 1.20
+  },
+
+  "layout_proporciones_apt": {
+    "zona_living_pct_fondo": {
+      "1amb": 0.00,
+      "estudio": 0.00,
+      "2amb": 0.40,
+      "3amb": 0.38,
+      "4amb": 0.35,
+      "duplex": 0.35
+    },
+    "zona_servicio_inicio_pct_fondo": {
+      "1amb": 0.65,
+      "estudio": 0.70,
+      "2amb": 0.70,
+      "3amb": 0.68,
+      "4amb": 0.65,
+      "duplex": 0.65
+    },
+    "cocina_pct_ancho_apt": 0.55
+  }
+}

@@ -93,25 +93,19 @@ OUT = niveles_creados
 _CODE_GRILLA = '''\
 import clr
 clr.AddReference("RevitAPI")
-clr.AddReference("RevitAPIUI")
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 from Autodesk.Revit.DB import (
     Grid, Line, XYZ, Transaction,
     UnitUtils, UnitTypeId,
 )
-import Autodesk.Revit.DB as DB
+doc = DocumentManager.Instance.CurrentDBDocument
 
-clr.AddReference("RevitServices")
-from RevitServices.Persistence import DocumentManager
-doc  = DocumentManager.Instance.CurrentDBDocument
-
-# --- Parámetros ---
 frente_m = float(IN[0])
 fondo_m  = float(IN[1])
-paso_m   = 5.0          # módulo de grilla estructural (5.00 m típico CABA)
+paso_m   = 5.0
 
-def m_to_ft(m: float) -> float:
+def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
 
 grillas_creadas = []
@@ -119,35 +113,94 @@ grillas_creadas = []
 with Transaction(doc, "py-building-gen: Grilla") as t:
     t.Start()
 
-    # Ejes verticales (paralelos al fondo, dirección Y) — A, B, C ...
-    x = 0.0
-    col_idx = 0
+    # Ejes verticales (A, B, C …)
+    x = 0.0; col_idx = 0
     while x <= frente_m + 0.001:
         nombre = chr(ord("A") + col_idx)
         p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)
         p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)
-        grid = Grid.Create(doc, Line.CreateBound(p1, p2))
-        grid.Name = nombre
+        g = Grid.Create(doc, Line.CreateBound(p1, p2))
+        g.Name = nombre
         grillas_creadas.append(nombre)
-        x += paso_m
-        col_idx += 1
+        x += paso_m; col_idx += 1
 
-    # Ejes horizontales (paralelos al frente, dirección X) — 1, 2, 3 ...
-    y = 0.0
-    row_idx = 1
+    # Ejes horizontales (1, 2, 3 …)
+    y = 0.0; row_idx = 1
     while y <= fondo_m + 0.001:
         nombre = str(row_idx)
         p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)
         p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)
-        grid = Grid.Create(doc, Line.CreateBound(p1, p2))
-        grid.Name = nombre
+        g = Grid.Create(doc, Line.CreateBound(p1, p2))
+        g.Name = nombre
         grillas_creadas.append(nombre)
-        y += paso_m
-        row_idx += 1
+        y += paso_m; row_idx += 1
 
     t.Commit()
 
-OUT = grillas_creadas
+OUT = {"ejes": grillas_creadas, "total": len(grillas_creadas)}
+'''
+
+# ---------------------------------------------------------------------------
+# ViewPlan por nivel (disciplinas: arquitectura + estructura + MEP)
+# ---------------------------------------------------------------------------
+
+_CODE_VIEW_TEMPLATES = '''\
+import clr
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import (
+    ViewPlan, ViewFamilyType, ViewFamily, Level,
+    FilteredElementCollector, Transaction,
+)
+clr.AddReference("RevitServices")
+from RevitServices.Persistence import DocumentManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+
+pisos_tipo   = int(IN[0])
+tiene_azotea = bool(IN[1])
+
+def get_vft(familia):
+    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()
+    return next((t for t in tipos if t.ViewFamily == familia), None)
+
+def get_level(nombre):
+    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()
+    return next((l for l in levels if l.Name == nombre), None)
+
+vft_arq = get_vft(ViewFamily.FloorPlan)
+vft_est = get_vft(ViewFamily.StructuralPlan)   # planta estructural
+vft_mep = get_vft(ViewFamily.FloorPlan)         # reutiliza FloorPlan para MEP
+
+niveles = ["PB"] + [f"P{i:02d}" for i in range(1, pisos_tipo + 1)]
+if tiene_azotea:
+    niveles.append("AZO")
+
+vistas = []
+
+with Transaction(doc, "py-building-gen: Plantas por disciplina") as t:
+    t.Start()
+    for nom in niveles:
+        lvl = get_level(nom)
+        if lvl is None:
+            continue
+        for vft, prefijo in [(vft_arq, "PLANTA"), (vft_est, "EST"), (vft_mep, "MEP")]:
+            if vft is None:
+                continue
+            nombre_vista = f"{prefijo} {nom}"
+            # Verificar si ya existe una vista con ese nombre
+            existente = next(
+                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()
+                 if v.Name == nombre_vista), None
+            )
+            if existente:
+                vistas.append({"nivel": nom, "tipo": prefijo, "id": existente.Id.Value, "nuevo": False})
+                continue
+            vista = ViewPlan.Create(doc, vft.Id, lvl.Id)
+            vista.Name = nombre_vista
+            vistas.append({"nivel": nom, "tipo": prefijo, "id": vista.Id.Value, "nuevo": True})
+    t.Commit()
+
+OUT = {"total": len(vistas), "detalle": vistas}
 '''
 
 
@@ -212,5 +265,21 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> Pat
 
     watch_grid = s.add_watch(label="Ejes creados", col=2, row=7)
     s.connect(py_grilla, watch_grid)
+
+    # --- Plantas por disciplina (ARQ + EST + MEP) ---
+    cb_pisos2  = s.add_code_block(str(params.pisos_tipo),              label="pisos_tipo",    col=0, row=10)
+    cb_azotea2 = s.add_code_block(str(params.tiene_azotea).lower(),    label="tiene_azotea",  col=0, row=11)
+
+    py_vistas = s.add_python_node(
+        code=_CODE_VIEW_TEMPLATES,
+        n_inputs=2,
+        label="Plantas por Disciplina",
+        col=1, row=10,
+    )
+    s.connect(cb_pisos2,  py_vistas, to_input=0)
+    s.connect(cb_azotea2, py_vistas, to_input=1)
+
+    watch_vistas = s.add_watch(label="Plantas creadas", col=2, row=10)
+    s.connect(py_vistas, watch_vistas)
 
     return s.save(output_dir / "01_niveles_grilla.dyn")

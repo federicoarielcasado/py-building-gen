@@ -1,0 +1,727 @@
+{
+  "Uuid": "8efea57d-cb27-4643-b85e-df0fe1558199",
+  "IsCustomNode": false,
+  "Description": "Crea espacios MEP, matafuegos (NFPA 13) y tableros eléctricos seccionales por nivel.",
+  "Name": "07_instalaciones_mep",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "75bd9752-8504-4240-a315-20e3f0d960f0",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1bfe0e72-4476-4228-8261-2ba7a2141578",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10.0",
+      "Id": "97da894b-c855-4c1c-9727-31e33f92788a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "812e518c-2365-4568-97df-b979a8f8a7a1",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "24.0",
+      "Id": "0888e2ee-3b14-4a75-a63e-4de1400c2487",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "04d2cb46-5c66-4227-82a2-5ad4fb426957",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "5985bad9-8de9-4733-b4c3-a9b17da3ee23",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2879024f-41bd-465f-9adc-a70a4116ba76",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1",
+      "Id": "b79a5a33-daee-4184-85ad-69c9cc52b960",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c3b1fd1f-340b-4eac-b272-c0a953c90465",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "ca1afbf8-0440-4282-8bdf-266a435fd342",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0889b2fb-81d8-4c54-b241-5b8aacb92087",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "75f9cba3-eab4-4551-94fd-8b0ccb8e76e0",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5df44db3-9d1f-4484-a100-1e837666f71e",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "37d9e01d-dc7c-45c1-b30b-5ff90cb31cf4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "eb05d4fd-61a5-486c-9060-e63558a46586",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, XYZ, FamilySymbol,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\nfrom Autodesk.Revit.DB.Mechanical import Space\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo      = int(IN[0])\nfrente_m        = float(IN[1])\nfondo_m         = float(IN[2])\ncant_escaleras  = int(IN[3])\ncant_ascensores = int(IN[4])\ninst_san        = bool(IN[5])\ninst_elec       = bool(IN[6])\ninst_inc        = bool(IN[7])\n\n# ── Layout geometry ────────────────────────────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\ny_pasillo    = y_nucleo - PASILLO_PROF\n# Matafuego y tablero: contra pared del pasillo, lado izquierdo del núcleo\nx_mat = max(0.30, x_nucleo - 0.50)   # 0.50m antes del shaft\ny_mat = y_pasillo + 0.60              # en el pasillo, cerca del inicio del shaft\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_levels_tipo():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(\n        [l for l in levels if l.Name.startswith(\"P\") and l.Name[1:].isdigit()],\n        key=lambda l: l.Elevation\n    )\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\ndef get_sym(categoria, keywords):\n    col = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(categoria).ToElements()\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in keywords)), None)\n    return match or (col[0] if col else None)\n\n# ── Symbols ────────────────────────────────────────────────────────────────────\n_KW_MAT  = (\"fire\",\"extintor\",\"matafuego\",\"extinguisher\",\"sprinkler\")\n_KW_TAB  = (\"panel\",\"tablero\",\"board\",\"electrical\",\"distribution\",\"cuadro\")\n\nsym_mat = get_sym(BuiltInCategory.OST_FireAlarmDevices,   _KW_MAT) or           get_sym(BuiltInCategory.OST_GenericModel,        _KW_MAT)\nsym_tab = get_sym(BuiltInCategory.OST_ElectricalEquipment, _KW_TAB) or           get_sym(BuiltInCategory.OST_GenericModel,         _KW_TAB)\n\nartefactos = []\nspaces_creados = []\n\nwith Transaction(doc, \"py-building-gen: Artefactos MEP v2\") as t:\n    t.Start()\n\n    # Activar símbolos\n    for sym in [sym_mat, sym_tab]:\n        if sym and not sym.IsActive:\n            sym.Activate()\n\n    for lvl in get_levels_tipo():\n        # MEP Space (para análisis de cargas)\n        pt_sp = XYZ(m_to_ft(frente_m * 0.5), m_to_ft(fondo_m * 0.5), lvl.Elevation + 0.1)\n        try:\n            sp = Space(doc, lvl, pt_sp)\n            p_name = sp.LookupParameter(\"Name\")\n            if p_name:\n                p_name.Set(f\"Zona MEP {lvl.Name}\")\n            spaces_creados.append({\"nivel\": lvl.Name, \"id\": sp.Id.Value})\n        except Exception as e:\n            spaces_creados.append({\"nivel\": lvl.Name, \"error\": str(e)})\n\n        # Matafuego — NFPA 13: 1 por piso en pasillo junto a escalera\n        if inst_inc and sym_mat:\n            pt = XYZ(m_to_ft(x_mat), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_mat, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"matafuego\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n        # Tablero eléctrico seccional — 1 por piso en pasillo\n        if inst_elec and sym_tab:\n            pt = XYZ(m_to_ft(x_mat + 0.60), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_tab, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"tablero_seccional\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n    t.Commit()\n\ninstalaciones = []\nif inst_san:  instalaciones.append(\"Sanitaria\")\nif inst_elec: instalaciones.append(\"Eléctrica\")\nif inst_inc:  instalaciones.append(\"Incendio\")\n\nOUT = {\n    \"spaces_mep\": len(spaces_creados),\n    \"artefactos\": len(artefactos),\n    \"detalle\": artefactos,\n    \"instalaciones_activas\": instalaciones,\n    \"nota\": \"Completar redes de tuberías y conductos manualmente en Revit MEP.\",\n}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Inputs": [
+        {
+          "Id": "d5f07c20-38a2-4731-a8f9-712f3e9ddf2f",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e15941cd-fbc7-4d5a-abdc-bbb6b39c5eab",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "12f87733-4b05-4fa3-b6f3-61b003f6033c",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "22744ba8-bcf3-456d-96c3-0f811e5b8227",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "68282153-5f2f-48f4-9ead-8dd28c27515b",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ed4bfce2-3e40-4d3f-8bfa-f20851522fef",
+          "Name": "IN[5]",
+          "Description": "Input 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "39196018-ed4b-4b92-a009-ea362cbabeaa",
+          "Name": "IN[6]",
+          "Description": "Input 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b2fcf921-53cf-4a8c-ab4d-94b52b11a83f",
+          "Name": "IN[7]",
+          "Description": "Input 7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f9341e06-4c78-45d2-bc69-512b8d0adaf2",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "62d7a1f0-a0e3-4f45-9002-2c66ed7eba0e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e4ef4495-df8e-42da-b368-35df48efbf1b",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "dc1a9463-79db-42b2-8bb0-2be365937a6a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "261ca50c-9015-4495-9e43-493aabb18a59",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "3ff2cda2-8d7d-4b88-90fd-c82e0d7ed904",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3450b42a-f63a-4e2b-8805-75bfda690bbf",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true",
+      "Id": "3f2cc477-d650-4866-aa02-df3b8c3b0f0b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f55d58a5-2433-4c34-b2dc-9ea51b8a5f9f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "false",
+      "Id": "4f476aae-552e-47ed-ab14-ba65497c09b8",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "114a1d88-8969-4dcd-bd95-af13641769e2",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    MEPSystemType, FilteredElementCollector,\n    Transaction, BuiltInCategory,\n)\nfrom Autodesk.Revit.DB.Plumbing import PipingSystemType\nfrom Autodesk.Revit.DB.Mechanical import MechanicalSystemType\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ninst_san  = bool(IN[0])\ninst_elec = bool(IN[1])\ninst_gas  = bool(IN[2])\ninst_inc  = bool(IN[3])\ninst_term = bool(IN[4])\n\nsistemas = []\n\ndef listar_sistemas(cls, nombre_sistema):\n    col = FilteredElementCollector(doc).OfClass(cls).ToElements()\n    return [{\"sistema\": nombre_sistema, \"tipo\": s.Name} for s in col]\n\nif inst_san or inst_inc:\n    sistemas += listar_sistemas(PipingSystemType, \"Plomería / Incendio\")\nif inst_term:\n    sistemas += listar_sistemas(MechanicalSystemType, \"Termomecánica\")\n\nOUT = sistemas if sistemas else [\"Sin sistemas MEP definidos en la plantilla\"]\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Inputs": [
+        {
+          "Id": "b8a21062-9ad9-48a7-8954-5d85ca980e9f",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5f62c295-1be8-40b3-9d6f-24e0b59a2b43",
+          "Name": "IN[1]",
+          "Description": "Input 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2a4be649-6376-46af-a7e3-3d9b58cce06f",
+          "Name": "IN[2]",
+          "Description": "Input 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "29dfedf1-95bd-45b5-8b46-c129c1b51973",
+          "Name": "IN[3]",
+          "Description": "Input 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2de79fa6-a55f-4eaa-8832-563cd33bec17",
+          "Name": "IN[4]",
+          "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4c935c1e-1308-4bb0-87c8-8c2fb4584b62",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "75bd9752-8504-4240-a315-20e3f0d960f0",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "a04b0a62-560a-409e-b52e-c848fdbdfc7c",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "97da894b-c855-4c1c-9727-31e33f92788a",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "285b2763-cd61-4af7-bcb8-01879b76b0d6",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "0888e2ee-3b14-4a75-a63e-4de1400c2487",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "4753f28c-cec2-495a-98aa-0f39ba72115a",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "5985bad9-8de9-4733-b4c3-a9b17da3ee23",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "657fd494-f02a-4301-b318-41e2e22bb803",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "b79a5a33-daee-4184-85ad-69c9cc52b960",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "2c038c42-e0ff-43d5-bacd-73eff3b10ef0",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    },
+    {
+      "Start": "ca1afbf8-0440-4282-8bdf-266a435fd342",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "bfb0d916-613c-4a1a-ac6f-70412a8eb9cc",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 5
+    },
+    {
+      "Start": "75f9cba3-eab4-4551-94fd-8b0ccb8e76e0",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "c2dd842f-ef9b-4788-8bba-5160b3ea7c41",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 6
+    },
+    {
+      "Start": "37d9e01d-dc7c-45c1-b30b-5ff90cb31cf4",
+      "End": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+      "Id": "4a8799fa-e7a6-4627-8040-7c3fd844697a",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 7
+    },
+    {
+      "Start": "62d7a1f0-a0e3-4f45-9002-2c66ed7eba0e",
+      "End": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Id": "fae0f056-e687-4fc0-bce8-66ce7a1100c2",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    },
+    {
+      "Start": "dc1a9463-79db-42b2-8bb0-2be365937a6a",
+      "End": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Id": "beb40cd3-3f7b-442b-9489-bbedcf7e14e9",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 1
+    },
+    {
+      "Start": "3ff2cda2-8d7d-4b88-90fd-c82e0d7ed904",
+      "End": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Id": "439afd4f-9679-4438-98e3-04619764bca4",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 2
+    },
+    {
+      "Start": "3f2cc477-d650-4866-aa02-df3b8c3b0f0b",
+      "End": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Id": "e54b4d0b-b20d-4f18-bba3-89648e6ca4f3",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 3
+    },
+    {
+      "Start": "4f476aae-552e-47ed-ab14-ba65497c09b8",
+      "End": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+      "Id": "c909eed7-022d-4ee2-8850-01812c3e61d4",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 4
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "75bd9752-8504-4240-a315-20e3f0d960f0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "97da894b-c855-4c1c-9727-31e33f92788a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "frente_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "0888e2ee-3b14-4a75-a63e-4de1400c2487",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "fondo_m",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "5985bad9-8de9-4733-b4c3-a9b17da3ee23",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_escaleras",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "b79a5a33-daee-4184-85ad-69c9cc52b960",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "cant_ascensores",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 520.0
+      },
+      {
+        "Id": "ca1afbf8-0440-4282-8bdf-266a435fd342",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_san",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 650.0
+      },
+      {
+        "Id": "75f9cba3-eab4-4551-94fd-8b0ccb8e76e0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_elec",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 780.0
+      },
+      {
+        "Id": "37d9e01d-dc7c-45c1-b30b-5ff90cb31cf4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_inc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 910.0
+      },
+      {
+        "Id": "19f203f6-6ccb-4797-aba0-e44397e7b5b4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Artefactos MEP v2",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "62d7a1f0-a0e3-4f45-9002-2c66ed7eba0e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_san",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1300.0
+      },
+      {
+        "Id": "dc1a9463-79db-42b2-8bb0-2be365937a6a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_elec",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1430.0
+      },
+      {
+        "Id": "3ff2cda2-8d7d-4b88-90fd-c82e0d7ed904",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_gas",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1560.0
+      },
+      {
+        "Id": "3f2cc477-d650-4866-aa02-df3b8c3b0f0b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_inc",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1690.0
+      },
+      {
+        "Id": "4f476aae-552e-47ed-ab14-ba65497c09b8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "inst_term",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 1820.0
+      },
+      {
+        "Id": "45acb2d9-890b-4efa-b3b1-db59f9c7c1ec",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Sistemas MEP",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 1300.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

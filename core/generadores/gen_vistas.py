@@ -76,13 +76,13 @@ from Autodesk.Revit.DB import (
     XYZ, Transform, FilteredElementCollector, Transaction,
     UnitUtils, UnitTypeId,
 )
-
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
-doc  = DocumentManager.Instance.CurrentDBDocument
 
-frente_m    = float(IN[0])
-fondo_m     = float(IN[1])
+doc = DocumentManager.Instance.CurrentDBDocument
+
+frente_m     = float(IN[0])
+fondo_m      = float(IN[1])
 altura_total = float(IN[2])
 
 def m_to_ft(m):
@@ -92,57 +92,79 @@ def get_vft_section():
     tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()
     return next((t for t in tipos if t.ViewFamily == ViewFamily.Section), None)
 
-vft = get_vft_section()
+def make_section(vft, origen, basis_x, basis_z, half_w, h, profundidad):
+    """Crea una ViewSection con los vectores dados."""
+    bbox = BoundingBoxXYZ()
+    xf = Transform.Identity
+    xf.BasisX = basis_x
+    xf.BasisY = XYZ(0, 0, 1)
+    xf.BasisZ = basis_z
+    xf.Origin = origen
+    bbox.Transform = xf
+    margen = m_to_ft(1.0)
+    bbox.Min = XYZ(-half_w - margen, 0, -margen)
+    bbox.Max = XYZ( half_w + margen, h,  profundidad + margen)
+    return ViewSection.CreateSection(doc, vft.Id, bbox)
+
+vft  = get_vft_section()
 vistas = []
 
 if vft:
-    with Transaction(doc, "py-building-gen: Cortes y Alzados") as t:
+    with Transaction(doc, "py-building-gen: Cortes y Alzados v2") as t:
         t.Start()
 
-        margen = m_to_ft(1.0)
         h      = m_to_ft(altura_total + 1.0)
+        hf_x   = m_to_ft(frente_m / 2)
+        hf_y   = m_to_ft(fondo_m  / 2)
+        prof   = m_to_ft(fondo_m + 2.0)
 
-        # Corte transversal — a mitad del fondo, mirando hacia frente (eje X)
-        bbox_trans = BoundingBoxXYZ()
-        xform = Transform.Identity
-        xform.BasisX = XYZ(1, 0, 0)
-        xform.BasisY = XYZ(0, 0, 1)
-        xform.BasisZ = XYZ(0, -1, 0)
-        xform.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(fondo_m / 2), 0)
-        bbox_trans.Transform = xform
-        bbox_trans.Min = XYZ(-m_to_ft(frente_m / 2) - margen, 0, -margen)
-        bbox_trans.Max = XYZ( m_to_ft(frente_m / 2) + margen, h,  margen)
-        v = ViewSection.CreateSection(doc, vft.Id, bbox_trans)
+        # ── Corte A-A transversal (perpendicular al frente) ───────────────
+        v = make_section(vft,
+            XYZ(hf_x, hf_y, 0),
+            XYZ(1,0,0), XYZ(0,-1,0),
+            hf_x, h, m_to_ft(fondo_m / 2 + 1.0))
         v.Name = "CORTE A-A"
-        vistas.append({"tipo": "corte_transversal", "id": v.Id.IntegerValue})
+        vistas.append({"tipo": "corte_transversal", "id": v.Id.Value})
 
-        # Corte longitudinal — a mitad del frente, mirando hacia el fondo (eje Y)
-        bbox_long = BoundingBoxXYZ()
-        xform2 = Transform.Identity
-        xform2.BasisX = XYZ(0, 1, 0)
-        xform2.BasisY = XYZ(0, 0, 1)
-        xform2.BasisZ = XYZ(1, 0, 0)
-        xform2.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(fondo_m / 2), 0)
-        bbox_long.Transform = xform2
-        bbox_long.Min = XYZ(-m_to_ft(fondo_m / 2) - margen, 0, -margen)
-        bbox_long.Max = XYZ( m_to_ft(fondo_m / 2) + margen, h,  margen)
-        v2 = ViewSection.CreateSection(doc, vft.Id, bbox_long)
+        # ── Corte B-B longitudinal (paralelo al frente) ───────────────────
+        v2 = make_section(vft,
+            XYZ(hf_x, hf_y, 0),
+            XYZ(0,1,0), XYZ(1,0,0),
+            hf_y, h, m_to_ft(frente_m / 2 + 1.0))
         v2.Name = "CORTE B-B"
-        vistas.append({"tipo": "corte_longitudinal", "id": v2.Id.IntegerValue})
+        vistas.append({"tipo": "corte_longitudinal", "id": v2.Id.Value})
 
-        # Alzado frontal (fachada principal)
-        bbox_fach = BoundingBoxXYZ()
-        xform3 = Transform.Identity
-        xform3.BasisX = XYZ(1, 0, 0)
-        xform3.BasisY = XYZ(0, 0, 1)
-        xform3.BasisZ = XYZ(0, 1, 0)
-        xform3.Origin = XYZ(m_to_ft(frente_m / 2), m_to_ft(-1.5), 0)
-        bbox_fach.Transform = xform3
-        bbox_fach.Min = XYZ(-m_to_ft(frente_m / 2) - margen, 0, -margen)
-        bbox_fach.Max = XYZ( m_to_ft(frente_m / 2) + margen, h,  m_to_ft(fondo_m + 2))
-        v3 = ViewSection.CreateSection(doc, vft.Id, bbox_fach)
+        # ── Fachada principal (mirando desde el frente, Y negativo) ───────
+        v3 = make_section(vft,
+            XYZ(hf_x, m_to_ft(-2.0), 0),
+            XYZ(1,0,0), XYZ(0,1,0),
+            hf_x, h, prof)
         v3.Name = "FACHADA PRINCIPAL"
-        vistas.append({"tipo": "fachada", "id": v3.Id.IntegerValue})
+        vistas.append({"tipo": "fachada_principal", "id": v3.Id.Value})
+
+        # ── Fachada contrafrente (mirando desde el fondo, Y positivo) ─────
+        v4 = make_section(vft,
+            XYZ(hf_x, m_to_ft(fondo_m + 2.0), 0),
+            XYZ(-1,0,0), XYZ(0,-1,0),
+            hf_x, h, prof)
+        v4.Name = "FACHADA CONTRAFRENTE"
+        vistas.append({"tipo": "fachada_contrafrente", "id": v4.Id.Value})
+
+        # ── Fachada lateral izquierda (X = 0) ────────────────────────────
+        v5 = make_section(vft,
+            XYZ(m_to_ft(-2.0), hf_y, 0),
+            XYZ(0,1,0), XYZ(-1,0,0),
+            hf_y, h, prof)
+        v5.Name = "FACHADA LATERAL IZQ"
+        vistas.append({"tipo": "fachada_lateral_izq", "id": v5.Id.Value})
+
+        # ── Fachada lateral derecha (X = frente_m) ───────────────────────
+        v6 = make_section(vft,
+            XYZ(m_to_ft(frente_m + 2.0), hf_y, 0),
+            XYZ(0,-1,0), XYZ(1,0,0),
+            hf_y, h, prof)
+        v6.Name = "FACHADA LATERAL DER"
+        vistas.append({"tipo": "fachada_lateral_der", "id": v6.Id.Value})
 
         t.Commit()
 
@@ -177,6 +199,81 @@ if vft:
         t.Commit()
 
 OUT = resultado
+'''
+
+# ---------------------------------------------------------------------------
+# Visibility overrides — controla qué categorías muestra cada disciplina
+# ---------------------------------------------------------------------------
+
+_CODE_VISIBILITY = '''\
+import clr
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import (
+    ViewPlan, View, BuiltInCategory, ElementId,
+    OverrideGraphicSettings, FilteredElementCollector,
+    Transaction,
+)
+clr.AddReference("RevitServices")
+from RevitServices.Persistence import DocumentManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+
+# Categorías a ocultar según disciplina de la vista
+CAT_ESTRUCTURA = [
+    int(BuiltInCategory.OST_StructuralColumns),
+    int(BuiltInCategory.OST_StructuralFraming),
+    int(BuiltInCategory.OST_StructuralFoundation),
+    int(BuiltInCategory.OST_StructuralStiffener),
+]
+CAT_ARQ = [
+    int(BuiltInCategory.OST_Walls),
+    int(BuiltInCategory.OST_Floors),
+    int(BuiltInCategory.OST_Doors),
+    int(BuiltInCategory.OST_Windows),
+    int(BuiltInCategory.OST_Stairs),
+    int(BuiltInCategory.OST_Rooms),
+]
+
+def is_arq_view(v):
+    return v.Name.startswith("PLANTA") or v.Name.startswith("CORTE") or v.Name.startswith("FACHADA")
+
+def is_est_view(v):
+    return v.Name.startswith("EST ")
+
+def is_mep_view(v):
+    return v.Name.startswith("MEP ")
+
+def set_hidden(view, cat_ids, hidden):
+    for cat_id in cat_ids:
+        eid = ElementId(cat_id)
+        try:
+            view.SetCategoryHidden(eid, hidden)
+        except Exception:
+            pass
+
+vistas_config = []
+
+with Transaction(doc, "py-building-gen: Visibility Overrides") as t:
+    t.Start()
+    all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()
+    for v in all_views:
+        if v.IsTemplate:
+            continue
+        try:
+            if is_arq_view(v):
+                set_hidden(v, CAT_ESTRUCTURA, True)    # oculta estructura en ARQ
+                vistas_config.append({"vista": v.Name, "config": "ARQ — estructura oculta"})
+            elif is_est_view(v):
+                set_hidden(v, CAT_ARQ, True)            # oculta elementos ARQ en EST
+                vistas_config.append({"vista": v.Name, "config": "EST — elementos ARQ ocultos"})
+            elif is_mep_view(v):
+                set_hidden(v, CAT_ESTRUCTURA, True)
+                vistas_config.append({"vista": v.Name, "config": "MEP — estructura oculta"})
+        except Exception as e:
+            vistas_config.append({"vista": v.Name, "error": str(e)})
+    t.Commit()
+
+OUT = {"vistas_configuradas": len(vistas_config), "detalle": vistas_config}
 '''
 
 
@@ -224,5 +321,10 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> lis
     py_3d = s.add_python_node(_CODE_3D, n_inputs=0, label="Crear Vista 3D", col=1, row=7)
     w_3d = s.add_watch(label="Vista 3D", col=2, row=7)
     s.connect(py_3d, w_3d)
+
+    # Visibility overrides por disciplina
+    py_vis = s.add_python_node(_CODE_VISIBILITY, n_inputs=0, label="Visibility Overrides", col=1, row=10)
+    w_vis = s.add_watch(label="Vistas configuradas", col=2, row=10)
+    s.connect(py_vis, w_vis)
 
     return [s.save(output_dir / "08_vistas.dyn")]

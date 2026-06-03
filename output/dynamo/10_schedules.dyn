@@ -1,0 +1,129 @@
+{
+  "Uuid": "ae022b9b-3c2a-49da-8351-f2b59541ec25",
+  "IsCustomNode": false,
+  "Description": "Crea tablas de cómputo (áreas, puertas, ventanas, estructura) para documentación y presupuesto.",
+  "Name": "10_schedules",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "6",
+      "Id": "94a4d89f-e682-4ab8-8969-d7f609fccb64",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "31c019f8-e61f-4333-b105-29d9ce596b07",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "ExtensionNode",
+      "Code": "import clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSchedule, SchedulableField, ScheduleFieldType,\n    BuiltInParameter, FilteredElementCollector,\n    BuiltInCategory, ScheduleSortGroupField,\n    Transaction, ElementId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo = int(IN[0])\n\ndef crear_schedule(nombre, cat_id_int):\n    try:\n        sch = ViewSchedule.CreateSchedule(doc, ElementId(cat_id_int))\n        sch.Name = nombre\n        return sch\n    except Exception:\n        return None\n\ndef agregar_campos(sch, bip_list):\n    \"\"\"Agrega campos BuiltInParameter al schedule si están disponibles.\"\"\"\n    sched_def = sch.Definition\n    campos_disponibles = {f.ParameterId: f for f in sched_def.GetSchedulableFields()}\n    for bip in bip_list:\n        fid = ElementId(int(bip))\n        if fid in campos_disponibles:\n            try:\n                sched_def.AddField(campos_disponibles[fid])\n            except Exception:\n                pass\n\nschedules_creados = []\n\n# Campos por categoría (BuiltInParameter)\nCAMPOS = {\n    int(BuiltInCategory.OST_Rooms): [\n        BuiltInParameter.ROOM_NAME,\n        BuiltInParameter.ROOM_NUMBER,\n        BuiltInParameter.LEVEL_NAME,\n        BuiltInParameter.ROOM_AREA,\n        BuiltInParameter.ROOM_PERIMETER,\n    ],\n    int(BuiltInCategory.OST_Doors): [\n        BuiltInParameter.ALL_MODEL_MARK,\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.LEVEL_PARAM,\n        BuiltInParameter.DOOR_WIDTH,\n        BuiltInParameter.DOOR_HEIGHT,\n    ],\n    int(BuiltInCategory.OST_Windows): [\n        BuiltInParameter.ALL_MODEL_MARK,\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.LEVEL_PARAM,\n        BuiltInParameter.WINDOW_WIDTH,\n        BuiltInParameter.WINDOW_HEIGHT,\n    ],\n    int(BuiltInCategory.OST_Walls): [\n        BuiltInParameter.ALL_MODEL_MARK,\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.WALL_BASE_CONSTRAINT,\n        BuiltInParameter.HOST_AREA_COMPUTED,\n        BuiltInParameter.CURVE_ELEM_LENGTH,\n    ],\n    int(BuiltInCategory.OST_Floors): [\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.LEVEL_PARAM,\n        BuiltInParameter.HOST_AREA_COMPUTED,\n        BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM,\n    ],\n    int(BuiltInCategory.OST_StructuralColumns): [\n        BuiltInParameter.ALL_MODEL_MARK,\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM,\n        BuiltInParameter.FAMILY_HEIGHT_PARAM,\n    ],\n    int(BuiltInCategory.OST_StructuralFraming): [\n        BuiltInParameter.ALL_MODEL_MARK,\n        BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM,\n        BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION,\n        BuiltInParameter.CURVE_ELEM_LENGTH,\n    ],\n}\n\nconfig = [\n    (\"CÓMPUTO - LOCALES Y ÁREAS\",   int(BuiltInCategory.OST_Rooms)),\n    (\"CÓMPUTO - PUERTAS\",           int(BuiltInCategory.OST_Doors)),\n    (\"CÓMPUTO - VENTANAS\",          int(BuiltInCategory.OST_Windows)),\n    (\"CÓMPUTO - MUROS\",             int(BuiltInCategory.OST_Walls)),\n    (\"CÓMPUTO - LOSAS\",             int(BuiltInCategory.OST_Floors)),\n    (\"CÓMPUTO - COLUMNAS\",          int(BuiltInCategory.OST_StructuralColumns)),\n    (\"CÓMPUTO - VIGAS\",             int(BuiltInCategory.OST_StructuralFraming)),\n]\n\nwith Transaction(doc, \"py-building-gen: Schedules v2\") as t:\n    t.Start()\n    for nombre, cat_id in config:\n        sch = crear_schedule(nombre, cat_id)\n        if sch:\n            campos_bip = CAMPOS.get(cat_id, [])\n            agregar_campos(sch, campos_bip)\n            schedules_creados.append({\"nombre\": nombre, \"id\": sch.Id.Value})\n    t.Commit()\n\nOUT = {\"total\": len(schedules_creados), \"schedules\": schedules_creados}\n",
+      "Engine": "PythonNet3",
+      "EngineName": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "3d0ada98-84d9-4970-ad7f-e951a54435f9",
+      "Inputs": [
+        {
+          "Id": "082e22b3-18b2-4898-9d15-4a3528e82cc6",
+          "Name": "IN[0]",
+          "Description": "Input 0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cb6f2327-e95c-4949-844c-e6b0ddb4861b",
+          "Name": "OUT",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "94a4d89f-e682-4ab8-8969-d7f609fccb64",
+      "End": "3d0ada98-84d9-4970-ad7f-e951a54435f9",
+      "Id": "a1d375de-a3f5-4ea7-9679-ce7684339d5c",
+      "PortType": 0,
+      "StartIndex": 0,
+      "EndIndex": 0
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithTimeout": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.0",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "94a4d89f-e682-4ab8-8969-d7f609fccb64",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "pisos_tipo",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "3d0ada98-84d9-4970-ad7f-e951a54435f9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Crear Schedules",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 300.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 0.75
+  }
+}

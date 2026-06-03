@@ -155,8 +155,8 @@ class TestScriptsEspecificos:
     def test_01_niveles_nodos_correctos(self, tmp_out):
         p = gen_niveles.generar(_PARAMS, tmp_out)
         data = _load_dyn(p)
-        # 8 CodeBlocks + 2 PythonNodes (sin Watch nodes en Dynamo 4.0)
-        assert len(data["Nodes"]) == 10
+        # 10 CodeBlocks + 3 PythonNodes (niveles + grilla + plantas por disciplina)
+        assert len(data["Nodes"]) == 13
 
     def test_01_niveles_con_subsuelo(self, tmp_path):
         p = ParametrosEdificio(tiene_subsuelo=True, cant_subsuelos=2)
