@@ -34,7 +34,7 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc  = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo   = int(IN[0])
+pisos_tipo   = _ii(IN[0])
 tiene_azotea = bool(IN[1])
 
 def get_view_family_type(familia):
@@ -81,9 +81,9 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m     = float(IN[0])
-fondo_m      = float(IN[1])
-altura_total = float(IN[2])
+frente_m     = _fi(IN[0])
+fondo_m      = _fi(IN[1])
+altura_total = _fi(IN[2])
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)

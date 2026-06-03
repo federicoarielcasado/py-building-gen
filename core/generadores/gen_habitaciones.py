@@ -33,13 +33,13 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-pisos_tipo      = int(IN[2])
-cant_depto_tipo = int(IN[3])
-tipologias_json = str(IN[4])
-cant_escaleras  = int(IN[5])
-cant_ascensores = int(IN[6])
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+pisos_tipo      = _ii(IN[2])
+cant_depto_tipo = _ii(IN[3])
+tipologias_json = _si(IN[4])
+cant_escaleras  = _ii(IN[5])
+cant_ascensores = _ii(IN[6])
 
 tipologias_raw = json.loads(tipologias_json)
 apts = []

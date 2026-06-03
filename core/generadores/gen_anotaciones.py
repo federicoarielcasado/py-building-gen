@@ -37,7 +37,7 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo = int(IN[0])
+pisos_tipo = _ii(IN[0])
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
@@ -123,8 +123,8 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m = float(IN[0])
-fondo_m  = float(IN[1])
+frente_m = _fi(IN[0])
+fondo_m  = _fi(IN[1])
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
@@ -225,7 +225,7 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo = int(IN[0])
+pisos_tipo = _ii(IN[0])
 
 def get_planta(nombre):
     todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()

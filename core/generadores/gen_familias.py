@@ -46,8 +46,8 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc  = DocumentManager.Instance.CurrentDBDocument
 
-tipo_hormigon = str(IN[0])   # "H-21" | "H-25" | "H-30"
-tipo_acero    = str(IN[1])   # "ADN 420" | "AL 220"
+tipo_hormigon = _si(IN[0])   # "H-21" | "H-25" | "H-30"
+tipo_acero    = _si(IN[1])   # "ADN 420" | "AL 220"
 
 def color(r, g, b):
     return Color(r, g, b)
@@ -244,8 +244,8 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc  = DocumentManager.Instance.CurrentDBDocument
 
-espesor_losa_cm = float(IN[0])
-tipo_hormigon   = str(IN[1])
+espesor_losa_cm = _fi(IN[0], 20.0)
+tipo_hormigon   = _si(IN[1], "H-21")
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
@@ -325,10 +325,10 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc  = DocumentManager.Instance.CurrentDBDocument
 
-lado_col_cm   = float(IN[0])
-ancho_viga_cm = float(IN[1])
-alto_viga_cm  = float(IN[2])
-tipo_hormigon = str(IN[3])
+lado_col_cm   = _fi(IN[0], 35.0)
+ancho_viga_cm = _fi(IN[1], 25.0)
+alto_viga_cm  = _fi(IN[2], 50.0)
+tipo_hormigon = _si(IN[3], "H-21")
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)

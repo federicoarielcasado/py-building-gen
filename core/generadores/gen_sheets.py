@@ -36,9 +36,9 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-proyecto      = str(IN[0])
-autor         = str(IN[1])
-pisos_tipo    = int(IN[2])
+proyecto      = _si(IN[0])
+autor         = _si(IN[1])
+pisos_tipo    = _ii(IN[2])
 tiene_azotea  = bool(IN[3])
 
 def m_to_ft(m):
@@ -148,7 +148,7 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo = int(IN[0])
+pisos_tipo = _ii(IN[0])
 
 def crear_schedule(nombre, cat_id_int):
     try:
@@ -261,9 +261,9 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m  = float(IN[0])
-fondo_m   = float(IN[1])
-pisos_tipo = int(IN[2])
+frente_m  = _fi(IN[0])
+fondo_m   = _fi(IN[1])
+pisos_tipo = _ii(IN[2])
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)

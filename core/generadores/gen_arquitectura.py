@@ -38,18 +38,18 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m          = float(IN[0])
-fondo_m           = float(IN[1])
-altura_pb         = float(IN[2])
-altura_tipo       = float(IN[3])
-pisos_tipo        = int(IN[4])
-cant_depto_tipo   = int(IN[5])
-tipologias_json   = str(IN[6])   # [{"tipo":"2amb","cantidad":1}, ...]
-cant_escaleras    = int(IN[7])
-cant_ascensores   = int(IN[8])
-nombre_muro_ext   = str(IN[9])   # "Muro exterior - 200mm"
-nombre_tabique    = str(IN[10])  # "Tabique interior - 100mm"
-nombre_cortafuego = str(IN[11])  # "Muro cortafuego - 200mm"
+frente_m          = _fi(IN[0])
+fondo_m           = _fi(IN[1])
+altura_pb         = _fi(IN[2])
+altura_tipo       = _fi(IN[3])
+pisos_tipo        = _ii(IN[4])
+cant_depto_tipo   = _ii(IN[5])
+tipologias_json   = _si(IN[6])   # [{"tipo":"2amb","cantidad":1}, ...]
+cant_escaleras    = _ii(IN[7])
+cant_ascensores   = _ii(IN[8])
+nombre_muro_ext   = _si(IN[9])   # "Muro exterior - 200mm"
+nombre_tabique    = _si(IN[10])  # "Tabique interior - 100mm"
+nombre_cortafuego = _si(IN[11])  # "Muro cortafuego - 200mm"
 
 tipologias_raw = json.loads(tipologias_json)
 
@@ -243,15 +243,15 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-pisos_tipo      = int(IN[2])
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+pisos_tipo      = _ii(IN[2])
 tiene_azotea    = bool(IN[3])
-espesor_cm      = float(IN[4])
-nombre_losa     = str(IN[5])
-nombre_losa_azo = str(IN[6])
-cant_escaleras  = int(IN[7])
-cant_ascensores = int(IN[8])
+espesor_cm      = _fi(IN[4])
+nombre_losa     = _si(IN[5])
+nombre_losa_azo = _si(IN[6])
+cant_escaleras  = _ii(IN[7])
+cant_ascensores = _ii(IN[8])
 
 # ── Shaft geometry (same constants as Script 02) ──────────────────────────────
 ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00
@@ -344,14 +344,14 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-altura_tipo     = float(IN[2])
-pisos_tipo      = int(IN[3])
-cant_depto_tipo = int(IN[4])
-tipologias_json = str(IN[5])
-cant_escaleras  = int(IN[6])
-cant_ascensores = int(IN[7])
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+altura_tipo     = _fi(IN[2])
+pisos_tipo      = _ii(IN[3])
+cant_depto_tipo = _ii(IN[4])
+tipologias_json = _si(IN[5])
+cant_escaleras  = _ii(IN[6])
+cant_ascensores = _ii(IN[7])
 
 tipologias_raw = json.loads(tipologias_json)
 apts = []
@@ -523,13 +523,13 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m    = float(IN[0])
-fondo_m     = float(IN[1])
-pisos_tipo  = int(IN[2])
-cant_esc    = int(IN[3])
-cant_asc    = int(IN[4])
-altura_pb   = float(IN[5])
-altura_tipo = float(IN[6])
+frente_m    = _fi(IN[0])
+fondo_m     = _fi(IN[1])
+pisos_tipo  = _ii(IN[2])
+cant_esc    = _ii(IN[3])
+cant_asc    = _ii(IN[4])
+altura_pb   = _fi(IN[5])
+altura_tipo = _fi(IN[6])
 
 # ── Misma geometría que Scripts 02/03/05 ──────────────────────────────────────
 ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00

@@ -41,11 +41,11 @@ doc  = DocumentManager.Instance.CurrentDBDocument
 uidoc = DocumentManager.Instance.CurrentUIDocument
 
 # --- Parámetros desde nodos Code Block ---
-pisos_tipo   = int(IN[0])
-altura_pb    = float(IN[1])   # metros
-altura_tipo  = float(IN[2])   # metros
+pisos_tipo   = _ii(IN[0])
+altura_pb    = _fi(IN[1])   # metros
+altura_tipo  = _fi(IN[2])   # metros
 tiene_sub    = bool(IN[3])
-cant_sub     = int(IN[4])
+cant_sub     = _ii(IN[4])
 tiene_azotea = bool(IN[5])
 
 def m_to_ft(m: float) -> float:
@@ -101,8 +101,8 @@ from Autodesk.Revit.DB import (
 )
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m = float(IN[0])
-fondo_m  = float(IN[1])
+frente_m = _fi(IN[0])
+fondo_m  = _fi(IN[1])
 paso_m   = 5.0
 
 def m_to_ft(m):
@@ -156,7 +156,7 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo   = int(IN[0])
+pisos_tipo   = _ii(IN[0])
 tiene_azotea = bool(IN[1])
 
 def get_vft(familia):

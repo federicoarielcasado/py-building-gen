@@ -27,6 +27,15 @@ from typing import Optional
 # Usamos una cadena compatible; Dynamo lee cualquier 3.x sin error.
 _DYNAMO_VERSION = "4.0.0.0"
 
+# Helpers inyectados al inicio de todos los Python nodes.
+# Previenen TypeError cuando un input llega como None (nodo desconectado o
+# code block sin evaluar). Usar _fi/_ii/_si en lugar de float/int/str directos.
+_INPUT_HELPERS = '''\
+def _fi(v, d=0.0): return float(v) if v is not None else float(d)
+def _ii(v, d=0):   return int(v)   if v is not None else int(d)
+def _si(v, d=""):  return str(v)   if v is not None else str(d)
+'''
+
 # Separación entre nodos en el canvas (píxeles del canvas de Dynamo)
 _COL_W = 300.0
 _ROW_H = 130.0
@@ -149,7 +158,7 @@ class PythonNode(_BaseNode):
         return {
             "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
             "NodeType": "ExtensionNode",
-            "Code": self.code,
+            "Code": _INPUT_HELPERS + self.code,
             "Engine": "PythonNet3",
             "EngineName": "PythonNet3",
             "VariableInputPorts": True,
@@ -275,8 +284,11 @@ class DynScript:
     ) -> CodeBlockNode:
         """Agrega un nodo Code Block y retorna la instancia."""
         c, r = self._resolve_pos(col, row)
+        # DesignScript requiere punto y coma para evaluar la expresión como statement.
+        # Sin él, el nodo produce null y los Python nodes reciben IN[x] = None.
+        code_ds = code if code.rstrip().endswith(";") else code.rstrip() + ";"
         node = CodeBlockNode(
-            code=code,
+            code=code_ds,
             label=label or code[:20],
             x=c * _COL_W,
             y=r * _ROW_H,

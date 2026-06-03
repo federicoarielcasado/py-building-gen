@@ -164,7 +164,7 @@ class TestScriptsEspecificos:
         data = _load_dyn(out)
         # El code block de cant_subsuelos debe tener el valor 2
         cb_nodes = [n for n in data["Nodes"] if n.get("NodeType") == "CodeBlockNode"]
-        codigos = [n["Code"] for n in cb_nodes]
+        codigos = [n["Code"].rstrip(";") for n in cb_nodes]
         assert "2" in codigos
 
     def test_04_estructura_usa_predimensionado(self, tmp_path):
@@ -175,7 +175,7 @@ class TestScriptsEspecificos:
         out_paths = gen_estructura.generar(p, tmp_path)
         data = _load_dyn(out_paths[0])
         cbs = [n for n in data["Nodes"] if n.get("NodeType") == "CodeBlockNode"]
-        codigos = [n["Code"] for n in cbs]
+        codigos = [n["Code"].rstrip(";") for n in cbs]
         assert str(lado_cm) in codigos, f"Sección {lado_cm}cm no encontrada en CodeBlocks"
 
     def test_10_scripts_con_todas_instalaciones(self, tmp_path):

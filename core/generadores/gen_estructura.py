@@ -34,11 +34,11 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-lado_col_cm     = float(IN[2])
-pisos_tipo      = int(IN[3])
-nombre_col_tipo = str(IN[4])
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+lado_col_cm     = _fi(IN[2])
+pisos_tipo      = _ii(IN[3])
+nombre_col_tipo = _si(IN[4])
 paso_m          = 5.0
 
 def m_to_ft(m):
@@ -131,12 +131,12 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc  = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-ancho_cm        = float(IN[2])
-alto_cm         = float(IN[3])
-pisos_tipo      = int(IN[4])
-nombre_viga_tipo = str(IN[5])   # "Viga HA 45x85cm"  (creado por 00_familias.dyn)
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+ancho_cm        = _fi(IN[2])
+alto_cm         = _fi(IN[3])
+pisos_tipo      = _ii(IN[4])
+nombre_viga_tipo = _si(IN[5])   # "Viga HA 45x85cm"  (creado por 00_familias.dyn)
 paso_m          = 5.0
 
 def m_to_ft(m):
@@ -231,12 +231,12 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m        = float(IN[0])
-fondo_m         = float(IN[1])
-ancho_vf_cm     = float(IN[2])   # sección viga de fundación (CIRSOC: ≥ 30×60cm)
-alto_vf_cm      = float(IN[3])
+frente_m        = _fi(IN[0])
+fondo_m         = _fi(IN[1])
+ancho_vf_cm     = _fi(IN[2])   # sección viga de fundación (CIRSOC: ≥ 30×60cm)
+alto_vf_cm      = _fi(IN[3])
 tiene_subsuelo  = bool(IN[4])
-nombre_viga_tipo = str(IN[5])
+nombre_viga_tipo = _si(IN[5])
 paso_m          = 5.0
 Z_OFFSET        = -0.30           # m — centro viga a 30cm bajo nivel de fundación
 
@@ -324,10 +324,10 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-frente_m       = float(IN[0])
-fondo_m        = float(IN[1])
-lado_zapata_cm = float(IN[2])   # lado de la zapata cuadrada (predimensionado)
-altura_pb      = float(IN[3])
+frente_m       = _fi(IN[0])
+fondo_m        = _fi(IN[1])
+lado_zapata_cm = _fi(IN[2])   # lado de la zapata cuadrada (predimensionado)
+altura_pb      = _fi(IN[3])
 tiene_subsuelo = bool(IN[4])
 paso_m         = 5.0
 

@@ -35,11 +35,11 @@ from RevitServices.Persistence import DocumentManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
-pisos_tipo      = int(IN[0])
-frente_m        = float(IN[1])
-fondo_m         = float(IN[2])
-cant_escaleras  = int(IN[3])
-cant_ascensores = int(IN[4])
+pisos_tipo      = _ii(IN[0])
+frente_m        = _fi(IN[1])
+fondo_m         = _fi(IN[2])
+cant_escaleras  = _ii(IN[3])
+cant_ascensores = _ii(IN[4])
 inst_san        = bool(IN[5])
 inst_elec       = bool(IN[6])
 inst_inc        = bool(IN[7])
