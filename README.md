@@ -262,7 +262,7 @@ Ancho viga:          b = h / 2                     [mínimo 20cm]
 Viga de fundación:   ≥ 30×60cm (CIRSOC mínimo)
 ```
 
-**Reducción de sección en altura:** los pisos superiores (>50% del total de pisos) usan una sección 5cm menor, reproduciendo el comportamiento real de un proyecto de estructura.
+**Reducción de sección en altura:** el script crea **dos `FamilySymbol` independientes** — uno para pisos inferiores y otro (5cm menor) para pisos superiores (>50% del total). Cada nivel usa el tipo correcto, de forma que la sección queda grabada en el modelo sin interferencias entre niveles.
 
 **Parámetros que lo controlan:**
 
@@ -278,10 +278,10 @@ Viga de fundación:   ≥ 30×60cm (CIRSOC mínimo)
 **Ejemplo (default H-21, 6 pisos, 10×24m):**
 
 ```
-Columnas:          35×35cm pisos 1-3, 30×30cm pisos 4-6
+Columnas:          Col HA 35x35cm (pisos 1-3) + Col HA 30x30cm (pisos 4-6)
 Vigas entrepiso:   45×85cm en toda la altura
-Vigas fundación:   45×85cm en ambas direcciones al nivel PB -30cm
-Zapatas:           120×120cm
+Vigas fundación:   45×85cm en ambas direcciones a -30cm del nivel de cimentación
+Zapatas:           120×120cm al nivel de cimentación exacto
 Total:             105 columnas, 15 zapatas
 ```
 
@@ -659,6 +659,24 @@ py-building-gen/
 | Documentación | IRAM 4505 (title block A3) |
 | Urbanística | Código de Planeamiento Urbano CABA — Zona R2b (FOT 2.4, FOS 0.60) |
 | Locales habitables | Código de Edificación CABA Art. 4.1 (ilum. 1/8, vent. 1/16 de sup.) |
+
+---
+
+## Fixes técnicos — API Revit 2027 / Dynamo 4.0 / PythonNet3
+
+Bugs corregidos tras revisión sistemática de todos los generadores contra la API de Revit 2024+:
+
+| Script | Fix | Causa raíz |
+|--------|-----|------------|
+| `00_familias` — Crear Floor Types | `FA.Finish1` reemplazado por `FA.Substrate` (carpeta) y `FA.Membrane` (membrana) en `CompoundStructure` para `FloorType` | `Finish1`/`Finish2` activan `OpeningWrapping` en walls; aplicado a un `FloorType` Revit lanza `"wrong EndCap condition"` |
+| `04_estructura` — Columnas | Dos `FamilySymbol` separados (`Col HA 35x35cm` / `Col HA 30x30cm`) en lugar de mutar el tipo dentro del loop | `set_section()` modifica parámetros de tipo → todas las instancias quedan con la sección del último nivel procesado |
+| `04_estructura` — Vigas de fundación | `z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)` (relativo al nivel) | Z absoluto = -0.30m colocaba vigas a 2.50m por encima del nivel SS01 cuando `tiene_subsuelo=True` |
+| `04_estructura` — Zapatas | `pt = XYZ(x, y, lvl_fund.Elevation)` (relativo al nivel) | Z = 0 absoluto colocaba zapatas fuera del nivel de cimentación cuando había subsuelo |
+| `07_instalaciones` — MEP Spaces | `doc.Create.NewSpace(lvl, UV(x, y))` | El constructor `Space(doc, lvl, XYZ)` no existe en Revit 2024+; `NewSpace` es el método canónico |
+| `08_vistas` — Plantas | Chequeo de existencia antes de `ViewPlan.Create` | El script 01 ya crea `"PLANTA PB"`, `"PLANTA P01"`, etc.; intentar crearlas de nuevo lanzaba `ArgumentException: Name is already in use` |
+| `09_sheets` — Láminas EST/MEP | Filtros corregidos: `"EST PB"` / `"MEP PB"` en lugar de `"PLANTA PB"` | Las láminas estructurales y MEP recibían vistas arquitectónicas por coincidencia de nombre |
+| `09b_anotaciones` — Tags | `XYZ(pt.X, pt.Y, 0)` en lugar de `UV(pt.X, pt.Y)` en `IndependentTag.Create` | La firma de `IndependentTag.Create` requiere `XYZ` como 7.° argumento; `UV` lanzaba `ArgumentException` |
+| `09b_anotaciones` — Dimensiones | `WallSide` importado en bloque de imports del nodo | Import dinámico `__import__(...)` dentro de un list comprehension no es confiable en PythonNet3 |
 
 ---
 

@@ -24,12 +24,11 @@ import clr
 import json
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
-    Level, XYZ, FamilySymbol,
+    Level, XYZ, UV, FamilySymbol,
     FilteredElementCollector, BuiltInCategory,
     Transaction, UnitUtils, UnitTypeId,
 )
 from Autodesk.Revit.DB.Structure import StructuralType as ST
-from Autodesk.Revit.DB.Mechanical import Space
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 
@@ -95,9 +94,9 @@ with Transaction(doc, "py-building-gen: Artefactos MEP v2") as t:
 
     for lvl in get_levels_tipo():
         # MEP Space (para análisis de cargas)
-        pt_sp = XYZ(m_to_ft(frente_m * 0.5), m_to_ft(fondo_m * 0.5), lvl.Elevation + 0.1)
+        uv_sp = UV(m_to_ft(frente_m * 0.5), m_to_ft(fondo_m * 0.5))
         try:
-            sp = Space(doc, lvl, pt_sp)
+            sp = doc.Create.NewSpace(lvl, uv_sp)
             p_name = sp.LookupParameter("Name")
             if p_name:
                 p_name.Set(f"Zona MEP {lvl.Name}")

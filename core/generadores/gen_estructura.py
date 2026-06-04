@@ -44,11 +44,14 @@ paso_m          = 5.0
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
 
-def get_col_symbol():
-    col = (FilteredElementCollector(doc)
+def get_all_col_syms():
+    return list(FilteredElementCollector(doc)
            .OfClass(FamilySymbol)
            .OfCategory(BuiltInCategory.OST_StructuralColumns)
            .ToElements())
+
+def get_col_symbol():
+    col = get_all_col_syms()
     match = next((s for s in col if s.Name == nombre_col_tipo), None)
     if match:
         return match
@@ -74,40 +77,59 @@ def set_section(sym, lado_m):
             try: p.Set(lado_ft); break
             except Exception: pass
 
-# ── Reducción de sección en altura: CIRSOC 201 — pisos altos tienen menos carga ──
-# Pisos 1..n/2: sección base; pisos n/2+1..n: sección reducida (−5cm)
+# ── Secciones: inferior (pisos bajos) y superior (pisos altos, −5cm) ─────────
+# Cada grupo usa su propio FamilySymbol para que la sección no se pise.
 lado_inf_m = lado_col_cm / 100.0
 lado_sup_m = max(0.25, lado_inf_m - 0.05)
-piso_corte = pisos_tipo // 2 + 1   # piso desde donde se reduce
+piso_corte = pisos_tipo // 2 + 1
+misma_seccion = (lado_inf_m == lado_sup_m)
 
-sym = get_col_symbol()
-columnas = []
+nombre_inf = f"Col HA {lado_inf_m*100:.0f}x{lado_inf_m*100:.0f}cm"
+nombre_sup = f"Col HA {lado_sup_m*100:.0f}x{lado_sup_m*100:.0f}cm"
 
-if sym:
-    set_section(sym, lado_inf_m)
-    if not sym.IsActive:
-        sym.Activate()
+sym_base = get_col_symbol()
+columnas  = []
 
+if sym_base:
     with Transaction(doc, "py-building-gen: Columnas v2") as t:
         t.Start()
+
+        todos = get_all_col_syms()
+
+        # Tipo inferior
+        sym_inf = next((s for s in todos if s.Name == nombre_inf), None)
+        if sym_inf is None:
+            sym_inf = sym_base.Duplicate(nombre_inf)
+            set_section(sym_inf, lado_inf_m)
+        if not sym_inf.IsActive:
+            sym_inf.Activate()
+
+        # Tipo superior (solo si difiere del inferior)
+        if misma_seccion:
+            sym_sup = sym_inf
+        else:
+            sym_sup = next((s for s in todos if s.Name == nombre_sup), None)
+            if sym_sup is None:
+                sym_sup = sym_base.Duplicate(nombre_sup)
+                set_section(sym_sup, lado_sup_m)
+            if not sym_sup.IsActive:
+                sym_sup.Activate()
+
         for idx_piso, nombre_nivel in enumerate(
             ["PB"] + [f"P{i:02d}" for i in range(1, pisos_tipo + 1)]
         ):
             lvl = get_level(nombre_nivel)
-            # Reducción de sección para pisos superiores
-            if idx_piso >= piso_corte:
-                set_section(sym, lado_sup_m)
-            else:
-                set_section(sym, lado_inf_m)
+            sym_local = sym_sup if idx_piso >= piso_corte else sym_inf
             x = 0.0
             while x <= frente_m + 0.001:
                 y = 0.0
                 while y <= fondo_m + 0.001:
                     pt = XYZ(m_to_ft(x), m_to_ft(y), 0)
-                    inst = doc.Create.NewFamilyInstance(pt, sym, lvl, StructuralType.Column)
+                    inst = doc.Create.NewFamilyInstance(pt, sym_local, lvl, StructuralType.Column)
                     columnas.append(inst.Id.Value)
                     y += paso_m
                 x += paso_m
+
         t.Commit()
 
 OUT = {
@@ -274,7 +296,7 @@ if sym:
 
     with Transaction(doc, "py-building-gen: Vigas de fundación") as t:
         t.Start()
-        z = m_to_ft(Z_OFFSET)
+        z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)
 
         # Dirección X (paralelas al frente)
         y = 0.0
@@ -377,7 +399,7 @@ if sym:
         while x <= frente_m + 0.001:
             y = 0.0
             while y <= fondo_m + 0.001:
-                pt = XYZ(m_to_ft(x), m_to_ft(y), 0)
+                pt = XYZ(m_to_ft(x), m_to_ft(y), lvl_fund.Elevation)
                 inst = doc.Create.NewFamilyInstance(pt, sym, lvl_fund, StructuralType.Footing)
                 zapatas.append(inst.Id.Value)
                 y += paso_m

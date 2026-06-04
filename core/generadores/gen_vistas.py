@@ -58,10 +58,19 @@ if vft_planta:
 
         for nombre in nombres_nivel:
             lvl = get_level(nombre)
-            if lvl:
-                vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)
-                vista.Name = f"PLANTA {nombre}"
-                plantas.append({"nivel": nombre, "id": vista.Id.Value})
+            if lvl is None:
+                continue
+            nombre_vista = f"PLANTA {nombre}"
+            existente = next(
+                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()
+                 if v.Name == nombre_vista), None
+            )
+            if existente:
+                plantas.append({"nivel": nombre, "id": existente.Id.Value})
+                continue
+            vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)
+            vista.Name = nombre_vista
+            plantas.append({"nivel": nombre, "id": vista.Id.Value})
 
         t.Commit()
 

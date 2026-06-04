@@ -111,11 +111,11 @@ else:
         ("A-07", "ARQ - FACHADA CONTRAFRENTE",     "FACHADA CONTRAFRENTE"),
         ("A-08", "ARQ - FACHADAS LATERALES",       "FACHADA LATERAL"),
         # EST — estructura
-        ("E-01", "EST - PLANTA FUNDACIONES",       "PLANTA PB"),
-        ("E-02", "EST - PLANTA ESTRUCTURA TIPO",   "PLANTA P01"),
+        ("E-01", "EST - PLANTA FUNDACIONES",        "EST PB"),
+        ("E-02", "EST - PLANTA ESTRUCTURA TIPO",    "EST P01"),
         # MEP — instalaciones
-        ("M-01", "MEP - PLANTA INSTALACIONES PB",  "PLANTA PB"),
-        ("M-02", "MEP - PLANTA INSTALACIONES TIPO","PLANTA P01"),
+        ("M-01", "MEP - PLANTA INSTALACIONES PB",   "MEP PB"),
+        ("M-02", "MEP - PLANTA INSTALACIONES TIPO", "MEP P01"),
         # General
         ("G-01", "3D - VISTA GENERAL",             "3D"),
     ]

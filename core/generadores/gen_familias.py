@@ -276,7 +276,7 @@ with Transaction(doc, "py-building-gen: Tipos de losa") as t:
     nombre = f"Losa HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm"
     ft = get_or_duplicate_floor_type(nombre)
     capas = [
-        (0.030,     FA.Finish1,   "Mortero de cemento"),   # carpeta + piso
+        (0.030,     FA.Substrate, "Mortero de cemento"),   # carpeta + piso
         (espesor_m, FA.Structure, nombre_mat_ha),           # losa HA
     ]
     layers = []
@@ -291,9 +291,9 @@ with Transaction(doc, "py-building-gen: Tipos de losa") as t:
     nombre_azo = f"Losa azotea HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm"
     ft_azo = get_or_duplicate_floor_type(nombre_azo)
     capas_azo = [
-        (0.004,     FA.Finish1,        "Membrana asfáltica"),
-        (0.020,     FA.Substrate,      "Mortero de cemento"),
-        (espesor_m, FA.Structure,      nombre_mat_ha),
+        (0.004,     FA.Membrane,  "Membrana asfáltica"),
+        (0.020,     FA.Substrate, "Mortero de cemento"),
+        (espesor_m, FA.Structure, nombre_mat_ha),
     ]
     layers_azo = []
     for esp, func, mat_nombre in capas_azo:

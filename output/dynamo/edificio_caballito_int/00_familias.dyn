@@ -1,5 +1,5 @@
 {
-  "Uuid": "f335238d-350e-4be8-9e40-531e7f1161b8",
+  "Uuid": "448146ff-64b0-40de-b0c7-2c2188bfc0a7",
   "IsCustomNode": false,
   "Description": "Crea materiales, wall types, floor types y tipos estructurales. Ejecutar PRIMERO, antes de 01_niveles_grilla.dyn.",
   "Name": "00_familias",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"H-21\";",
-      "Id": "64575bd9-eeb6-4143-b9ea-c0909974a5f7",
+      "Id": "df4e40bb-cc51-43b1-b064-6080deb89204",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2d36833b-9187-4206-8fa8-ee06bec1842c",
+          "Id": "74aaa859-ed3a-433e-8fa7-f23ddee14f8d",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"ADN 420\";",
-      "Id": "8440ad34-9315-4ce6-84f0-83d05a2dd81a",
+      "Id": "30bc9180-f943-4cb7-928d-12adfc97b7c6",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "4a46bf1c-aed6-40fc-9640-d7040fe23c90",
+          "Id": "742b3e28-298d-4cfb-a0db-b9a76af3d056",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -56,10 +56,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "8b9bd036-f666-4638-bc78-3c905ab256a5",
+      "Id": "4e2d90f6-f943-4e6d-8c06-45eaf5143a2e",
       "Inputs": [
         {
-          "Id": "2e1074c7-5225-4467-b409-0cfb1f50958c",
+          "Id": "46f91bf4-3d78-4e7f-96b8-cc7b20be783b",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -68,7 +68,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "791b6161-9881-4b94-8690-faedb7517c4e",
+          "Id": "eeaed151-f86f-44b9-b57e-b4da49130baf",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -79,7 +79,7 @@
       ],
       "Outputs": [
         {
-          "Id": "153e7870-36ca-4d65-9148-c2ba59b283a1",
+          "Id": "3b55848e-3d48-4b78-88a3-6c79b7718899",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -98,11 +98,11 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "64529820-649d-4d44-9fa8-a2f8ca2f5552",
+      "Id": "356148f1-d87a-43f1-bd7f-05e9bd9925a4",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d550d59a-f13a-4420-b261-986d9ba94874",
+          "Id": "5c7d70e1-0629-49b6-9e29-786613f0850b",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -118,11 +118,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "30;",
-      "Id": "de3d9181-e3e9-4f92-a2ff-b7ace54f17d8",
+      "Id": "e0a19b4e-7315-46bd-85b6-6b4d38cd5d94",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "148d73ff-28cb-48c9-a40f-b1fe0e97c9c4",
+          "Id": "22f3cd5d-3c84-49f0-9a67-d0c27a195175",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -138,11 +138,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"H-21\";",
-      "Id": "fce2b1d7-86b0-4a59-b951-1870fa288acb",
+      "Id": "d27d02a4-d8f7-44a6-ab87-00d6faf62ccb",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "eebea6d6-56c9-43d6-b17c-c55deceb3f3c",
+          "Id": "6dd672de-8957-4a8c-bcb8-e54019f63084",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -161,10 +161,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "144591eb-8ce5-437e-a3ef-279a2a7da686",
+      "Id": "609480f9-a5df-4cfb-8fcc-68b14b3d91b2",
       "Inputs": [
         {
-          "Id": "e61c10d6-9028-4555-a785-fa4a913e9d0f",
+          "Id": "4a48d9e1-38f1-4f1c-98c7-e45ff666d35a",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -173,7 +173,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5418963c-e6b5-4b94-a928-3db13751217e",
+          "Id": "368c729c-644e-4ba0-be81-141089e9b1dd",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -184,7 +184,7 @@
       ],
       "Outputs": [
         {
-          "Id": "5129f184-2557-4059-8188-b43e1f493396",
+          "Id": "475b5b6e-f5f0-4b61-9018-182b2e81b149",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -200,11 +200,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "35;",
-      "Id": "127fe9bf-a950-4ec7-a34c-965184af044f",
+      "Id": "6095d5a6-636e-4db9-9ef9-9d227e4976e9",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "9be7b811-a068-4c3d-aec7-7c9591d6f508",
+          "Id": "634221e0-7de6-47eb-b99d-69785223c762",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -220,11 +220,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "45;",
-      "Id": "657a657c-38ac-4498-8562-13f50cd42021",
+      "Id": "005beca8-ad1f-4e98-825c-fc9670894382",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "75765701-cfc1-4af2-b9f6-5c62ac0b50dc",
+          "Id": "6f84272f-c972-4c55-90e5-74202a97d5ef",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -240,11 +240,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "85;",
-      "Id": "d2a499ab-29f4-42f7-b247-0719558f9248",
+      "Id": "6c067e44-63dd-449b-93fb-20f8a839c252",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "7a624a1a-bc1a-45a8-bb02-f0e2734964bd",
+          "Id": "018c53ab-ac18-40df-aeb6-77e7eda12d4b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -260,11 +260,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"H-21\";",
-      "Id": "70e918b5-2dd5-4c08-b058-60166a922339",
+      "Id": "5e210396-03b3-4e9b-a9e7-211a579b3393",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "bfae1115-8957-4129-8fab-c99900089483",
+          "Id": "7c6c5753-e63c-436c-bc45-73ce361e552a",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -283,10 +283,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "d199a51c-f984-4043-8786-a42bc2bbaa81",
+      "Id": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
       "Inputs": [
         {
-          "Id": "4c89aa95-3cb0-4129-80c1-4f1ee832198f",
+          "Id": "78881399-7c9e-4348-a7e9-1e1e4181989b",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -295,7 +295,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "07514141-98c4-4aaf-ac45-dff4e9d529b5",
+          "Id": "f951b965-f985-4be9-bb94-9bb6e8c8c9e4",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -304,7 +304,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2701b0ab-59ea-458a-8647-7d4c1234469a",
+          "Id": "ca131e43-ffeb-4355-83b2-eebfe4627c01",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -313,7 +313,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5cfd8591-f5c3-431f-a8ac-83c25856eed6",
+          "Id": "16b8203e-3330-46c1-80d1-4a1da365729f",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -324,7 +324,7 @@
       ],
       "Outputs": [
         {
-          "Id": "ff1aacca-e8b8-46ee-b343-7fe8c4527d99",
+          "Id": "8e8febcd-4a5e-4083-9a42-ab19b7176684",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -339,65 +339,65 @@
   ],
   "Connectors": [
     {
-      "Start": "64575bd9-eeb6-4143-b9ea-c0909974a5f7",
-      "End": "8b9bd036-f666-4638-bc78-3c905ab256a5",
-      "Id": "482becc6-237c-4ff8-a71a-924c8efaa8ca",
+      "Start": "df4e40bb-cc51-43b1-b064-6080deb89204",
+      "End": "4e2d90f6-f943-4e6d-8c06-45eaf5143a2e",
+      "Id": "567ab467-0b15-4697-89e3-d312f2de6d92",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "8440ad34-9315-4ce6-84f0-83d05a2dd81a",
-      "End": "8b9bd036-f666-4638-bc78-3c905ab256a5",
-      "Id": "6e2b951a-4af5-4545-93e5-453734ad8c7c",
+      "Start": "30bc9180-f943-4cb7-928d-12adfc97b7c6",
+      "End": "4e2d90f6-f943-4e6d-8c06-45eaf5143a2e",
+      "Id": "44d05e5f-71b0-405a-bcea-2ecd6b00f555",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "de3d9181-e3e9-4f92-a2ff-b7ace54f17d8",
-      "End": "144591eb-8ce5-437e-a3ef-279a2a7da686",
-      "Id": "d7687c46-b0d5-474e-96d2-bc9c47b7c3ec",
+      "Start": "e0a19b4e-7315-46bd-85b6-6b4d38cd5d94",
+      "End": "609480f9-a5df-4cfb-8fcc-68b14b3d91b2",
+      "Id": "443a9065-2857-48c9-be36-2b925c1ceb24",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "fce2b1d7-86b0-4a59-b951-1870fa288acb",
-      "End": "144591eb-8ce5-437e-a3ef-279a2a7da686",
-      "Id": "a0c2ab68-e624-450e-a566-ae3dbda2c389",
+      "Start": "d27d02a4-d8f7-44a6-ab87-00d6faf62ccb",
+      "End": "609480f9-a5df-4cfb-8fcc-68b14b3d91b2",
+      "Id": "b8a9643e-a594-46da-8650-bcc916afe8cd",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "127fe9bf-a950-4ec7-a34c-965184af044f",
-      "End": "d199a51c-f984-4043-8786-a42bc2bbaa81",
-      "Id": "a5c4a6b9-2f46-47a7-9caf-9c24ca05d1f0",
+      "Start": "6095d5a6-636e-4db9-9ef9-9d227e4976e9",
+      "End": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
+      "Id": "2d05ba6f-3769-41d7-8290-29886e4ec24f",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "657a657c-38ac-4498-8562-13f50cd42021",
-      "End": "d199a51c-f984-4043-8786-a42bc2bbaa81",
-      "Id": "5667c11e-8c52-472b-b38a-2c76bf045782",
+      "Start": "005beca8-ad1f-4e98-825c-fc9670894382",
+      "End": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
+      "Id": "5bb9b75e-65b7-4e1c-bc58-a76b74210d3a",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "d2a499ab-29f4-42f7-b247-0719558f9248",
-      "End": "d199a51c-f984-4043-8786-a42bc2bbaa81",
-      "Id": "585724c0-db41-4b4a-8437-a4d4fd630834",
+      "Start": "6c067e44-63dd-449b-93fb-20f8a839c252",
+      "End": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
+      "Id": "73364809-006d-47ee-a72f-dcc68c5f23b3",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "70e918b5-2dd5-4c08-b058-60166a922339",
-      "End": "d199a51c-f984-4043-8786-a42bc2bbaa81",
-      "Id": "a354e7ca-ea52-4c3e-a5a0-5d333e38ddf3",
+      "Start": "5e210396-03b3-4e9b-a9e7-211a579b3393",
+      "End": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
+      "Id": "b553721f-8eaf-4522-85e6-db5732f369d3",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
@@ -431,7 +431,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "64575bd9-eeb6-4143-b9ea-c0909974a5f7",
+        "Id": "df4e40bb-cc51-43b1-b064-6080deb89204",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tipo_hormigon",
@@ -441,7 +441,7 @@
         "Y": 0.0
       },
       {
-        "Id": "8440ad34-9315-4ce6-84f0-83d05a2dd81a",
+        "Id": "30bc9180-f943-4cb7-928d-12adfc97b7c6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tipo_acero",
@@ -451,7 +451,7 @@
         "Y": 130.0
       },
       {
-        "Id": "8b9bd036-f666-4638-bc78-3c905ab256a5",
+        "Id": "4e2d90f6-f943-4e6d-8c06-45eaf5143a2e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Materiales",
@@ -461,7 +461,7 @@
         "Y": 0.0
       },
       {
-        "Id": "64529820-649d-4d44-9fa8-a2f8ca2f5552",
+        "Id": "356148f1-d87a-43f1-bd7f-05e9bd9925a4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Wall Types",
@@ -471,7 +471,7 @@
         "Y": 390.0
       },
       {
-        "Id": "de3d9181-e3e9-4f92-a2ff-b7ace54f17d8",
+        "Id": "e0a19b4e-7315-46bd-85b6-6b4d38cd5d94",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "espesor_losa_cm",
@@ -481,7 +481,7 @@
         "Y": 650.0
       },
       {
-        "Id": "fce2b1d7-86b0-4a59-b951-1870fa288acb",
+        "Id": "d27d02a4-d8f7-44a6-ab87-00d6faf62ccb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tipo_hormigon",
@@ -491,7 +491,7 @@
         "Y": 780.0
       },
       {
-        "Id": "144591eb-8ce5-437e-a3ef-279a2a7da686",
+        "Id": "609480f9-a5df-4cfb-8fcc-68b14b3d91b2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Floor Types",
@@ -501,7 +501,7 @@
         "Y": 650.0
       },
       {
-        "Id": "127fe9bf-a950-4ec7-a34c-965184af044f",
+        "Id": "6095d5a6-636e-4db9-9ef9-9d227e4976e9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "lado_col_cm",
@@ -511,7 +511,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "657a657c-38ac-4498-8562-13f50cd42021",
+        "Id": "005beca8-ad1f-4e98-825c-fc9670894382",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "ancho_viga_cm",
@@ -521,7 +521,7 @@
         "Y": 1170.0
       },
       {
-        "Id": "d2a499ab-29f4-42f7-b247-0719558f9248",
+        "Id": "6c067e44-63dd-449b-93fb-20f8a839c252",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "alto_viga_cm",
@@ -531,7 +531,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "70e918b5-2dd5-4c08-b058-60166a922339",
+        "Id": "5e210396-03b3-4e9b-a9e7-211a579b3393",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tipo_hormigon",
@@ -541,7 +541,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "d199a51c-f984-4043-8786-a42bc2bbaa81",
+        "Id": "d93014ec-d42d-43d1-9f28-b685e5fbc04c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Tipos Estructurales",

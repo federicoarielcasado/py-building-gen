@@ -28,7 +28,7 @@ from Autodesk.Revit.DB import (
     ViewPlan, ViewFamily, ViewFamilyType, Level,
     FilteredElementCollector, BuiltInCategory,
     IndependentTag, TagMode, TagOrientation, Reference,
-    Transaction, UV, UnitUtils, UnitTypeId,
+    Transaction, XYZ, UV, UnitUtils, UnitTypeId,
     FamilySymbol,
 )
 from Autodesk.Revit.DB.Architecture import Room
@@ -93,7 +93,7 @@ with Transaction(doc, "py-building-gen: Room Tags") as t:
                     False,
                     TagMode.TM_ADDBY_ELEMENT,
                     TagOrientation.Horizontal,
-                    UV(pt.X, pt.Y),
+                    XYZ(pt.X, pt.Y, 0),
                 )
                 if tag_type:
                     tag.ChangeTypeId(tag_type.Id)
@@ -116,7 +116,7 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     ViewPlan, ViewSection, Wall, Level, Line, XYZ,
     ReferenceArray, FilteredElementCollector,
-    Transaction, UnitUtils, UnitTypeId,
+    Transaction, UnitUtils, UnitTypeId, WallSide,
 )
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
@@ -180,10 +180,9 @@ if vista_pb:
             walls_izq = get_walls_at_x(0.0)
             walls_der = get_walls_at_x(frente_m)
             for w in walls_izq[:1] + walls_der[:1]:
-                for ref in w.GetReferences(
-                    __import__("Autodesk.Revit.DB", fromlist=["WallSide"]).WallSide.Exterior,
-                ) if hasattr(w, "GetReferences") else []:
-                    refs.Append(ref)
+                for ref in (w.GetReferences(WallSide.Exterior)
+                        if hasattr(w, "GetReferences") else []):
+                refs.Append(ref)
 
             # Alternativa: usar la curva de la pared directamente
             if refs.Size < 2:
@@ -218,7 +217,7 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     ViewPlan, FamilyInstance, FamilySymbol, BuiltInCategory,
     FilteredElementCollector, IndependentTag, TagMode, TagOrientation,
-    Reference, Transaction, UV, UnitUtils, UnitTypeId,
+    Reference, Transaction, XYZ, UV, UnitUtils, UnitTypeId,
 )
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
@@ -284,7 +283,7 @@ with Transaction(doc, "py-building-gen: Tags puertas y ventanas") as t:
                             Reference(inst), False,
                             TagMode.TM_ADDBY_ELEMENT,
                             TagOrientation.Horizontal,
-                            UV(pt.X, pt.Y),
+                            XYZ(pt.X, pt.Y, 0),
                         )
                         tag.ChangeTypeId(tag_type.Id)
                         tags_creados.append({"tipo": categoria.ToString(), "id": tag.Id.Value})

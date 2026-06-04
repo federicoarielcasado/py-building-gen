@@ -1,5 +1,5 @@
 {
-  "Uuid": "bce8c1ae-26fc-4559-b003-f49f2b487b91",
+  "Uuid": "ea22279f-7c35-4117-b102-e6c442be1e67",
   "IsCustomNode": false,
   "Description": "Crea escaleras reales (StairsEditScope, 2 tramos + descanso, CABA) y shaft openings para ascensores.",
   "Name": "06_escaleras_ascensores",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "18664e55-cfa9-4046-a219-85faa40f3394",
+      "Id": "b2961c14-1158-4b03-aa63-b9acadf1cb08",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8291fbc1-64a3-43e2-967d-092728839699",
+          "Id": "81ef6d2c-dad6-40be-99ec-035ac73bb985",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "394c99c7-fb28-40aa-9669-0c99fa05d8be",
+      "Id": "ab1dff98-a520-4655-942c-49716537796b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e270c248-ad7d-4653-b0e6-d9e9c13715a0",
+          "Id": "c9797e25-d622-4816-aca9-9bf8f40efd5e",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "639859d9-53f0-479c-8e56-15f21fad8a34",
+      "Id": "e42ab2cc-81c4-4649-a5e5-b8cdc7401156",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ab60f156-f511-4eb6-a90c-b2d012ee140f",
+          "Id": "c363466a-d86f-46cd-9da5-b6c13ee9739b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "3327ddc6-3889-467e-a07c-eae27648a059",
+      "Id": "3d3367dc-acf4-452a-8d8e-44b100a7ab53",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b6447711-a7d1-4893-b384-99db7998baaf",
+          "Id": "e305a1a2-f2e4-43d3-ae7f-0f011ef8d370",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "1f03bc0d-2d7f-46e0-bb22-1591d0295d84",
+      "Id": "5d9788c5-4f28-4076-aa34-a0032eefc7f5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "57ef12cd-f4ae-45fd-81ad-b342b6ae4791",
+          "Id": "07e04297-c2bd-4ffc-883f-5d338e3232d0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "b91b502b-62d5-4775-a8b7-e3251c55b99c",
+      "Id": "85d5e6af-1236-4dee-a630-7dfbdd30e1b2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2852ee68-3660-482a-acf7-082d7ebcd1ac",
+          "Id": "c6343260-64c7-4933-8a84-2716f39c2578",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -133,11 +133,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2.8;",
-      "Id": "4d4329ac-2243-4a2f-b3d1-3c7d8a5b36ce",
+      "Id": "93480184-6c0b-41e4-ab56-c22403c5b273",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "380f54df-dc13-4dbc-aa6a-0e3640cef094",
+          "Id": "592e0744-459f-4e44-a554-524456bc9490",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -156,10 +156,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "04f51815-0562-41f2-bdaa-13d526d87c02",
+      "Id": "2a6353f6-b89f-4642-9972-2684db0fe519",
       "Inputs": [
         {
-          "Id": "f8959bef-4006-492a-9802-e8bd2223328c",
+          "Id": "85a4c764-cf64-41a0-b535-f733d7a51ae8",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -168,7 +168,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "82df9b4d-68b0-4e8f-bf30-d5e75faf9ef8",
+          "Id": "703293b3-f8a2-4415-8c3c-dc268af13116",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -177,7 +177,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ec073345-8fb7-498e-bf8b-8b3a17586bab",
+          "Id": "e6cd63be-9a0d-4453-8d19-a0334302d32a",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -186,7 +186,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "89d27900-2d5b-41c2-a5c7-a42bfcf4326f",
+          "Id": "cd60f8db-a0c2-4ce4-ab1e-a2ef740b8885",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -195,7 +195,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a2bf1042-e525-465a-acd2-35742322f4f5",
+          "Id": "82f6eb7d-eb30-4d1b-ae06-80f0b1ad0818",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -204,7 +204,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "9fbb67c3-da5d-43d4-a5c3-f717a52c9f85",
+          "Id": "4e031578-1f32-473c-acdb-9f9120e4a203",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -213,7 +213,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3641f6a1-d303-4701-9b30-bec6eb8b199b",
+          "Id": "b1142c08-b993-4c3d-9e6b-df84ce172776",
           "Name": "IN[6]",
           "Description": "Input 6",
           "UsingDefaultValue": false,
@@ -224,7 +224,7 @@
       ],
       "Outputs": [
         {
-          "Id": "d6ac2f55-474f-42de-8a9d-3c51d2701ddd",
+          "Id": "cab7697e-4968-4b5a-b5a0-7e4eabdd5bec",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -239,57 +239,57 @@
   ],
   "Connectors": [
     {
-      "Start": "18664e55-cfa9-4046-a219-85faa40f3394",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "dd59a4e2-f9b9-44ab-9d19-280566c0a448",
+      "Start": "b2961c14-1158-4b03-aa63-b9acadf1cb08",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "d0c5f6a0-32f8-4791-aed3-c1597e49b230",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "394c99c7-fb28-40aa-9669-0c99fa05d8be",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "370030dc-7cac-4ae7-90f2-a4a0bb8f49e6",
+      "Start": "ab1dff98-a520-4655-942c-49716537796b",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "a9ed7b6b-9974-4810-bfa0-21f6d4488f10",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "639859d9-53f0-479c-8e56-15f21fad8a34",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "9b6328e1-98b9-4467-96e2-88abc1933ff3",
+      "Start": "e42ab2cc-81c4-4649-a5e5-b8cdc7401156",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "657177ac-b7bb-4433-bd27-9ed2b41a8109",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "3327ddc6-3889-467e-a07c-eae27648a059",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "8e27dad3-e299-4696-a017-264fbe6b6f2e",
+      "Start": "3d3367dc-acf4-452a-8d8e-44b100a7ab53",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "153a96d4-ded0-4471-bedc-256f961e0d74",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
     },
     {
-      "Start": "1f03bc0d-2d7f-46e0-bb22-1591d0295d84",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "b7b8c711-8dcb-4b0d-ac6c-7e2552aae27a",
+      "Start": "5d9788c5-4f28-4076-aa34-a0032eefc7f5",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "3d322661-0e04-484b-baa3-a86ce97bcbcd",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 4
     },
     {
-      "Start": "b91b502b-62d5-4775-a8b7-e3251c55b99c",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "0770280c-e2c9-4586-b2d8-984d86271c83",
+      "Start": "85d5e6af-1236-4dee-a630-7dfbdd30e1b2",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "c52dadcf-39af-4544-8314-0f34eed319f6",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 5
     },
     {
-      "Start": "4d4329ac-2243-4a2f-b3d1-3c7d8a5b36ce",
-      "End": "04f51815-0562-41f2-bdaa-13d526d87c02",
-      "Id": "d8cd52d7-de95-4846-88db-d265b2a71adb",
+      "Start": "93480184-6c0b-41e4-ab56-c22403c5b273",
+      "End": "2a6353f6-b89f-4642-9972-2684db0fe519",
+      "Id": "eba5b366-f605-4630-9857-3d60ce8ab7cc",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 6
@@ -323,7 +323,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "18664e55-cfa9-4046-a219-85faa40f3394",
+        "Id": "b2961c14-1158-4b03-aa63-b9acadf1cb08",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -333,7 +333,7 @@
         "Y": 0.0
       },
       {
-        "Id": "394c99c7-fb28-40aa-9669-0c99fa05d8be",
+        "Id": "ab1dff98-a520-4655-942c-49716537796b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -343,7 +343,7 @@
         "Y": 130.0
       },
       {
-        "Id": "639859d9-53f0-479c-8e56-15f21fad8a34",
+        "Id": "e42ab2cc-81c4-4649-a5e5-b8cdc7401156",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -353,7 +353,7 @@
         "Y": 260.0
       },
       {
-        "Id": "3327ddc6-3889-467e-a07c-eae27648a059",
+        "Id": "3d3367dc-acf4-452a-8d8e-44b100a7ab53",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_esc",
@@ -363,7 +363,7 @@
         "Y": 390.0
       },
       {
-        "Id": "1f03bc0d-2d7f-46e0-bb22-1591d0295d84",
+        "Id": "5d9788c5-4f28-4076-aa34-a0032eefc7f5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_asc",
@@ -373,7 +373,7 @@
         "Y": 520.0
       },
       {
-        "Id": "b91b502b-62d5-4775-a8b7-e3251c55b99c",
+        "Id": "85d5e6af-1236-4dee-a630-7dfbdd30e1b2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -383,7 +383,7 @@
         "Y": 650.0
       },
       {
-        "Id": "4d4329ac-2243-4a2f-b3d1-3c7d8a5b36ce",
+        "Id": "93480184-6c0b-41e4-ab56-c22403c5b273",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_tipo_m",
@@ -393,7 +393,7 @@
         "Y": 780.0
       },
       {
-        "Id": "04f51815-0562-41f2-bdaa-13d526d87c02",
+        "Id": "2a6353f6-b89f-4642-9972-2684db0fe519",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Escaleras y Ascensores",
