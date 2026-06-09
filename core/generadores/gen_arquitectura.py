@@ -235,9 +235,12 @@ import clr
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     Floor, FloorType, Level, CurveLoop, Line, XYZ,
-    FilteredElementCollector, Transaction,
+    FilteredElementCollector, ElementCategoryFilter,
+    BuiltInCategory, Transaction,
     UnitUtils, UnitTypeId,
 )
+import System
+from System.Collections.Generic import List as NetList
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 
@@ -263,7 +266,11 @@ def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
 
 def get_floor_type(nombre_exacto):
-    tipos = FilteredElementCollector(doc).OfClass(FloorType).ToElements()
+    cat_filter = ElementCategoryFilter(BuiltInCategory.OST_Floors)
+    tipos = (FilteredElementCollector(doc)
+             .OfClass(FloorType)
+             .WherePasses(cat_filter)
+             .ToElements())
     match = next((t for t in tipos if t.Name == nombre_exacto), None)
     if match:
         return match
@@ -314,11 +321,11 @@ with Transaction(doc, "py-building-gen: Losas v2") as t:
     for i in range(1, pisos_tipo + 1):
         nom = f"P{i:02d}"
         lvl = get_level(nom)
-        losa = Floor.Create(doc, curve_loops_losa(), ft_tipo.Id, lvl.Id)
+        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_tipo.Id, lvl.Id)
         losas_creadas.append({"nivel": nom, "id": losa.Id.Value})
     if tiene_azotea:
         lvl = get_level("AZO")
-        losa = Floor.Create(doc, curve_loops_losa(), ft_azo.Id, lvl.Id)
+        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_azo.Id, lvl.Id)
         losas_creadas.append({"nivel": "AZO", "id": losa.Id.Value})
     t.Commit()
 

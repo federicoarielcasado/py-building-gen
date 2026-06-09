@@ -1,5 +1,5 @@
 {
-  "Uuid": "c9b02c1f-c7fb-44f5-b215-c2efe83b099c",
+  "Uuid": "81c9a3ea-8ad6-44cf-af2c-99562cec79a4",
   "IsCustomNode": false,
   "Description": "Crea plantas, cortes, alzados y vista 3D para documentación técnica.",
   "Name": "08_vistas",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "31e1ddf2-5879-4555-ae00-c4064ae6f20f",
+      "Id": "0e39b716-3038-475c-a562-40c194dbab51",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f66be8bb-e6ff-45b8-ae8d-4b50c60d2616",
+          "Id": "3a7f94b1-8d61-4144-a220-110e1fb8a157",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "0a0f6d42-d1c1-4fee-ac81-56e84b36499c",
+      "Id": "6e6a07dd-64d2-44d7-8551-aa37203de797",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "965f59f5-11b4-4461-9572-23c94c8a7625",
+          "Id": "30f3c51a-76a5-4189-9652-36246a7c6143",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -56,10 +56,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "58ab5747-d48a-40f1-8445-93c6fad041e1",
+      "Id": "cc68e66c-a6e3-4a31-832e-73529b0d63b2",
       "Inputs": [
         {
-          "Id": "9e3be6f6-c6dc-4dca-b904-945dd8a623a4",
+          "Id": "1d4e2867-5ec9-4de3-9213-29dea02e3886",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -68,7 +68,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "70ab85db-1b6c-428f-872b-e7aa73468780",
+          "Id": "9a926020-d88e-4917-9ae4-ccb541b7b4f6",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -79,7 +79,7 @@
       ],
       "Outputs": [
         {
-          "Id": "d856a9fc-592f-4f08-8712-4a16ba326c7b",
+          "Id": "fd7aaa37-e895-4de2-922d-e8e62a0a382c",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -95,11 +95,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "dcee5eae-c597-4608-80cc-82fd3729f327",
+      "Id": "c82c8e29-0f5d-4ef9-aea0-b39497476220",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ccbff2fe-a9eb-4e26-883f-bcd4e9497e9a",
+          "Id": "98ceb2dc-b219-4777-9211-1bd20cade6ae",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -115,11 +115,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "50b874e3-7b96-4822-a41d-1407ff47fa87",
+      "Id": "51458d54-faa8-4303-a070-268b9b6b4882",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c0043100-73cc-43b2-9f3b-3e06ced7e513",
+          "Id": "cf3ab548-c1cd-44b2-8b72-ed0e4dfd8ee9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -135,11 +135,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "20.299999999999997;",
-      "Id": "17406ecb-0afe-485b-a9d8-3943dbc41f6c",
+      "Id": "887fe9fa-37d4-45ac-bb39-55c1942bf966",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "7109790b-f2c1-4927-9521-4a1a39c96dab",
+          "Id": "ff74bca1-d79d-42db-a1fe-5700ca503da7",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -158,10 +158,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "aca4880d-2d2a-4500-a9a7-f10b62bdfacd",
+      "Id": "722c6eaf-0b0f-44cc-8c6a-97974fe7942d",
       "Inputs": [
         {
-          "Id": "bc8f990a-65e6-4344-b48b-1892330d117b",
+          "Id": "b152d022-039a-471e-8c8a-971074526621",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -170,7 +170,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c06bb20d-6caa-4067-b811-73fe6b7bca5f",
+          "Id": "6f3b20fc-a57f-4b45-bbbc-f27e5b0339f1",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -179,7 +179,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "777cb3ff-36b0-4690-8844-bff9225c6f3f",
+          "Id": "6bf63342-ddc2-4dfc-be04-fd70cde58f19",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -190,7 +190,7 @@
       ],
       "Outputs": [
         {
-          "Id": "6428ced4-0b22-4793-9354-53f7f18aba2c",
+          "Id": "147215c2-91a3-4f8d-9f2a-dc27c495d049",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -209,11 +209,11 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "94469114-118a-4b87-9b64-ed868f479e3b",
+      "Id": "0f398ad8-749b-4f1b-aa03-be489674a6eb",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "bdaab9a5-4cde-4284-a60c-a211c385598d",
+          "Id": "ab6b4038-ad36-44f1-8c33-30cf637b594d",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -232,11 +232,11 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "e05a4468-862e-4879-b1aa-944a7027aa78",
+      "Id": "5e02e95f-3c2e-40c6-82ca-2b4f64aa365a",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c61cee43-c02e-491e-abba-2f2b2e8dc1c0",
+          "Id": "21952bfb-1f69-4681-9412-e6b1a3230555",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -251,41 +251,41 @@
   ],
   "Connectors": [
     {
-      "Start": "31e1ddf2-5879-4555-ae00-c4064ae6f20f",
-      "End": "58ab5747-d48a-40f1-8445-93c6fad041e1",
-      "Id": "7351967f-3d32-4f8d-b5d4-68d188cae910",
+      "Start": "0e39b716-3038-475c-a562-40c194dbab51",
+      "End": "cc68e66c-a6e3-4a31-832e-73529b0d63b2",
+      "Id": "6316476d-ebd2-4939-8db2-b4f446d27590",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "0a0f6d42-d1c1-4fee-ac81-56e84b36499c",
-      "End": "58ab5747-d48a-40f1-8445-93c6fad041e1",
-      "Id": "9370a577-1d93-41f5-a66f-797607a4d2b7",
+      "Start": "6e6a07dd-64d2-44d7-8551-aa37203de797",
+      "End": "cc68e66c-a6e3-4a31-832e-73529b0d63b2",
+      "Id": "ad800aa9-f904-41c2-be86-34f5b4f00ad2",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "dcee5eae-c597-4608-80cc-82fd3729f327",
-      "End": "aca4880d-2d2a-4500-a9a7-f10b62bdfacd",
-      "Id": "c6dbb442-984e-4244-939e-cb7586ce020d",
+      "Start": "c82c8e29-0f5d-4ef9-aea0-b39497476220",
+      "End": "722c6eaf-0b0f-44cc-8c6a-97974fe7942d",
+      "Id": "991623af-205c-48e6-a42c-d00b56773d7a",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "50b874e3-7b96-4822-a41d-1407ff47fa87",
-      "End": "aca4880d-2d2a-4500-a9a7-f10b62bdfacd",
-      "Id": "452ba865-8ec3-4340-91a7-b227f11876e7",
+      "Start": "51458d54-faa8-4303-a070-268b9b6b4882",
+      "End": "722c6eaf-0b0f-44cc-8c6a-97974fe7942d",
+      "Id": "b306458d-f37a-47c5-a490-78f24e6ebf93",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "17406ecb-0afe-485b-a9d8-3943dbc41f6c",
-      "End": "aca4880d-2d2a-4500-a9a7-f10b62bdfacd",
-      "Id": "6f71070a-ff1b-458f-9075-1b4de7e2706c",
+      "Start": "887fe9fa-37d4-45ac-bb39-55c1942bf966",
+      "End": "722c6eaf-0b0f-44cc-8c6a-97974fe7942d",
+      "Id": "9bc33eb2-24bf-40d2-ac2d-f74a63910806",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
@@ -319,7 +319,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "31e1ddf2-5879-4555-ae00-c4064ae6f20f",
+        "Id": "0e39b716-3038-475c-a562-40c194dbab51",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -329,7 +329,7 @@
         "Y": 0.0
       },
       {
-        "Id": "0a0f6d42-d1c1-4fee-ac81-56e84b36499c",
+        "Id": "6e6a07dd-64d2-44d7-8551-aa37203de797",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -339,7 +339,7 @@
         "Y": 130.0
       },
       {
-        "Id": "58ab5747-d48a-40f1-8445-93c6fad041e1",
+        "Id": "cc68e66c-a6e3-4a31-832e-73529b0d63b2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Plantas",
@@ -349,7 +349,7 @@
         "Y": 0.0
       },
       {
-        "Id": "dcee5eae-c597-4608-80cc-82fd3729f327",
+        "Id": "c82c8e29-0f5d-4ef9-aea0-b39497476220",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -359,7 +359,7 @@
         "Y": 390.0
       },
       {
-        "Id": "50b874e3-7b96-4822-a41d-1407ff47fa87",
+        "Id": "51458d54-faa8-4303-a070-268b9b6b4882",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -369,7 +369,7 @@
         "Y": 520.0
       },
       {
-        "Id": "17406ecb-0afe-485b-a9d8-3943dbc41f6c",
+        "Id": "887fe9fa-37d4-45ac-bb39-55c1942bf966",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_total_m",
@@ -379,7 +379,7 @@
         "Y": 650.0
       },
       {
-        "Id": "aca4880d-2d2a-4500-a9a7-f10b62bdfacd",
+        "Id": "722c6eaf-0b0f-44cc-8c6a-97974fe7942d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Cortes y Alzados",
@@ -389,7 +389,7 @@
         "Y": 390.0
       },
       {
-        "Id": "94469114-118a-4b87-9b64-ed868f479e3b",
+        "Id": "0f398ad8-749b-4f1b-aa03-be489674a6eb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Vista 3D",
@@ -399,7 +399,7 @@
         "Y": 910.0
       },
       {
-        "Id": "e05a4468-862e-4879-b1aa-944a7027aa78",
+        "Id": "5e02e95f-3c2e-40c6-82ca-2b4f64aa365a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Visibility Overrides",

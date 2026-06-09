@@ -1,5 +1,5 @@
 {
-  "Uuid": "f87a5c68-f5b4-46b4-9bae-1701ca2dca39",
+  "Uuid": "00777e12-b083-4de4-9b62-9cd1f5e1532c",
   "IsCustomNode": false,
   "Description": "Crea columnas (con reducción de sección), vigas y zapatas aisladas según CIRSOC 201-2005.",
   "Name": "04_estructura",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "a5380e6d-415a-4586-adb0-601ccd1aacb6",
+      "Id": "cdfbb2eb-a8c3-4497-96e9-cb90172490b9",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "38a610c8-51c2-4794-869a-6c7fedf67060",
+          "Id": "500d8947-179d-4113-a7fc-c72b4f686acf",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "1ce8b5dd-edd5-4b4c-9426-ae22383ac42e",
+      "Id": "041925bc-ed53-4efb-a6df-2f2b19141f36",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "dbb86572-d752-46dc-a4e8-92bea0514de2",
+          "Id": "f5778964-26bc-4728-85f3-6175b6e1a597",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "35;",
-      "Id": "cc31da00-239a-4116-9a98-9a2d6675f1bf",
+      "Id": "e1e6a2e2-fd88-4342-95c4-fef50703c8b3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "110bf646-1531-45b4-b209-8b6df6c79c53",
+          "Id": "0686a7c6-d8f6-48fb-893c-48a6402995a3",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "719f0e50-d36c-4a3c-a926-3b5be7d14e2c",
+      "Id": "d321d06f-b580-46e7-b9a0-725456498d43",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "14f15b50-1aa2-4b19-8a69-855240bc1e94",
+          "Id": "5a597dfa-7bec-417e-b5f6-6d8a680e27af",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Columna HA 35x35cm\";",
-      "Id": "51f0c8a5-d3e2-4c9e-8b64-4d35bcbad08e",
+      "Id": "7ec3caa4-7852-4781-b736-381028fa8e5b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a947fd17-481a-4d34-93bb-3d824f74c605",
+          "Id": "2ee0cfb4-c5f8-4a56-83e9-d830b146a3b2",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -116,10 +116,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
+      "Id": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
       "Inputs": [
         {
-          "Id": "16c0121d-9854-4682-8dc9-a2401bfd78b6",
+          "Id": "64b29a10-668c-4973-8659-b743de2ef9ae",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -128,7 +128,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "09816659-ffc9-400e-8bb1-06fc63992148",
+          "Id": "abcc3373-7662-41de-9f1e-30a6d276946c",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -137,7 +137,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "155b7713-e08c-440f-80b1-54d315cfd523",
+          "Id": "afe66337-64a9-449e-ba7e-1e486c154086",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -146,7 +146,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "fae34d37-1751-48e7-b03a-baaf77621207",
+          "Id": "4fd7abbc-f922-4d97-9bf9-72fcaf0b65df",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -155,7 +155,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "df803d9f-90ba-4de2-8eb9-a95344712d53",
+          "Id": "d632ce82-0397-4bcf-b087-0cc721bfb64f",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -166,7 +166,7 @@
       ],
       "Outputs": [
         {
-          "Id": "e01b1aa5-0e45-4079-9e9f-a66868dbe8ce",
+          "Id": "415e40cd-c37e-4b20-97ed-03f07ec3cbc5",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -182,11 +182,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "4f5b8c84-a53d-4129-89a4-1655bcf67e03",
+      "Id": "d54b3ed9-81d0-4412-9ada-73d42e2db9a3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "523b40b7-235a-4ef1-b444-66d24ac92d62",
+          "Id": "dd07a44b-0e2e-4e65-b59b-8bba2756c99b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -202,11 +202,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "ed205be0-f834-4f2f-a6a6-72452017d178",
+      "Id": "00d18e3f-a34f-4b48-9f89-9255e9883073",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1ba0ccb1-9584-4c5f-bfb0-4ada8da79422",
+          "Id": "ee6335bf-baf4-4a77-bb68-e7a501635f7c",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -222,11 +222,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "45;",
-      "Id": "19382fe4-0412-4f29-a5b7-09b23862de7f",
+      "Id": "5f856570-b2d6-4d76-b6e6-611ed8bb372c",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "7c1e991d-8aef-49de-9a0a-ea7f9a11b103",
+          "Id": "64aaf08f-41d0-421e-9af8-e9c05603fb35",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -242,11 +242,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "85;",
-      "Id": "c5678d19-3cba-4fc7-b9f0-f4e7cff3ead3",
+      "Id": "a6ebd022-6b7e-49e7-902f-f61c304a443e",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "10d62197-0e4e-4ca1-adc2-e86ed5cb69cf",
+          "Id": "dc3cdc22-d731-4013-8c12-60c2e3816b1a",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -262,11 +262,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "1c17b727-85b0-410e-b29c-e005da4765fa",
+      "Id": "dec8fef6-294c-4df4-bca5-cabe4500cdc2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ad0b8ff9-c2f1-408b-93ac-48359b600817",
+          "Id": "b21ebbdb-c850-485a-8998-a1383205d55c",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -282,11 +282,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Viga HA 45x85cm\";",
-      "Id": "c89c25cf-dc31-443a-a8ce-9ae55bd0f84f",
+      "Id": "ece9fcc5-8897-4638-994c-2a1cc0108248",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "dd4e887a-7ecd-4b1a-8417-f397b4d29888",
+          "Id": "104fd726-8d85-4234-8232-64182af0b425",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -305,10 +305,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
+      "Id": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
       "Inputs": [
         {
-          "Id": "72957a62-df9c-433f-aa4d-b711f39cd002",
+          "Id": "ef30fb50-ad15-4d3b-9d9f-ff5733cec0fd",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -317,7 +317,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "070c5a10-a014-4952-b025-2865b749875d",
+          "Id": "c5bc7ca8-bc69-41e8-bae5-26ab59d3bef1",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -326,7 +326,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "65d6dd46-2536-402c-a35e-2fccd0ecadad",
+          "Id": "483e558c-40a1-4c20-90d9-83d4bc1915c7",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -335,7 +335,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "95185523-7b02-47fc-9941-884fb8dac879",
+          "Id": "9f1d1785-92d7-47dc-a04c-3242575790d5",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -344,7 +344,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6bb48f5e-3a25-482d-a22e-f9cde43f4481",
+          "Id": "e2d82348-20a1-4175-9f0f-0708857182fd",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -353,7 +353,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5eebf4a5-5813-4410-a395-67c97cc9e5da",
+          "Id": "e470db18-cbab-4d0e-ad6b-afbaa6d68d85",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -364,7 +364,7 @@
       ],
       "Outputs": [
         {
-          "Id": "e3eac75c-3d2d-4a8b-8c6a-0cdab53d30f0",
+          "Id": "5fd6896d-661e-4350-a574-0db5276f8933",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -380,11 +380,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "f080e60c-833a-4494-a78c-86609bc3171b",
+      "Id": "46287f06-0073-44cc-ab6a-22def6726f7b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "253dbddb-a941-4429-9935-78d1054bf54d",
+          "Id": "0205fcf5-30ec-47ed-91a5-f7ca4d9e1229",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -400,11 +400,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "5c8a20b8-a7c2-4930-ade0-5914ccd281eb",
+      "Id": "4b5b2539-d7ed-46bd-85d0-0af109aea353",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3f66ab32-86c1-463e-baa8-be6d422714a2",
+          "Id": "5226cc86-43e7-459d-89ce-6387b8cb4206",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -420,11 +420,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "45;",
-      "Id": "51027ff8-2798-418c-8874-20ddd8cb9d24",
+      "Id": "69cdde3f-5784-4372-a51d-c82366420ff0",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "95c7d5e3-68bb-40be-90f8-acf705828ee8",
+          "Id": "f5065196-3ae0-415c-a3ad-43a9ba763989",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -440,11 +440,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "85;",
-      "Id": "2dc261c2-5b32-4763-b35d-53a9f696d37a",
+      "Id": "cf0201f2-5637-47e1-8a39-398d4729ef4b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e756932c-de7f-4fa8-af1c-26fe69b1d0b3",
+          "Id": "03fd554a-8dea-46ec-8f44-8fbe49111e3c",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -460,11 +460,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "93770cbe-4820-4d9b-9500-a0e8539e521b",
+      "Id": "a6809541-bea6-4c63-9feb-24d2122be632",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "dfe15ca5-759c-44e3-aa8a-213e6a84337c",
+          "Id": "864fe6cf-209a-4444-bbd8-de445fdf4acf",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -480,11 +480,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Viga HA 45x85cm\";",
-      "Id": "7a056482-1ffa-4d89-9355-317559f55f03",
+      "Id": "a49c7d3c-bf58-49fe-8b02-fd276f98578a",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8d51156c-b686-4a68-8e70-a5857b56fe06",
+          "Id": "6daab4f2-c879-428a-bfec-dbf671fd3827",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -503,10 +503,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "c99c1b45-722e-437b-a670-2c420cf42102",
+      "Id": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
       "Inputs": [
         {
-          "Id": "745109cd-fdee-42f2-8f23-f19894f44d5d",
+          "Id": "3dde525a-893b-4cf2-968a-4b1d476634e5",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -515,7 +515,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ece7f82c-bfc3-42b6-99f1-b4aaf65938b4",
+          "Id": "56907cf8-b3a2-493e-8289-24bf2f8c7153",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -524,7 +524,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c66d2110-e55b-42ad-9950-2783ffec7d0f",
+          "Id": "e8de741b-650e-4698-946a-e90f2e49f01e",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -533,7 +533,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f0989944-16eb-4d0b-8e75-1d70da956ff1",
+          "Id": "0fadc0a7-b483-4d1b-a44e-9d95fc90b5b1",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -542,7 +542,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "86a15ab2-538b-405a-8cde-2861b2cb8b28",
+          "Id": "ee4ac2a3-12f6-406d-9d59-94cb79830431",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -551,7 +551,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0c06d467-415b-4cab-a14c-d12de2d35ddb",
+          "Id": "d0ef6355-835f-4ced-9f57-bd4b00d0028f",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -562,7 +562,7 @@
       ],
       "Outputs": [
         {
-          "Id": "e119c181-e3b9-45f4-8994-5eeb4d2bb9e2",
+          "Id": "4c10f91e-af28-4132-8c08-7869db4fcaf9",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -578,11 +578,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "43667e4e-548a-477a-b921-0b52d5e728f8",
+      "Id": "38e78e69-dc8b-44ea-81b8-db38714168f8",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2b51a8b9-896b-4287-b6dc-5c4a267c01cd",
+          "Id": "b75b542d-8926-4764-a99a-0b4175ede243",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -598,11 +598,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "a88c68fc-1338-45e2-8251-4c8f485e5259",
+      "Id": "ce792b50-0291-46dd-b312-e90bc7beddbd",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "423fad68-7e0e-48d7-b116-bbc0e0a77770",
+          "Id": "fe164d9c-2128-41da-8155-64712ef86a51",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -618,11 +618,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "120;",
-      "Id": "6f853a2e-8334-4074-9639-6df20ea00b02",
+      "Id": "2b1c5c0e-8cb5-4439-920f-8429f0844d0b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e8d5afef-d889-4ee1-9b9d-a942ed36c0df",
+          "Id": "18eed00c-9cfa-4a01-ada1-95c2060be04f",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -638,11 +638,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "9bdfbaaf-0981-4360-9931-ac9101bde875",
+      "Id": "662c7df0-408f-44e9-b945-86eb191ef8e1",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2343dc8f-146f-4253-a1b4-8b52e953ee8f",
+          "Id": "b528560b-7f68-4b50-a372-8c23918dfb48",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -658,11 +658,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "a22b246a-35af-4266-b47e-2b008c592de7",
+      "Id": "121b7604-af03-4700-8412-ab52f6601c3a",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c0e5b23b-dbf1-4464-895f-8d507949cf56",
+          "Id": "42b0fed6-4a15-4bad-b08f-d4ef20df7ec5",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -681,10 +681,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "054794ac-a07b-4c84-b55e-cef18fa11789",
+      "Id": "3b597447-84be-4019-a396-ddada1618720",
       "Inputs": [
         {
-          "Id": "ffd02042-c646-4570-bac2-5b5a9c1bf04c",
+          "Id": "c8de02c0-022b-4255-8427-14fd5e6da689",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -693,7 +693,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "94a3ff5a-7fa2-4507-928b-eb79267d696f",
+          "Id": "d31d523b-3bee-4e7e-9efc-b261ab93e7b5",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -702,7 +702,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "44723666-4248-436e-b63b-e603a290f8d1",
+          "Id": "9edfceab-2ac5-4788-bb65-3e67a06e6a0f",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -711,7 +711,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e97afdf7-cbcc-40d7-bab8-8b327ce67187",
+          "Id": "028abaa6-8584-4ae0-9cc1-525ecd7b4ab9",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -720,7 +720,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "44da7434-844e-4637-bc0a-e38cb9d3c1ff",
+          "Id": "65dcf1a3-dd9d-4540-b094-07ef31fd174b",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -731,7 +731,7 @@
       ],
       "Outputs": [
         {
-          "Id": "35f964b6-e1e3-42a0-80da-180f97b4ba38",
+          "Id": "d8329232-c835-453a-bf33-053973231c6a",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -746,177 +746,177 @@
   ],
   "Connectors": [
     {
-      "Start": "a5380e6d-415a-4586-adb0-601ccd1aacb6",
-      "End": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
-      "Id": "8095dfc3-2d28-4923-bd4c-a0664721dcb0",
+      "Start": "cdfbb2eb-a8c3-4497-96e9-cb90172490b9",
+      "End": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
+      "Id": "16819b2d-1b45-4aac-b0b5-8cb8758c29da",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "1ce8b5dd-edd5-4b4c-9426-ae22383ac42e",
-      "End": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
-      "Id": "6c605a83-88c6-4dae-8942-e99835bf7b57",
+      "Start": "041925bc-ed53-4efb-a6df-2f2b19141f36",
+      "End": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
+      "Id": "e442eda9-fa12-4016-911c-3022fa8d7689",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "cc31da00-239a-4116-9a98-9a2d6675f1bf",
-      "End": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
-      "Id": "23bddf5e-01fb-4037-b20d-cb8f376f75ea",
+      "Start": "e1e6a2e2-fd88-4342-95c4-fef50703c8b3",
+      "End": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
+      "Id": "083565a0-af88-4392-99ce-6073fd18daa2",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "719f0e50-d36c-4a3c-a926-3b5be7d14e2c",
-      "End": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
-      "Id": "9a22afb5-9e28-43e8-9bfb-e861d6082bfc",
+      "Start": "d321d06f-b580-46e7-b9a0-725456498d43",
+      "End": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
+      "Id": "38c0d1a2-8366-4528-ac7f-f73e1e3bd0c6",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
     },
     {
-      "Start": "51f0c8a5-d3e2-4c9e-8b64-4d35bcbad08e",
-      "End": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
-      "Id": "d0af15e4-b27b-43a4-9ec4-ecfd3f913ed5",
+      "Start": "7ec3caa4-7852-4781-b736-381028fa8e5b",
+      "End": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
+      "Id": "d5e6b8c0-6176-46a8-8550-fb8f2b1bb674",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 4
     },
     {
-      "Start": "4f5b8c84-a53d-4129-89a4-1655bcf67e03",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "80b7f525-d8b7-40b4-a406-f4f1508f353d",
+      "Start": "d54b3ed9-81d0-4412-9ada-73d42e2db9a3",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "615f09f9-92ae-4606-a7ed-070134dd1b00",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "ed205be0-f834-4f2f-a6a6-72452017d178",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "95e62bb5-3438-46db-99cc-7e289940d6bc",
+      "Start": "00d18e3f-a34f-4b48-9f89-9255e9883073",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "3a20b9c7-d8c1-42a0-8be3-908750131796",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "19382fe4-0412-4f29-a5b7-09b23862de7f",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "847f2f32-432f-4903-87df-c6d7e6d2e080",
+      "Start": "5f856570-b2d6-4d76-b6e6-611ed8bb372c",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "2feb0043-732a-4e4c-8b53-63188d5b469b",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "c5678d19-3cba-4fc7-b9f0-f4e7cff3ead3",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "ff94e4e5-4086-49df-9a9a-627b53ba30ac",
+      "Start": "a6ebd022-6b7e-49e7-902f-f61c304a443e",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "9f8bdab7-e32b-4bd1-9bd6-8f1d20a946ee",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
     },
     {
-      "Start": "1c17b727-85b0-410e-b29c-e005da4765fa",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "c4510b08-061e-4379-98c0-d0a6fc3bc88b",
+      "Start": "dec8fef6-294c-4df4-bca5-cabe4500cdc2",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "2059570b-e857-45db-b924-9124aba6e61e",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 4
     },
     {
-      "Start": "c89c25cf-dc31-443a-a8ce-9ae55bd0f84f",
-      "End": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
-      "Id": "256df3de-ae7b-4b8b-bb9e-f4f433b1c578",
+      "Start": "ece9fcc5-8897-4638-994c-2a1cc0108248",
+      "End": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
+      "Id": "673d9007-0375-448e-80a8-4445e43f773a",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 5
     },
     {
-      "Start": "f080e60c-833a-4494-a78c-86609bc3171b",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "ff638cb2-ded8-470b-83d1-ee806b237ee1",
+      "Start": "46287f06-0073-44cc-ab6a-22def6726f7b",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "6caf46a5-8836-4717-bcf0-f28f83856098",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "5c8a20b8-a7c2-4930-ade0-5914ccd281eb",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "5839207c-cfda-4c63-9538-4a1891035ddd",
+      "Start": "4b5b2539-d7ed-46bd-85d0-0af109aea353",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "b0727fc4-b852-4999-a8c1-7741803884b1",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "51027ff8-2798-418c-8874-20ddd8cb9d24",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "0cae09ae-1458-4d29-b21e-89fd4c08c627",
+      "Start": "69cdde3f-5784-4372-a51d-c82366420ff0",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "99a1d6d6-32bd-4a6a-91fd-3196d6cb3c54",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "2dc261c2-5b32-4763-b35d-53a9f696d37a",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "53496bd8-b0ec-4213-8618-bbf9fa5b9f39",
+      "Start": "cf0201f2-5637-47e1-8a39-398d4729ef4b",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "75896a69-1fbc-47a1-98cd-ed422e94c1e0",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
     },
     {
-      "Start": "93770cbe-4820-4d9b-9500-a0e8539e521b",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "8f74ef27-cb0a-43e4-a8e5-af8f0bd6505c",
+      "Start": "a6809541-bea6-4c63-9feb-24d2122be632",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "9544a7ac-e3cd-4957-b62a-e8457d5b36c1",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 4
     },
     {
-      "Start": "7a056482-1ffa-4d89-9355-317559f55f03",
-      "End": "c99c1b45-722e-437b-a670-2c420cf42102",
-      "Id": "8655e56e-6ed2-4260-b008-03d0dbd9c9cc",
+      "Start": "a49c7d3c-bf58-49fe-8b02-fd276f98578a",
+      "End": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
+      "Id": "625443aa-9b20-4caf-96e6-9ebccdea5246",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 5
     },
     {
-      "Start": "43667e4e-548a-477a-b921-0b52d5e728f8",
-      "End": "054794ac-a07b-4c84-b55e-cef18fa11789",
-      "Id": "361a1f9c-4e68-447d-a854-4e6cd9fe45ef",
+      "Start": "38e78e69-dc8b-44ea-81b8-db38714168f8",
+      "End": "3b597447-84be-4019-a396-ddada1618720",
+      "Id": "63904868-bfa7-49e9-993f-56abd7c6b1b3",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "a88c68fc-1338-45e2-8251-4c8f485e5259",
-      "End": "054794ac-a07b-4c84-b55e-cef18fa11789",
-      "Id": "6f68473a-b194-4261-9ba3-6fd7ef05546b",
+      "Start": "ce792b50-0291-46dd-b312-e90bc7beddbd",
+      "End": "3b597447-84be-4019-a396-ddada1618720",
+      "Id": "4e95627f-6046-4c99-8a5d-d0ea5117c620",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "6f853a2e-8334-4074-9639-6df20ea00b02",
-      "End": "054794ac-a07b-4c84-b55e-cef18fa11789",
-      "Id": "e16a596c-610b-4d4d-ae9b-bf8a2ccd08ae",
+      "Start": "2b1c5c0e-8cb5-4439-920f-8429f0844d0b",
+      "End": "3b597447-84be-4019-a396-ddada1618720",
+      "Id": "a206c069-4e70-463f-8ed6-228c9501a5e3",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 2
     },
     {
-      "Start": "9bdfbaaf-0981-4360-9931-ac9101bde875",
-      "End": "054794ac-a07b-4c84-b55e-cef18fa11789",
-      "Id": "c9ef2250-85df-48ef-a723-266fdcd794ca",
+      "Start": "662c7df0-408f-44e9-b945-86eb191ef8e1",
+      "End": "3b597447-84be-4019-a396-ddada1618720",
+      "Id": "f1d8f1ba-7819-4052-a81a-fada5f1a641a",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 3
     },
     {
-      "Start": "a22b246a-35af-4266-b47e-2b008c592de7",
-      "End": "054794ac-a07b-4c84-b55e-cef18fa11789",
-      "Id": "4c906a54-ec4d-42a5-95f8-e385a870d728",
+      "Start": "121b7604-af03-4700-8412-ab52f6601c3a",
+      "End": "3b597447-84be-4019-a396-ddada1618720",
+      "Id": "81a120f1-3aca-4a90-91ec-da85339b6ee1",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 4
@@ -950,7 +950,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "a5380e6d-415a-4586-adb0-601ccd1aacb6",
+        "Id": "cdfbb2eb-a8c3-4497-96e9-cb90172490b9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -960,7 +960,7 @@
         "Y": 0.0
       },
       {
-        "Id": "1ce8b5dd-edd5-4b4c-9426-ae22383ac42e",
+        "Id": "041925bc-ed53-4efb-a6df-2f2b19141f36",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -970,7 +970,7 @@
         "Y": 130.0
       },
       {
-        "Id": "cc31da00-239a-4116-9a98-9a2d6675f1bf",
+        "Id": "e1e6a2e2-fd88-4342-95c4-fef50703c8b3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "lado_col_cm",
@@ -980,7 +980,7 @@
         "Y": 260.0
       },
       {
-        "Id": "719f0e50-d36c-4a3c-a926-3b5be7d14e2c",
+        "Id": "d321d06f-b580-46e7-b9a0-725456498d43",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -990,7 +990,7 @@
         "Y": 390.0
       },
       {
-        "Id": "51f0c8a5-d3e2-4c9e-8b64-4d35bcbad08e",
+        "Id": "7ec3caa4-7852-4781-b736-381028fa8e5b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_col",
@@ -1000,7 +1000,7 @@
         "Y": 520.0
       },
       {
-        "Id": "45c5a56e-cae8-44d2-97b9-5ea9a9f952b4",
+        "Id": "49cd4b10-6a2a-48d7-b380-43affe4da8f5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Columnas v2",
@@ -1010,7 +1010,7 @@
         "Y": 0.0
       },
       {
-        "Id": "4f5b8c84-a53d-4129-89a4-1655bcf67e03",
+        "Id": "d54b3ed9-81d0-4412-9ada-73d42e2db9a3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1020,7 +1020,7 @@
         "Y": 780.0
       },
       {
-        "Id": "ed205be0-f834-4f2f-a6a6-72452017d178",
+        "Id": "00d18e3f-a34f-4b48-9f89-9255e9883073",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1030,7 +1030,7 @@
         "Y": 910.0
       },
       {
-        "Id": "19382fe4-0412-4f29-a5b7-09b23862de7f",
+        "Id": "5f856570-b2d6-4d76-b6e6-611ed8bb372c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "ancho_viga_cm",
@@ -1040,7 +1040,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "c5678d19-3cba-4fc7-b9f0-f4e7cff3ead3",
+        "Id": "a6ebd022-6b7e-49e7-902f-f61c304a443e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "alto_viga_cm",
@@ -1050,7 +1050,7 @@
         "Y": 1170.0
       },
       {
-        "Id": "1c17b727-85b0-410e-b29c-e005da4765fa",
+        "Id": "dec8fef6-294c-4df4-bca5-cabe4500cdc2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -1060,7 +1060,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "c89c25cf-dc31-443a-a8ce-9ae55bd0f84f",
+        "Id": "ece9fcc5-8897-4638-994c-2a1cc0108248",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_viga",
@@ -1070,7 +1070,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "e520e9b1-bf67-40cd-b1ee-f0546fa12e4e",
+        "Id": "5ec56e0f-3453-40a0-bb42-0df2fcff25fb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Vigas",
@@ -1080,7 +1080,7 @@
         "Y": 780.0
       },
       {
-        "Id": "f080e60c-833a-4494-a78c-86609bc3171b",
+        "Id": "46287f06-0073-44cc-ab6a-22def6726f7b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1090,7 +1090,7 @@
         "Y": 1690.0
       },
       {
-        "Id": "5c8a20b8-a7c2-4930-ade0-5914ccd281eb",
+        "Id": "4b5b2539-d7ed-46bd-85d0-0af109aea353",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1100,7 +1100,7 @@
         "Y": 1820.0
       },
       {
-        "Id": "51027ff8-2798-418c-8874-20ddd8cb9d24",
+        "Id": "69cdde3f-5784-4372-a51d-c82366420ff0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "ancho_vf_cm",
@@ -1110,7 +1110,7 @@
         "Y": 1950.0
       },
       {
-        "Id": "2dc261c2-5b32-4763-b35d-53a9f696d37a",
+        "Id": "cf0201f2-5637-47e1-8a39-398d4729ef4b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "alto_vf_cm",
@@ -1120,7 +1120,7 @@
         "Y": 2080.0
       },
       {
-        "Id": "93770cbe-4820-4d9b-9500-a0e8539e521b",
+        "Id": "a6809541-bea6-4c63-9feb-24d2122be632",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -1130,7 +1130,7 @@
         "Y": 2210.0
       },
       {
-        "Id": "7a056482-1ffa-4d89-9355-317559f55f03",
+        "Id": "a49c7d3c-bf58-49fe-8b02-fd276f98578a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_viga",
@@ -1140,7 +1140,7 @@
         "Y": 2340.0
       },
       {
-        "Id": "c99c1b45-722e-437b-a670-2c420cf42102",
+        "Id": "dc6aabb4-d535-4160-a2db-d5daf6fc9ffc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Vigas de Fundación",
@@ -1150,7 +1150,7 @@
         "Y": 1690.0
       },
       {
-        "Id": "43667e4e-548a-477a-b921-0b52d5e728f8",
+        "Id": "38e78e69-dc8b-44ea-81b8-db38714168f8",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1160,7 +1160,7 @@
         "Y": 2600.0
       },
       {
-        "Id": "a88c68fc-1338-45e2-8251-4c8f485e5259",
+        "Id": "ce792b50-0291-46dd-b312-e90bc7beddbd",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1170,7 +1170,7 @@
         "Y": 2730.0
       },
       {
-        "Id": "6f853a2e-8334-4074-9639-6df20ea00b02",
+        "Id": "2b1c5c0e-8cb5-4439-920f-8429f0844d0b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "lado_zapata_cm",
@@ -1180,7 +1180,7 @@
         "Y": 2860.0
       },
       {
-        "Id": "9bdfbaaf-0981-4360-9931-ac9101bde875",
+        "Id": "662c7df0-408f-44e9-b945-86eb191ef8e1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -1190,7 +1190,7 @@
         "Y": 2990.0
       },
       {
-        "Id": "a22b246a-35af-4266-b47e-2b008c592de7",
+        "Id": "121b7604-af03-4700-8412-ab52f6601c3a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -1200,7 +1200,7 @@
         "Y": 3120.0
       },
       {
-        "Id": "054794ac-a07b-4c84-b55e-cef18fa11789",
+        "Id": "3b597447-84be-4019-a396-ddada1618720",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Zapatas",

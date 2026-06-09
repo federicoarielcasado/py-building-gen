@@ -119,6 +119,8 @@ from Autodesk.Revit.DB import (
     FilteredElementCollector, Transaction,
     UnitUtils, UnitTypeId,
 )
+import System
+from System.Collections.Generic import List as NetList
 
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
@@ -133,7 +135,6 @@ def get_material_id(nombre):
     return mat.Id if mat else ElementId.InvalidElementId
 
 def get_or_duplicate_wall_type(nombre_base, nombre_nuevo):
-    """Duplica un tipo de muro existente o devuelve el nuevo si ya existe."""
     wts = FilteredElementCollector(doc).OfClass(WallType).ToElements()
     existente = next((wt for wt in wts if wt.Name == nombre_nuevo), None)
     if existente:
@@ -142,17 +143,11 @@ def get_or_duplicate_wall_type(nombre_base, nombre_nuevo):
     return base.Duplicate(nombre_nuevo)
 
 def build_compound_structure(capas):
-    """
-    capas: lista de (espesor_m, MaterialFunctionAssignment, nombre_material)
-    Orden: de exterior a interior.
-    """
-    layers = []
+    net_layers = NetList[CompoundStructureLayer]()
     for espesor_m, funcion, nombre_mat in capas:
         mat_id = get_material_id(nombre_mat)
-        layer = CompoundStructureLayer(m_to_ft(espesor_m), funcion, mat_id)
-        layers.append(layer)
-    cs = CompoundStructure.CreateSimpleCompoundStructure(layers)
-    return cs
+        net_layers.Add(CompoundStructureLayer(m_to_ft(espesor_m), funcion, mat_id))
+    return CompoundStructure.CreateSimpleCompoundStructure(net_layers)
 
 FA = MaterialFunctionAssignment  # alias
 tipos_creados = []
@@ -236,9 +231,12 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     FloorType, CompoundStructure, CompoundStructureLayer,
     MaterialFunctionAssignment, Material, ElementId,
-    FilteredElementCollector, Transaction,
+    FilteredElementCollector, ElementCategoryFilter,
+    BuiltInCategory, Transaction,
     UnitUtils, UnitTypeId,
 )
+import System
+from System.Collections.Generic import List as NetList
 
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
@@ -256,12 +254,28 @@ def get_material_id(nombre):
     return mat.Id if mat else ElementId.InvalidElementId
 
 def get_or_duplicate_floor_type(nombre_nuevo):
-    fts = FilteredElementCollector(doc).OfClass(FloorType).ToElements()
+    cat_filter = ElementCategoryFilter(BuiltInCategory.OST_Floors)
+    fts = (FilteredElementCollector(doc)
+           .OfClass(FloorType)
+           .WherePasses(cat_filter)
+           .ToElements())
     existente = next((ft for ft in fts if ft.Name == nombre_nuevo), None)
     if existente:
         return existente
-    base = fts[0]
-    return base.Duplicate(nombre_nuevo)
+    if not fts:
+        raise Exception("No se encontraron FloorTypes OST_Floors en el modelo.")
+    return fts[0].Duplicate(nombre_nuevo)
+
+def build_cs(doc, capas):
+    """Construye CompoundStructure con NetList explícito (PythonNet3 no convierte listas Python)."""
+    net_layers = NetList[CompoundStructureLayer]()
+    for esp, func, mat_nombre in capas:
+        mat_id = get_material_id(mat_nombre)
+        net_layers.Add(CompoundStructureLayer(m_to_ft(esp), func, mat_id))
+    try:
+        return CompoundStructure.Create(doc, net_layers)
+    except Exception:
+        return CompoundStructure.CreateSimpleCompoundStructure(net_layers)
 
 FA = MaterialFunctionAssignment
 tipos_creados = []
@@ -276,15 +290,10 @@ with Transaction(doc, "py-building-gen: Tipos de losa") as t:
     nombre = f"Losa HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm"
     ft = get_or_duplicate_floor_type(nombre)
     capas = [
-        (0.030,     FA.Substrate, "Mortero de cemento"),   # carpeta + piso
-        (espesor_m, FA.Structure, nombre_mat_ha),           # losa HA
+        (0.030,     FA.Substrate, "Mortero de cemento"),
+        (espesor_m, FA.Structure, nombre_mat_ha),
     ]
-    layers = []
-    for esp, func, mat_nombre in capas:
-        mat_id = get_material_id(mat_nombre)
-        layers.append(CompoundStructureLayer(m_to_ft(esp), func, mat_id))
-    cs = CompoundStructure.CreateSimpleCompoundStructure(layers)
-    ft.SetCompoundStructure(cs)
+    ft.SetCompoundStructure(build_cs(doc, capas))
     tipos_creados.append(nombre)
 
     # Losa azotea (con membrana)
@@ -295,12 +304,7 @@ with Transaction(doc, "py-building-gen: Tipos de losa") as t:
         (0.020,     FA.Substrate, "Mortero de cemento"),
         (espesor_m, FA.Structure, nombre_mat_ha),
     ]
-    layers_azo = []
-    for esp, func, mat_nombre in capas_azo:
-        mat_id = get_material_id(mat_nombre)
-        layers_azo.append(CompoundStructureLayer(m_to_ft(esp), func, mat_id))
-    cs_azo = CompoundStructure.CreateSimpleCompoundStructure(layers_azo)
-    ft_azo.SetCompoundStructure(cs_azo)
+    ft_azo.SetCompoundStructure(build_cs(doc, capas_azo))
     tipos_creados.append(nombre_azo)
 
     t.Commit()

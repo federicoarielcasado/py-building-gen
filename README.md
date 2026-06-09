@@ -664,19 +664,44 @@ py-building-gen/
 
 ## Fixes técnicos — API Revit 2027 / Dynamo 4.0 / PythonNet3
 
-Bugs corregidos tras revisión sistemática de todos los generadores contra la API de Revit 2024+:
+### Sesión 2026-06-04 — revisión API sistemática
 
 | Script | Fix | Causa raíz |
 |--------|-----|------------|
 | `00_familias` — Crear Floor Types | `FA.Finish1` reemplazado por `FA.Substrate` (carpeta) y `FA.Membrane` (membrana) en `CompoundStructure` para `FloorType` | `Finish1`/`Finish2` activan `OpeningWrapping` en walls; aplicado a un `FloorType` Revit lanza `"wrong EndCap condition"` |
 | `04_estructura` — Columnas | Dos `FamilySymbol` separados (`Col HA 35x35cm` / `Col HA 30x30cm`) en lugar de mutar el tipo dentro del loop | `set_section()` modifica parámetros de tipo → todas las instancias quedan con la sección del último nivel procesado |
-| `04_estructura` — Vigas de fundación | `z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)` (relativo al nivel) | Z absoluto = -0.30m colocaba vigas a 2.50m por encima del nivel SS01 cuando `tiene_subsuelo=True` |
-| `04_estructura` — Zapatas | `pt = XYZ(x, y, lvl_fund.Elevation)` (relativo al nivel) | Z = 0 absoluto colocaba zapatas fuera del nivel de cimentación cuando había subsuelo |
+| `04_estructura` — Vigas de fundación | `z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)` (relativo al nivel) | Z absoluto colocaba vigas fuera del nivel de cimentación con subsuelo |
+| `04_estructura` — Zapatas | `pt = XYZ(x, y, lvl_fund.Elevation)` (relativo al nivel) | Z = 0 absoluto colocaba zapatas fuera del nivel cuando había subsuelo |
 | `07_instalaciones` — MEP Spaces | `doc.Create.NewSpace(lvl, UV(x, y))` | El constructor `Space(doc, lvl, XYZ)` no existe en Revit 2024+; `NewSpace` es el método canónico |
-| `08_vistas` — Plantas | Chequeo de existencia antes de `ViewPlan.Create` | El script 01 ya crea `"PLANTA PB"`, `"PLANTA P01"`, etc.; intentar crearlas de nuevo lanzaba `ArgumentException: Name is already in use` |
-| `09_sheets` — Láminas EST/MEP | Filtros corregidos: `"EST PB"` / `"MEP PB"` en lugar de `"PLANTA PB"` | Las láminas estructurales y MEP recibían vistas arquitectónicas por coincidencia de nombre |
-| `09b_anotaciones` — Tags | `XYZ(pt.X, pt.Y, 0)` en lugar de `UV(pt.X, pt.Y)` en `IndependentTag.Create` | La firma de `IndependentTag.Create` requiere `XYZ` como 7.° argumento; `UV` lanzaba `ArgumentException` |
-| `09b_anotaciones` — Dimensiones | `WallSide` importado en bloque de imports del nodo | Import dinámico `__import__(...)` dentro de un list comprehension no es confiable en PythonNet3 |
+| `08_vistas` — Plantas | Chequeo de existencia antes de `ViewPlan.Create` | El script 01 ya crea las mismas vistas; crearlas de nuevo lanzaba `ArgumentException: Name is already in use` |
+| `09_sheets` — Láminas EST/MEP | Filtros corregidos: `"EST PB"` / `"MEP PB"` | Las láminas estructurales y MEP recibían vistas arquitectónicas |
+| `09b_anotaciones` — Tags | `XYZ(pt.X, pt.Y, 0)` en `IndependentTag.Create` | La firma requiere `XYZ`; `UV` lanzaba `ArgumentException` |
+| `09b_anotaciones` — Dimensiones | `WallSide` importado en bloque de imports del nodo | Import dinámico `__import__(...)` no es confiable en PythonNet3 |
+
+### Sesión 2026-06-09 — testing en Revit + auditoría preventiva
+
+| Archivo | Fix | Causa raíz |
+|---------|-----|------------|
+| `gen_familias.py` — Crear Floor Types | `FilteredElementCollector.OfClass(FloorType).WherePasses(ElementCategoryFilter(BuiltInCategory.OST_Floors))` | `OfClass(FloorType)` devuelve también `CeilingType` y foundation slabs en Revit 2027; duplicar uno de esos tipos produce un `CompoundStructure` con `EndCapCondition` incompatible con `FloorType.SetCompoundStructure` |
+| `gen_familias.py` — Crear Floor Types | `NetList[CompoundStructureLayer]` + `CompoundStructure.Create(doc, net_layers)` | PythonNet3 **no convierte automáticamente** listas Python a `IList<T>`; `CreateSimpleCompoundStructure(python_list)` recibía un objeto no marshalable y producía un compound structure malformado |
+| `gen_familias.py` — Crear Wall Types | `NetList[CompoundStructureLayer]` en `build_compound_structure()` | Mismo patrón de IList marshaling; corregido preventivamente |
+| `gen_arquitectura.py` — Crear Floor Types (getter) | `WherePasses(ElementCategoryFilter(BuiltInCategory.OST_Floors))` en `get_floor_type()` | Mismo bug de categoría que gen_familias: si `tipos[0]` era techo o foundation slab, `Floor.Create` recibiría un `FloorTypeId` inválido |
+| `gen_arquitectura.py` — Losas | `NetList[CurveLoop](curve_loops_losa())` en `Floor.Create` | `Floor.Create(doc, IList<CurveLoop>, ...)` requiere `IList<CurveLoop>` .NET; con lista Python PythonNet3 lanzaría `TypeError` |
+
+### Nota general — PythonNet3 vs IronPython 2.7
+
+Dynamo 4.0 usa PythonNet3 (CPython3). La diferencia más crítica respecto a IronPython:
+
+- **`IList<T>`:** las listas Python **no** se convierten automáticamente. Siempre usar `NetList[T]` explícito:
+  ```python
+  from System.Collections.Generic import List as NetList
+  net_loops = NetList[CurveLoop](python_list)
+  Floor.Create(doc, net_loops, ft_id, lvl_id)
+  ```
+- **Enums con nombres reservados:** `ViewDetailLevel.None`, etc. → usar `getattr(ViewDetailLevel, 'None')` o el valor entero.
+- **`ElementId`:** usar `.Value` (Int64) en lugar de `.IntegerValue` (Int32, obsoleto desde Revit 2024).
+- **`FamilySymbol.Activate()`:** siempre verificar `IsActive` antes de `NewFamilyInstance`; agregar `doc.Regenerate()` después de `Activate()`.
+- **`IDisposable` + `with`:** en Dynamo < 2.11 puede no llamar `Dispose()`; usar `try/finally` si la versión es incierta.
 
 ---
 

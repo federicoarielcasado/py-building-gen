@@ -1,5 +1,5 @@
 {
-  "Uuid": "75676cc3-b96a-479d-a41b-b26203a70a2a",
+  "Uuid": "f273c587-f8b2-407e-bd0b-8607db263ced",
   "IsCustomNode": false,
   "Description": "Crea tablas de cómputo (áreas, puertas, ventanas, estructura) para documentación y presupuesto.",
   "Name": "10_schedules",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "df2c7929-6081-47b6-9367-83125d7c3cd4",
+      "Id": "7156a845-86b8-4791-8f4b-20fbf83d8717",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "05c41b0d-e8dc-4aa2-b0c2-572a86e3dbfa",
+          "Id": "d131f900-3c43-471c-862c-5788198df404",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -36,10 +36,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "17b6911c-b0ab-42f8-9803-d5f99cd1ceac",
+      "Id": "96b48fa9-e9fc-458c-bf39-d448f388614b",
       "Inputs": [
         {
-          "Id": "8188420d-afdf-4f34-a963-b27e384a4c64",
+          "Id": "68b53837-7440-4a66-bdde-1fd94a786390",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -50,7 +50,7 @@
       ],
       "Outputs": [
         {
-          "Id": "63e0131f-a49f-4e7a-bfce-dc8edc630d8b",
+          "Id": "1e6f9382-73a7-4a28-92b9-19b17b5ce5a7",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -65,9 +65,9 @@
   ],
   "Connectors": [
     {
-      "Start": "df2c7929-6081-47b6-9367-83125d7c3cd4",
-      "End": "17b6911c-b0ab-42f8-9803-d5f99cd1ceac",
-      "Id": "783ec6e3-4e45-4924-9a53-b56217af7058",
+      "Start": "7156a845-86b8-4791-8f4b-20fbf83d8717",
+      "End": "96b48fa9-e9fc-458c-bf39-d448f388614b",
+      "Id": "3587378a-5518-4f1e-8a74-19fb308d8ea3",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
@@ -101,7 +101,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "df2c7929-6081-47b6-9367-83125d7c3cd4",
+        "Id": "7156a845-86b8-4791-8f4b-20fbf83d8717",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -111,7 +111,7 @@
         "Y": 0.0
       },
       {
-        "Id": "17b6911c-b0ab-42f8-9803-d5f99cd1ceac",
+        "Id": "96b48fa9-e9fc-458c-bf39-d448f388614b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Schedules",
