@@ -132,19 +132,51 @@ class TestNodosPython:
 
 class TestConectores:
     def test_conectores_tienen_campos(self, archivos_base):
-        campos = {"Start", "End", "Id", "StartIndex", "EndIndex"}
+        campos = {"Start", "End", "Id"}
         for p in archivos_base:
             data = _load_dyn(p)
             for c in data["Connectors"]:
                 faltantes = campos - c.keys()
                 assert not faltantes, f"{p.name}: conector incompleto {c}"
 
-    def test_indices_no_negativos(self, archivos_base):
+    def test_start_end_referencian_puertos_no_nodos(self, archivos_base):
+        """Start/End deben ser IDs de PUERTO existentes (Inputs/Outputs), no de nodo.
+
+        Dynamo resuelve las conexiones por ID de puerto. Si se usan IDs de nodo,
+        los inputs quedan desconectados -> IN[x] = None -> defaults (bug sistemico
+        que hacia que los scripts ignoraran los parametros del usuario en Revit).
+        """
         for p in archivos_base:
             data = _load_dyn(p)
+            output_ports, input_ports, node_ids = set(), set(), set()
+            for n in data["Nodes"]:
+                node_ids.add(n["Id"])
+                for o in n.get("Outputs", []):
+                    output_ports.add(o["Id"])
+                for i in n.get("Inputs", []):
+                    input_ports.add(i["Id"])
             for c in data["Connectors"]:
-                assert c["StartIndex"] >= 0
-                assert c["EndIndex"] >= 0
+                assert c["Start"] in output_ports, \
+                    f"{p.name}: Start {c['Start']} no es un puerto de salida"
+                assert c["End"] in input_ports, \
+                    f"{p.name}: End {c['End']} no es un puerto de entrada"
+                assert c["Start"] not in node_ids and c["End"] not in node_ids, \
+                    f"{p.name}: conector referencia un ID de nodo en vez de puerto"
+
+    def test_conectores_referencian_puertos_de_nodos_existentes(self, archivos_base):
+        """Cada puerto referenciado pertenece a un nodo presente en el grafo."""
+        for p in archivos_base:
+            data = _load_dyn(p)
+            # mapa puerto -> existe
+            all_ports = set()
+            for n in data["Nodes"]:
+                for o in n.get("Outputs", []):
+                    all_ports.add(o["Id"])
+                for i in n.get("Inputs", []):
+                    all_ports.add(i["Id"])
+            for c in data["Connectors"]:
+                assert c["Start"] in all_ports and c["End"] in all_ports, \
+                    f"{p.name}: conector apunta a un puerto inexistente"
 
 
 # ---------------------------------------------------------------------------
@@ -188,3 +220,56 @@ class TestScriptsEspecificos:
         nombres = [a.name for a in archivos]
         for nombre in nombres:
             assert nombre[0].isdigit(), f"{nombre} no empieza con número"
+
+
+# ---------------------------------------------------------------------------
+# Sintaxis del código Python embebido en los nodos
+# ---------------------------------------------------------------------------
+# El código de cada nodo Python vive dentro de strings (_CODE_*) que generar.py
+# NUNCA compila — solo los serializa al .dyn. Un error de sintaxis ahí pasa
+# desapercibido hasta que Dynamo intenta correr el nodo en Revit. Estos tests
+# compilan cada string como lo hará Dynamo (con los helpers que inyecta el builder).
+
+import importlib
+
+from core.dynamo.dyn_builder import _INPUT_HELPERS
+
+_MODULOS_GEN = [
+    "core.generadores.gen_familias",
+    "core.generadores.gen_niveles",
+    "core.generadores.gen_arquitectura",
+    "core.generadores.gen_estructura",
+    "core.generadores.gen_instalaciones",
+    "core.generadores.gen_vistas",
+    "core.generadores.gen_sheets",
+    "core.generadores.gen_anotaciones",
+    "core.generadores.gen_habitaciones",
+]
+
+
+def _nodos_codigo():
+    """Yields (id, codigo) de cada constante _CODE_* en todos los generadores."""
+    for mname in _MODULOS_GEN:
+        m = importlib.import_module(mname)
+        for attr in dir(m):
+            if attr.startswith("_CODE"):
+                val = getattr(m, attr)
+                if isinstance(val, str):
+                    yield f"{mname}.{attr}", val
+
+
+class TestSintaxisCodigoEmbebido:
+    def test_hay_nodos(self):
+        nodos = list(_nodos_codigo())
+        assert len(nodos) >= 28, f"Se esperaban >=28 nodos, hay {len(nodos)}"
+
+    def test_todos_compilan(self):
+        errores = []
+        for nid, codigo in _nodos_codigo():
+            # Mismo prefijo que inyecta PythonNode.node_dict en runtime
+            fuente = _INPUT_HELPERS + codigo
+            try:
+                compile(fuente, nid, "exec")
+            except SyntaxError as e:
+                errores.append(f"{nid}: {e.msg} (línea {e.lineno})")
+        assert not errores, "Errores de sintaxis en nodos Python:\n" + "\n".join(errores)

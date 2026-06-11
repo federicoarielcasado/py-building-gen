@@ -664,6 +664,11 @@ py-building-gen/
 
 ## Fixes técnicos — API Revit 2027 / Dynamo 4.0 / PythonNet3
 
+> 📘 **Referencia consolidada:** [`docs/dev/dynamo4_revitapi.md`](docs/dev/dynamo4_revitapi.md) —
+> documento vivo con patrones por elemento, marshaling PythonNet3, errores conocidos →
+> solución y checklist para escribir nodos nuevos. Esta sección es la bitácora cronológica;
+> el doc de referencia es la versión organizada por tema.
+
 ### Sesión 2026-06-04 — revisión API sistemática
 
 | Script | Fix | Causa raíz |
@@ -687,6 +692,27 @@ py-building-gen/
 | `gen_familias.py` — Crear Wall Types | `NetList[CompoundStructureLayer]` en `build_compound_structure()` | Mismo patrón de IList marshaling; corregido preventivamente |
 | `gen_arquitectura.py` — Crear Floor Types (getter) | `WherePasses(ElementCategoryFilter(BuiltInCategory.OST_Floors))` en `get_floor_type()` | Mismo bug de categoría que gen_familias: si `tipos[0]` era techo o foundation slab, `Floor.Create` recibiría un `FloorTypeId` inválido |
 | `gen_arquitectura.py` — Losas | `NetList[CurveLoop](curve_loops_losa())` en `Floor.Create` | `Floor.Create(doc, IList<CurveLoop>, ...)` requiere `IList<CurveLoop>` .NET; con lista Python PythonNet3 lanzaría `TypeError` |
+
+### Sesión 2026-06-10 — auditoría completa de los 9 generadores (28 nodos)
+
+| Archivo | Fix | Causa raíz |
+|---------|-----|------------|
+| `gen_familias.py` — Crear Floor Types | `ft.GetCompoundStructure()` + `cs.SetLayers(net_layers)` en vez de crear el CS desde cero | Todo CS creado con `Create`/`CreateSimpleCompoundStructure` hereda atributos de WallType (`OpeningWrapping`, EndCap por capa) que `FloorType.SetCompoundStructure` rechaza; tocar `OpeningWrapping` desde afuera no alcanza (PythonNet3 mapea `.None` a `None`) |
+| `gen_anotaciones.py` — Dimensiones | Reescrito bloque de referencias; corregido `IndentationError` real | `refs.Append(ref)` mal indentado dentro del string `_CODE_*` → `generar.py` no lo compila, el error solo aparecía al correr el nodo en Revit |
+| `gen_arquitectura.py` — Escaleras | `StairsEditScope.Start()` + Transaction dentro del scope + `IFailuresPreprocessor` + Z por tramo | `Stairs.Create(doc, tipo, ...)` no existe; los runs requieren Transaction abierta en el scope; `Commit` espera `IFailuresPreprocessor` (no `FailureHandlingOptions`); Z=0 rompe en pisos altos |
+| `gen_sheets.py` — Símbolo de norte | `NewFamilyInstance(pt, sym, view)` sin `StructuralType` | El overload con `StructuralType` matchea `(XYZ, sym, Element host, StructuralType)` y trata la View como host |
+| `gen_sheets.py` — Cuadro de superficies | `TextNoteOptions` con un `TextNoteType.Id` real | `TextNoteOptions(InvalidElementId)` hace fallar `TextNote.Create` |
+| `tests/test_generadores.py` | Nuevo `TestSintaxisCodigoEmbebido`: compila los 28 nodos con `compile()` | Los errores de sintaxis dentro de strings `_CODE_*` pasaban hasta Revit (72/72 tests) |
+
+### Sesión 2026-06-10 (bis) — bug raíz: conectores del .dyn
+
+| Archivo | Fix | Causa raíz |
+|---------|-----|------------|
+| `dyn_builder.py` — `_Connector` | `Start`/`End` ahora referencian **IDs de puerto** (Inputs/Outputs), formato `{Start, End, Id, IsHidden}` | Usaba IDs de **nodo** + `StartIndex`/`EndIndex`, formato no estándar. Dynamo no resolvía ninguna conexión → todos los `IN[x]` llegaban `None` → los scripts corrían con los **defaults** de `_fi/_ii/_si`, ignorando los parámetros del usuario. Explica grilla con 2 ejes (frente=fondo=0), muros de largo cero, y por qué `00` "funcionaba" (sus defaults coincidían con los params default) |
+| `tests/test_generadores.py` | `test_start_end_referencian_puertos_no_nodos` valida que cada conector apunte a un puerto real | El test viejo asumía el formato incorrecto (chequeaba `StartIndex`/`EndIndex`) |
+
+> **Impacto:** hasta este fix, ningún parámetro del usuario llegaba a Revit. Tras el fix
+> hay que re-correr los scripts desde un modelo limpio para obtener geometría paramétrica real.
 
 ### Nota general — PythonNet3 vs IronPython 2.7
 

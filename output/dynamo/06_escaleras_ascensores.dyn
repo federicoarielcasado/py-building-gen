@@ -1,5 +1,5 @@
 {
-  "Uuid": "ab448123-4913-496b-9c77-394a2d0fe9ea",
+  "Uuid": "355ee54c-16dd-401e-b6e6-8a55e4aaa7d3",
   "IsCustomNode": false,
   "Description": "Crea escaleras reales (StairsEditScope, 2 tramos + descanso, CABA) y shaft openings para ascensores.",
   "Name": "06_escaleras_ascensores",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "8253b42b-08f9-42a7-bd01-8d1d8e967309",
+      "Id": "631b398a-6310-4f65-a645-8702aed79a76",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "db1636d7-3883-4dc6-a534-f57ebba74e93",
+          "Id": "65c6eba3-c4bc-442b-9b43-dbb65e500314",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "dfdb4ab8-081c-4bb0-989a-3457e2332b10",
+      "Id": "786d2623-0c4f-46c2-ac51-41a9a87e38fc",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3e6050ad-c3b7-439a-856e-f5d0b7207e4e",
+          "Id": "b43b2d8d-86f6-4f36-a80f-976fdea5708e",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "babbcb60-c1cf-404e-be54-975dad0ded72",
+      "Id": "a465e8c2-f20c-4fd4-80be-45239e9e5d53",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e1db4c83-b2f7-4618-a2c1-05c1fbefe719",
+          "Id": "54d19834-7629-4506-9e7b-33c3eb8bec4d",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "bb73d8c7-3b17-4e7f-9d10-ac535298908f",
+      "Id": "f76f1d7c-f8c9-432c-9d18-df027e3fdff4",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d6cb85d1-3fd7-4e4d-8e2b-ba49285d6089",
+          "Id": "25eb69a2-e0e1-4f42-b10a-72e92af24748",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "d56ff1cd-f480-4173-9761-72b960416437",
+      "Id": "8f9e2aa1-169c-4011-ba13-9fcbfb499e77",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e0db988d-868f-4050-a7ef-02fdadcd76c9",
+          "Id": "c6f5d9c4-b620-4c7e-bd07-b8f6e34c45b1",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "c8d40105-7664-437f-a52e-fb0f247c80c9",
+      "Id": "c8f0b3ef-fb75-4ae0-b4e7-78e10d71e324",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "18c9a8d1-decf-4d8e-aadf-bf4f46db8de5",
+          "Id": "f47681cd-67f6-4314-84e4-912d438d0c4f",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -133,11 +133,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2.8;",
-      "Id": "e87b00b6-402b-4075-a6de-97e56145c92f",
+      "Id": "64f674ac-853e-4747-88de-046237478a25",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "037e0a90-c0a3-47e4-bfbb-beefa927d959",
+          "Id": "1d854e22-40a5-48ae-8b46-5a0835fadb05",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -152,14 +152,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nimport math\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, Line, XYZ, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId,\n    Opening, CurveArray, FailureHandlingOptions,\n)\nfrom Autodesk.Revit.DB.Architecture import (\n    Stairs, StairsEditScope, StairsRun, StairsType,\n    StairsRunJustification,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m    = _fi(IN[0])\nfondo_m     = _fi(IN[1])\npisos_tipo  = _ii(IN[2])\ncant_esc    = _ii(IN[3])\ncant_asc    = _ii(IN[4])\naltura_pb   = _fi(IN[5])\naltura_tipo = _fi(IN[6])\n\n# ── Misma geometría que Scripts 02/03/05 ──────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_esc * ESC_ANCHO + cant_asc * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\n# ── Geometría de la escalera por piso ────────────────────────────────────────\n# 2 tramos rectos + descanso intermedio, dentro del shaft ESC_ANCHO × ESC_FONDO\nMARGEN     = 0.10  # m — separación de muros de shaft\nDESCANSO   = 1.10  # m — profundidad de descanso (mínimo CABA)\nn_risers   = math.ceil(altura_tipo / 0.175)   # contrahuella ~17.5cm → 16 para 2.80m\nn_por_tramo = n_risers // 2                    # 8 por tramo\nrun_len    = (ESC_FONDO - 2 * MARGEN - DESCANSO) / 2   # 2.10m\nhuella_m   = run_len / n_por_tramo              # ~0.2625m > 25cm CABA ✓\n\ny_r1_ini = y_nucleo + MARGEN\ny_r1_fin = y_r1_ini + run_len\ny_r2_ini = y_r1_fin + DESCANSO\ny_r2_fin = y_r2_ini + run_len\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef get_levels_sorted():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(levels, key=lambda l: l.Elevation)\n\ndef get_stair_type():\n    col = FilteredElementCollector(doc).OfClass(StairsType).ToElements()\n    return col[0] if col else None\n\ndef rect_opening_shaft(x0, y0, ancho, largo):\n    arr = CurveArray()\n    pts = [\n        XYZ(m_to_ft(x0),       m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0+largo), 0),\n        XYZ(m_to_ft(x0),       m_to_ft(y0+largo), 0),\n    ]\n    for k in range(4):\n        arr.Append(Line.CreateBound(pts[k], pts[(k+1)%4]))\n    return arr\n\n# ── Escaleras ────────────────────────────────────────────────────────────────\nstair_type = get_stair_type()\nescaleras  = []\nniveles    = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n\nif stair_type:\n    for i_esc in range(cant_esc):\n        x_cen = x_nucleo + i_esc * ESC_ANCHO + ESC_ANCHO / 2.0\n        for idx in range(len(niveles) - 1):\n            lvl_bot = get_level(niveles[idx])\n            lvl_top = get_level(niveles[idx + 1])\n            if lvl_bot is None or lvl_top is None:\n                continue\n            scope = None\n            try:\n                scope = StairsEditScope(doc, f\"Esc{i_esc+1}_{niveles[idx+1]}\")\n                stair_id = Stairs.Create(doc, stair_type.Id, lvl_bot.Id, lvl_top.Id)\n                elem = doc.GetElement(stair_id)\n                elem.DesiredRisersNumber = n_risers\n                # Tramo 1\n                StairsRun.CreateStraightRun(doc, stair_id,\n                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r1_ini), 0),\n                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r1_fin), 0)),\n                    StairsRunJustification.Center)\n                # Tramo 2\n                StairsRun.CreateStraightRun(doc, stair_id,\n                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r2_ini), 0),\n                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r2_fin), 0)),\n                    StairsRunJustification.Center)\n                scope.Commit(FailureHandlingOptions())\n                scope = None\n                escaleras.append({\"tipo\": \"escalera_real\", \"nivel\": niveles[idx+1],\n                                   \"id\": stair_id.Value, \"risers\": n_risers,\n                                   \"huella_m\": round(huella_m, 3)})\n            except Exception as e:\n                if scope is not None:\n                    try: scope.Cancel()\n                    except Exception: pass\n                escaleras.append({\"tipo\": \"error\", \"nivel\": niveles[idx+1], \"msg\": str(e)})\nelse:\n    # Fallback: shaft openings si no hay StairsType en el template\n    all_lvls = get_levels_sorted()\n    lvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\n    lvl_top  = all_lvls[-1]\n    with Transaction(doc, \"py-building-gen: Escalera shaft fallback\") as t:\n        t.Start()\n        for i in range(cant_esc):\n            x0 = x_nucleo + i * ESC_ANCHO\n            arr = rect_opening_shaft(x0, y_nucleo, ESC_ANCHO, ESC_FONDO)\n            op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n            escaleras.append({\"tipo\": \"shaft_fallback\", \"id\": op.Id.Value})\n        t.Commit()\n\n# ── Ascensores: shaft opening (apropiado para cabina de ascensor) ─────────────\nascensores = []\nall_lvls = get_levels_sorted()\nlvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\nlvl_top  = all_lvls[-1]\n\nwith Transaction(doc, \"py-building-gen: Shaft ascensores\") as t:\n    t.Start()\n    for i in range(cant_asc):\n        x0 = x_nucleo + cant_esc * ESC_ANCHO + i * ASC_ANCHO\n        arr = rect_opening_shaft(x0, y_nucleo, ASC_ANCHO, ESC_FONDO)\n        op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n        ascensores.append({\"tipo\": f\"ascensor_{i+1}\", \"id\": op.Id.Value})\n    t.Commit()\n\nOUT = {\n    \"escaleras\": escaleras,\n    \"ascensores\": ascensores,\n    \"escalera_tipo\": stair_type.Name if stair_type else \"fallback_shaft\",\n    \"config\": {\"n_escalones\": n_risers, \"n_por_tramo\": n_por_tramo,\n                \"huella_m\": round(huella_m, 3), \"descanso_m\": DESCANSO},\n}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nimport math\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, Line, XYZ, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId,\n    Opening, CurveArray,\n    IFailuresPreprocessor, FailureProcessingResult,\n)\nfrom Autodesk.Revit.DB.Architecture import (\n    Stairs, StairsEditScope, StairsRun, StairsType,\n    StairsRunJustification,\n)\n\n# Preprocesador de fallos requerido por StairsEditScope.Commit (IFailuresPreprocessor).\n# Continúa ante warnings (p.ej. escalones fuera de rango), evita diálogos modales.\nclass _StairFailures(IFailuresPreprocessor):\n    def PreprocessFailures(self, failuresAccessor):\n        return FailureProcessingResult.Continue\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m    = _fi(IN[0])\nfondo_m     = _fi(IN[1])\npisos_tipo  = _ii(IN[2])\ncant_esc    = _ii(IN[3])\ncant_asc    = _ii(IN[4])\naltura_pb   = _fi(IN[5])\naltura_tipo = _fi(IN[6])\n\n# ── Misma geometría que Scripts 02/03/05 ──────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_esc * ESC_ANCHO + cant_asc * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\n# ── Geometría de la escalera por piso ────────────────────────────────────────\n# 2 tramos rectos + descanso intermedio, dentro del shaft ESC_ANCHO × ESC_FONDO\nMARGEN     = 0.10  # m — separación de muros de shaft\nDESCANSO   = 1.10  # m — profundidad de descanso (mínimo CABA)\nn_risers   = math.ceil(altura_tipo / 0.175)   # contrahuella ~17.5cm → 16 para 2.80m\nn_por_tramo = n_risers // 2                    # 8 por tramo\nrun_len    = (ESC_FONDO - 2 * MARGEN - DESCANSO) / 2   # 2.10m\nhuella_m   = run_len / n_por_tramo              # ~0.2625m > 25cm CABA ✓\n\ny_r1_ini = y_nucleo + MARGEN\ny_r1_fin = y_r1_ini + run_len\ny_r2_ini = y_r1_fin + DESCANSO\ny_r2_fin = y_r2_ini + run_len\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef get_levels_sorted():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(levels, key=lambda l: l.Elevation)\n\ndef get_stair_type():\n    col = FilteredElementCollector(doc).OfClass(StairsType).ToElements()\n    return col[0] if col else None\n\ndef rect_opening_shaft(x0, y0, ancho, largo):\n    arr = CurveArray()\n    pts = [\n        XYZ(m_to_ft(x0),       m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0),       0),\n        XYZ(m_to_ft(x0+ancho), m_to_ft(y0+largo), 0),\n        XYZ(m_to_ft(x0),       m_to_ft(y0+largo), 0),\n    ]\n    for k in range(4):\n        arr.Append(Line.CreateBound(pts[k], pts[(k+1)%4]))\n    return arr\n\n# ── Escaleras ────────────────────────────────────────────────────────────────\nstair_type = get_stair_type()\nescaleras  = []\nniveles    = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n\nif stair_type:\n    for i_esc in range(cant_esc):\n        x_cen = x_nucleo + i_esc * ESC_ANCHO + ESC_ANCHO / 2.0\n        for idx in range(len(niveles) - 1):\n            lvl_bot = get_level(niveles[idx])\n            lvl_top = get_level(niveles[idx + 1])\n            if lvl_bot is None or lvl_top is None:\n                continue\n            # Riser count y elevaciones derivados de la altura REAL del tramo\n            # (PB→P01 usa altura_pb; el resto altura_tipo). lvl.Elevation ya está en pies.\n            h_seg_ft = lvl_top.Elevation - lvl_bot.Elevation\n            n_seg = max(2, int(round(h_seg_ft / m_to_ft(0.175))))\n            if n_seg % 2 != 0:\n                n_seg += 1                       # par → dos tramos iguales\n            z_base = lvl_bot.Elevation           # base de la escalera (pies, modelo)\n            z_mid  = z_base + h_seg_ft / 2.0     # nivel del descanso intermedio\n\n            scope = StairsEditScope(doc, f\"Esc{i_esc+1}_{niveles[idx+1]}\")\n            try:\n                # Start crea una escalera vacía con tipo por defecto y devuelve su Id\n                stair_id = scope.Start(lvl_bot.Id, lvl_top.Id)\n                # Crear los tramos dentro de una Transaction abierta en el scope\n                with Transaction(doc, \"py-building-gen: Tramos escalera\") as tr:\n                    tr.Start()\n                    stair_elem = doc.GetElement(stair_id)\n                    stair_elem.DesiredRisersNumber = n_seg\n                    # Tramo 1 — arranca en la base del tramo (Z = z_base)\n                    StairsRun.CreateStraightRun(doc, stair_id,\n                        Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r1_ini), z_base),\n                                         XYZ(m_to_ft(x_cen), m_to_ft(y_r1_fin), z_base)),\n                        StairsRunJustification.Center)\n                    # Tramo 2 — arranca en el descanso (Z = z_mid)\n                    StairsRun.CreateStraightRun(doc, stair_id,\n                        Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r2_ini), z_mid),\n                                         XYZ(m_to_ft(x_cen), m_to_ft(y_r2_fin), z_mid)),\n                        StairsRunJustification.Center)\n                    tr.Commit()\n                scope.Commit(_StairFailures())\n                escaleras.append({\"tipo\": \"escalera_real\", \"nivel\": niveles[idx+1],\n                                   \"id\": stair_id.Value, \"risers\": n_seg,\n                                   \"huella_m\": round(huella_m, 3)})\n            except Exception as e:\n                # Cancelar el scope si quedó abierto (idempotente bajo try/except)\n                try: scope.Cancel()\n                except Exception: pass\n                escaleras.append({\"tipo\": \"error\", \"nivel\": niveles[idx+1], \"msg\": str(e)})\nelse:\n    # Fallback: shaft openings si no hay StairsType en el template\n    all_lvls = get_levels_sorted()\n    lvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\n    lvl_top  = all_lvls[-1]\n    with Transaction(doc, \"py-building-gen: Escalera shaft fallback\") as t:\n        t.Start()\n        for i in range(cant_esc):\n            x0 = x_nucleo + i * ESC_ANCHO\n            arr = rect_opening_shaft(x0, y_nucleo, ESC_ANCHO, ESC_FONDO)\n            op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n            escaleras.append({\"tipo\": \"shaft_fallback\", \"id\": op.Id.Value})\n        t.Commit()\n\n# ── Ascensores: shaft opening (apropiado para cabina de ascensor) ─────────────\nascensores = []\nall_lvls = get_levels_sorted()\nlvl_pb   = next((l for l in all_lvls if l.Name == \"PB\"), all_lvls[0])\nlvl_top  = all_lvls[-1]\n\nwith Transaction(doc, \"py-building-gen: Shaft ascensores\") as t:\n    t.Start()\n    for i in range(cant_asc):\n        x0 = x_nucleo + cant_esc * ESC_ANCHO + i * ASC_ANCHO\n        arr = rect_opening_shaft(x0, y_nucleo, ASC_ANCHO, ESC_FONDO)\n        op = doc.Create.NewOpening(lvl_pb, lvl_top, arr)\n        ascensores.append({\"tipo\": f\"ascensor_{i+1}\", \"id\": op.Id.Value})\n    t.Commit()\n\nOUT = {\n    \"escaleras\": escaleras,\n    \"ascensores\": ascensores,\n    \"escalera_tipo\": stair_type.Name if stair_type else \"fallback_shaft\",\n    \"config\": {\"n_escalones\": n_risers, \"n_por_tramo\": n_por_tramo,\n                \"huella_m\": round(huella_m, 3), \"descanso_m\": DESCANSO},\n}\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "3bdedd72-8833-43a2-87e8-72eff17781cc",
+      "Id": "fcaec6e6-3b0d-43bc-a127-8704715173bf",
       "Inputs": [
         {
-          "Id": "df9daef0-eced-43a0-9d54-5222cadcd7c3",
+          "Id": "36f2188f-e33a-422a-b5c3-56177ce205d5",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -168,7 +168,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2dc1ace8-481e-496b-b633-7cbcbd69d317",
+          "Id": "e593625b-f5b6-4535-b931-27dfc759febb",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -177,7 +177,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d639463d-e072-4b8e-89a1-e6ad5dfdac34",
+          "Id": "49c4b325-da55-4e3b-860f-99cb2cda8bf4",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -186,7 +186,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1d7b7e6c-f91a-415d-a322-e9b378c7a47e",
+          "Id": "e0ca7a61-7c91-4cfd-a857-f112e9a31195",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -195,7 +195,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "fcd62683-21c1-49d2-8fa2-21446f44f3f9",
+          "Id": "4db37e6b-c65e-4d35-bf7e-e8f5bde6f806",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -204,7 +204,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "065fd445-f073-4d14-b58b-20d2edddc5b3",
+          "Id": "67d9fdf7-bbe2-4c1a-baac-516ed1b368ec",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -213,7 +213,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "89692018-79e8-4e58-9ab8-0de4fb299e77",
+          "Id": "8d722cb6-98e3-458d-81a6-ea525e421d75",
           "Name": "IN[6]",
           "Description": "Input 6",
           "UsingDefaultValue": false,
@@ -224,7 +224,7 @@
       ],
       "Outputs": [
         {
-          "Id": "32cd7f7b-2e85-43c3-a86f-72150147caa6",
+          "Id": "6f618206-0825-4ca0-aac0-bceebca14193",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -239,60 +239,46 @@
   ],
   "Connectors": [
     {
-      "Start": "8253b42b-08f9-42a7-bd01-8d1d8e967309",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "e4d9f7aa-bebd-436e-91d0-cf12f4c35dca",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "65c6eba3-c4bc-442b-9b43-dbb65e500314",
+      "End": "36f2188f-e33a-422a-b5c3-56177ce205d5",
+      "Id": "ab90686a-9bb7-4161-b8ac-7790f7074196",
+      "IsHidden": "False"
     },
     {
-      "Start": "dfdb4ab8-081c-4bb0-989a-3457e2332b10",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "9829dec9-dd62-4224-a3ae-679ec89250dd",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "b43b2d8d-86f6-4f36-a80f-976fdea5708e",
+      "End": "e593625b-f5b6-4535-b931-27dfc759febb",
+      "Id": "95540245-f300-412c-abd3-1643995c1a90",
+      "IsHidden": "False"
     },
     {
-      "Start": "babbcb60-c1cf-404e-be54-975dad0ded72",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "714de4fe-66e6-41cb-aa5c-4296d17e1230",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "54d19834-7629-4506-9e7b-33c3eb8bec4d",
+      "End": "49c4b325-da55-4e3b-860f-99cb2cda8bf4",
+      "Id": "b97461f4-f75f-4f58-9877-33a100611431",
+      "IsHidden": "False"
     },
     {
-      "Start": "bb73d8c7-3b17-4e7f-9d10-ac535298908f",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "70c618f9-4c88-4a4b-ab37-a803a44cab30",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "25eb69a2-e0e1-4f42-b10a-72e92af24748",
+      "End": "e0ca7a61-7c91-4cfd-a857-f112e9a31195",
+      "Id": "752ea04d-b51e-4727-b3fa-7f1ddc504930",
+      "IsHidden": "False"
     },
     {
-      "Start": "d56ff1cd-f480-4173-9761-72b960416437",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "55dd803d-6d26-4e82-9694-d7d983809957",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "c6f5d9c4-b620-4c7e-bd07-b8f6e34c45b1",
+      "End": "4db37e6b-c65e-4d35-bf7e-e8f5bde6f806",
+      "Id": "1be3b974-829f-46a4-be19-360ca4376311",
+      "IsHidden": "False"
     },
     {
-      "Start": "c8d40105-7664-437f-a52e-fb0f247c80c9",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "b0969235-bf49-4649-9abb-9856f8b3c8bc",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "f47681cd-67f6-4314-84e4-912d438d0c4f",
+      "End": "67d9fdf7-bbe2-4c1a-baac-516ed1b368ec",
+      "Id": "ca24d732-7ab3-407b-bdc1-39c5de60fea2",
+      "IsHidden": "False"
     },
     {
-      "Start": "e87b00b6-402b-4075-a6de-97e56145c92f",
-      "End": "3bdedd72-8833-43a2-87e8-72eff17781cc",
-      "Id": "1a1b01fe-2f2e-4b16-9644-1ea861b52b57",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 6
+      "Start": "1d854e22-40a5-48ae-8b46-5a0835fadb05",
+      "End": "8d722cb6-98e3-458d-81a6-ea525e421d75",
+      "Id": "ca5fc36d-46b0-4d33-9e30-38a751e474ad",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -323,7 +309,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "8253b42b-08f9-42a7-bd01-8d1d8e967309",
+        "Id": "631b398a-6310-4f65-a645-8702aed79a76",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -333,7 +319,7 @@
         "Y": 0.0
       },
       {
-        "Id": "dfdb4ab8-081c-4bb0-989a-3457e2332b10",
+        "Id": "786d2623-0c4f-46c2-ac51-41a9a87e38fc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -343,7 +329,7 @@
         "Y": 130.0
       },
       {
-        "Id": "babbcb60-c1cf-404e-be54-975dad0ded72",
+        "Id": "a465e8c2-f20c-4fd4-80be-45239e9e5d53",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -353,7 +339,7 @@
         "Y": 260.0
       },
       {
-        "Id": "bb73d8c7-3b17-4e7f-9d10-ac535298908f",
+        "Id": "f76f1d7c-f8c9-432c-9d18-df027e3fdff4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_esc",
@@ -363,7 +349,7 @@
         "Y": 390.0
       },
       {
-        "Id": "d56ff1cd-f480-4173-9761-72b960416437",
+        "Id": "8f9e2aa1-169c-4011-ba13-9fcbfb499e77",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_asc",
@@ -373,7 +359,7 @@
         "Y": 520.0
       },
       {
-        "Id": "c8d40105-7664-437f-a52e-fb0f247c80c9",
+        "Id": "c8f0b3ef-fb75-4ae0-b4e7-78e10d71e324",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -383,7 +369,7 @@
         "Y": 650.0
       },
       {
-        "Id": "e87b00b6-402b-4075-a6de-97e56145c92f",
+        "Id": "64f674ac-853e-4747-88de-046237478a25",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_tipo_m",
@@ -393,7 +379,7 @@
         "Y": 780.0
       },
       {
-        "Id": "3bdedd72-8833-43a2-87e8-72eff17781cc",
+        "Id": "fcaec6e6-3b0d-43bc-a127-8704715173bf",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Escaleras y Ascensores",

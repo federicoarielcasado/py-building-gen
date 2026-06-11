@@ -1,5 +1,5 @@
 {
-  "Uuid": "3df8edc5-d929-445e-a766-19c3b576d9b3",
+  "Uuid": "56c09f6b-790c-432e-b63e-1fa986d7b092",
   "IsCustomNode": false,
   "Description": "Crea Levels y Grids en Revit 2027. Generado por py-building-gen. Ejecutar primero.",
   "Name": "01_niveles_grilla",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "86683d83-b9e2-4bfd-b168-7e4b0c62341a",
+      "Id": "f7d3ab0f-122e-455a-bc74-50fb9cb56f12",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "0bb66790-bb00-4c52-8f9d-73a736a0e5bb",
+          "Id": "dc9258be-8250-4648-aa4b-f1b5a447e736",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "b662b8ca-c0b2-407a-82a8-b795fce94b8c",
+      "Id": "026cf3f8-e36a-4f34-9cd9-52ad59ef8ff0",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1b7a3f5b-559f-4a95-9bd7-e2c00395c24e",
+          "Id": "2abe3a44-7f58-4a5e-bf9c-305d0287b299",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2.8;",
-      "Id": "991ec57a-2493-4947-b748-010c0fff69f6",
+      "Id": "aff67eab-e349-4eab-acf1-9c5a31c40a4c",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1778627a-210a-4d26-b972-4687875ca9fa",
+          "Id": "9450b53b-2e8f-4b17-9d63-476c567e63a1",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "76803d4f-82ce-4548-9e79-1a208913c29f",
+      "Id": "4dc14681-efaa-4697-8049-835cfd3c3ee5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "cff4b8ac-c25a-4406-9043-3d02fd774c21",
+          "Id": "bb6be8af-8489-40f2-8dc9-1d362866d1e8",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "0;",
-      "Id": "22fd90e9-ae44-4da8-a6c5-8d1268cf616b",
+      "Id": "174965be-764b-4b2b-a8bf-df19b5bceda3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b6a9de07-771c-4cde-b1e3-1e84c5af9ca7",
+          "Id": "885b1156-d9c8-453b-8ba1-35988013bed8",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "6978aa34-8d85-4094-b424-3ac4521755b4",
+      "Id": "3d36b24c-dc93-4790-845e-0a3de9843a1f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2922fe1b-3cbc-4ce0-95c9-cabacabe4b5a",
+          "Id": "274bdedd-7ac6-4830-8595-807510a31065",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -136,10 +136,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "d25ecea2-db83-4edd-8610-28f7f2f79466",
+      "Id": "ed935501-d95a-4ca3-91e2-4ccfbaacf9fe",
       "Inputs": [
         {
-          "Id": "82da42e5-2142-4ee4-bbfd-66eedad42ab1",
+          "Id": "89781e27-f261-4ed6-a219-6648baa3f022",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -148,7 +148,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "fabdb707-cf62-4f97-84d9-4b50e01d18ee",
+          "Id": "f8c9564b-1926-47bd-bb71-c886d8c544bf",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -157,7 +157,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "92c70dd9-6f6b-4516-ae03-252398f9d3de",
+          "Id": "5962ef71-8d26-45b9-b501-3d661c8af701",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -166,7 +166,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "06f091c0-96ba-4196-a347-90d6344d2238",
+          "Id": "0da4b9d4-97a4-47d5-9b07-65e1d6a2ee4f",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -175,7 +175,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "899a9958-b035-483b-be9f-0fe4004c6b5d",
+          "Id": "30a4fd23-4f82-486e-a1cc-e72a72f3f424",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -184,7 +184,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f326fa45-49f1-4347-ba6d-dd30fc73a521",
+          "Id": "87293b8e-357d-40a9-bac8-d7c46393370a",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -195,7 +195,7 @@
       ],
       "Outputs": [
         {
-          "Id": "00f7b0e0-cb95-42cd-a304-b3e20e1162da",
+          "Id": "04e7832a-c472-4dc1-a6fd-e75a3a851aca",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -211,11 +211,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "6b99438f-2699-4de0-9708-26847866fcf5",
+      "Id": "432f7523-93ea-4bf2-94fc-018bebba90dc",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a5ea4a54-33a4-4ee6-8592-2bbfb621c8fb",
+          "Id": "c2ce40d9-c5dc-44ab-bc1b-6227616b42e4",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -231,11 +231,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "27a94b1f-c4d1-47d1-ade6-883ebc22aadd",
+      "Id": "d187f9fa-86dc-4338-a073-53153f592f1f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "25988358-ca9b-444f-bffb-48cc56d24720",
+          "Id": "d4155431-eca9-4818-8496-f1cd80ecd7a9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -250,14 +250,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Grid, Line, XYZ, Transaction,\n    UnitUtils, UnitTypeId,\n)\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\npaso_m   = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ngrillas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Grilla\") as t:\n    t.Start()\n\n    # Ejes verticales (A, B, C …)\n    x = 0.0; col_idx = 0\n    while x <= frente_m + 0.001:\n        nombre = chr(ord(\"A\") + col_idx)\n        p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)\n        p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n        x += paso_m; col_idx += 1\n\n    # Ejes horizontales (1, 2, 3 …)\n    y = 0.0; row_idx = 1\n    while y <= fondo_m + 0.001:\n        nombre = str(row_idx)\n        p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)\n        p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n        y += paso_m; row_idx += 1\n\n    t.Commit()\n\nOUT = {\"ejes\": grillas_creadas, \"total\": len(grillas_creadas)}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Grid, Line, XYZ, Transaction,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\nPASO     = 5.0    # m — modulo objetivo entre ejes\nMIN_BAY  = 2.5    # m — bahia minima; si el resto es menor, se absorbe\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ejes(span, paso=PASO, min_bay=MIN_BAY):\n    \"\"\"Posiciones de eje en [0, span]: modulo de 5m + eje de cierre en el borde.\n\n    Siempre incluye 0 y span (medianeras/fachada). Si el ultimo paño quedaria\n    mas chico que min_bay, se fusiona con el anterior (evita bahias minusculas).\n    \"\"\"\n    if span <= paso + 1e-9:\n        return [0.0, round(span, 4)]\n    pos = []\n    x = 0.0\n    while x < span - 1e-6:\n        pos.append(round(x, 4))\n        x += paso\n    resto = span - pos[-1]\n    if resto < min_bay and len(pos) >= 2:\n        pos.pop()            # absorber: la ultima bahia queda paso+resto\n    pos.append(round(span, 4))\n    return pos\n\ndef es_grid_nuestro(nombre):\n    # Ejes de py-building-gen: una sola letra A-Z, o solo digitos\n    return (len(nombre) == 1 and nombre.isalpha()) or nombre.isdigit()\n\nxs = ejes(frente_m)   # ejes verticales (A, B, C…) a lo ancho del frente\nys = ejes(fondo_m)    # ejes horizontales (1, 2, 3…) a lo largo del fondo\ngrillas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Grilla\") as t:\n    t.Start()\n\n    # Idempotencia: borrar ejes previos de py-building-gen y reposicionarlos.\n    # (Grid.Create + asignar un nombre ya usado lanza error al re-correr.)\n    for g in list(FilteredElementCollector(doc).OfClass(Grid).ToElements()):\n        if es_grid_nuestro(g.Name):\n            try: doc.Delete(g.Id)\n            except Exception: pass\n\n    # Ejes verticales A, B, C … (x constante, corren en Y)\n    for i, x in enumerate(xs):\n        nombre = chr(ord(\"A\") + i)\n        p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)\n        p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    # Ejes horizontales 1, 2, 3 … (y constante, corren en X)\n    for i, y in enumerate(ys):\n        nombre = str(i + 1)\n        p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)\n        p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    t.Commit()\n\nOUT = {\n    \"ejes\": grillas_creadas,\n    \"total\": len(grillas_creadas),\n    \"frente_m_recibido\": frente_m,\n    \"fondo_m_recibido\": fondo_m,\n    \"x_ejes_m\": [round(v, 2) for v in xs],\n    \"y_ejes_m\": [round(v, 2) for v in ys],\n}\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "4ce43c02-b318-40a5-a1d0-22ecee8ba1a5",
+      "Id": "98682b2f-024b-4d58-977a-b2926c26efa7",
       "Inputs": [
         {
-          "Id": "afc7b678-0f56-4940-9674-90e03a69e956",
+          "Id": "3016fee3-d2b5-4f24-a876-655e351ae1e0",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -266,7 +266,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e49882cb-a097-492a-956f-3eddf8230446",
+          "Id": "38be0b32-5b1e-47cc-a186-c919ece4d639",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -277,7 +277,7 @@
       ],
       "Outputs": [
         {
-          "Id": "058876e6-0ed1-4fc6-99b0-f6ae84381602",
+          "Id": "90671c0f-5c5d-4f9f-9717-6bf988e620af",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -293,11 +293,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "33204aff-0079-483b-86ed-2e9cd9e0f2d1",
+      "Id": "ae28b4a1-4d94-47d5-9699-ce49e07607ff",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1f3547cb-0031-4a32-9d85-4b0c2efaeefe",
+          "Id": "d9ba1214-ce73-42b0-b482-8eff0399f4b4",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -313,11 +313,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "f21c9e30-ea6a-43dd-b382-ead70f24434c",
+      "Id": "80cef83e-517f-4c57-b338-61ebc3c34815",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "567e3951-5389-4f80-92cb-29337d9c57e0",
+          "Id": "02b10a48-c9b8-4924-bde9-80f28646099b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -336,10 +336,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "7da57e2f-2c37-4b16-9655-a7d90435ce9a",
+      "Id": "db7c5ccc-d3c7-49cd-bc0b-5041c433b0ba",
       "Inputs": [
         {
-          "Id": "827b525a-0081-4dff-9f78-9f4ff4d8264b",
+          "Id": "6685e6e4-0217-48b3-949d-2e025c8b284b",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -348,7 +348,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8738dd36-c9b5-47fc-88a4-9adca0675d0a",
+          "Id": "2bf87fdc-06d6-43bd-807e-41cfd278a703",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -359,7 +359,7 @@
       ],
       "Outputs": [
         {
-          "Id": "832f4775-cb2b-44e3-8eeb-91db2e03285c",
+          "Id": "ea2befe3-ac5a-4d69-98e5-1d73bc51a8d2",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -374,84 +374,64 @@
   ],
   "Connectors": [
     {
-      "Start": "86683d83-b9e2-4bfd-b168-7e4b0c62341a",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "59054d4e-8a7a-4b5d-a852-a46842f0d15c",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "dc9258be-8250-4648-aa4b-f1b5a447e736",
+      "End": "89781e27-f261-4ed6-a219-6648baa3f022",
+      "Id": "cf51435f-d671-4962-8355-b7f37299b3a4",
+      "IsHidden": "False"
     },
     {
-      "Start": "b662b8ca-c0b2-407a-82a8-b795fce94b8c",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "97b217d6-0556-494a-a7db-b4a3feb8e612",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "2abe3a44-7f58-4a5e-bf9c-305d0287b299",
+      "End": "f8c9564b-1926-47bd-bb71-c886d8c544bf",
+      "Id": "537bf23c-9d22-49bd-9785-162291f24574",
+      "IsHidden": "False"
     },
     {
-      "Start": "991ec57a-2493-4947-b748-010c0fff69f6",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "d10644f1-f7af-4bba-9ab0-d9eaabd1e4b9",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "9450b53b-2e8f-4b17-9d63-476c567e63a1",
+      "End": "5962ef71-8d26-45b9-b501-3d661c8af701",
+      "Id": "62321ced-5842-450b-a21e-be6881833b82",
+      "IsHidden": "False"
     },
     {
-      "Start": "76803d4f-82ce-4548-9e79-1a208913c29f",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "6232b234-31ea-49e7-a366-ab3dd2726860",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "bb6be8af-8489-40f2-8dc9-1d362866d1e8",
+      "End": "0da4b9d4-97a4-47d5-9b07-65e1d6a2ee4f",
+      "Id": "cab4eb1f-058e-4782-b5c3-1a5b47d9f7ec",
+      "IsHidden": "False"
     },
     {
-      "Start": "22fd90e9-ae44-4da8-a6c5-8d1268cf616b",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "f4ce396c-d72e-418e-87a6-df9fd2748213",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "885b1156-d9c8-453b-8ba1-35988013bed8",
+      "End": "30a4fd23-4f82-486e-a1cc-e72a72f3f424",
+      "Id": "d2572327-63d4-42f7-a0c9-8210b8d4e6d8",
+      "IsHidden": "False"
     },
     {
-      "Start": "6978aa34-8d85-4094-b424-3ac4521755b4",
-      "End": "d25ecea2-db83-4edd-8610-28f7f2f79466",
-      "Id": "80ecea7d-d2bb-4a19-94f7-83f8b4b4df84",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "274bdedd-7ac6-4830-8595-807510a31065",
+      "End": "87293b8e-357d-40a9-bac8-d7c46393370a",
+      "Id": "6a8ebd1c-fe64-499e-968c-fd4066b48b28",
+      "IsHidden": "False"
     },
     {
-      "Start": "6b99438f-2699-4de0-9708-26847866fcf5",
-      "End": "4ce43c02-b318-40a5-a1d0-22ecee8ba1a5",
-      "Id": "8f3913c8-3904-467b-8e6b-a2d9ad2f7605",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "c2ce40d9-c5dc-44ab-bc1b-6227616b42e4",
+      "End": "3016fee3-d2b5-4f24-a876-655e351ae1e0",
+      "Id": "a4741aac-cc20-4b5d-9d98-a04555b5a40e",
+      "IsHidden": "False"
     },
     {
-      "Start": "27a94b1f-c4d1-47d1-ade6-883ebc22aadd",
-      "End": "4ce43c02-b318-40a5-a1d0-22ecee8ba1a5",
-      "Id": "0c6a7caf-0053-47d8-a3d7-89db36a59631",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "d4155431-eca9-4818-8496-f1cd80ecd7a9",
+      "End": "38be0b32-5b1e-47cc-a186-c919ece4d639",
+      "Id": "9a914105-86ab-4a4a-9942-58a163ffc229",
+      "IsHidden": "False"
     },
     {
-      "Start": "33204aff-0079-483b-86ed-2e9cd9e0f2d1",
-      "End": "7da57e2f-2c37-4b16-9655-a7d90435ce9a",
-      "Id": "7acc57c1-923a-478a-b9f6-aafcf05d3c1f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "d9ba1214-ce73-42b0-b482-8eff0399f4b4",
+      "End": "6685e6e4-0217-48b3-949d-2e025c8b284b",
+      "Id": "174cf3cb-7ddd-4b46-99db-1c04ea640c12",
+      "IsHidden": "False"
     },
     {
-      "Start": "f21c9e30-ea6a-43dd-b382-ead70f24434c",
-      "End": "7da57e2f-2c37-4b16-9655-a7d90435ce9a",
-      "Id": "6df344d4-f70f-4853-8427-0389c41f2e8e",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "02b10a48-c9b8-4924-bde9-80f28646099b",
+      "End": "2bf87fdc-06d6-43bd-807e-41cfd278a703",
+      "Id": "f8c42e13-ba4f-40ef-b10f-678a559476b6",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -482,7 +462,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "86683d83-b9e2-4bfd-b168-7e4b0c62341a",
+        "Id": "f7d3ab0f-122e-455a-bc74-50fb9cb56f12",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -492,7 +472,7 @@
         "Y": 0.0
       },
       {
-        "Id": "b662b8ca-c0b2-407a-82a8-b795fce94b8c",
+        "Id": "026cf3f8-e36a-4f34-9cd9-52ad59ef8ff0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -502,7 +482,7 @@
         "Y": 130.0
       },
       {
-        "Id": "991ec57a-2493-4947-b748-010c0fff69f6",
+        "Id": "aff67eab-e349-4eab-acf1-9c5a31c40a4c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_tipo_m",
@@ -512,7 +492,7 @@
         "Y": 260.0
       },
       {
-        "Id": "76803d4f-82ce-4548-9e79-1a208913c29f",
+        "Id": "4dc14681-efaa-4697-8049-835cfd3c3ee5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -522,7 +502,7 @@
         "Y": 390.0
       },
       {
-        "Id": "22fd90e9-ae44-4da8-a6c5-8d1268cf616b",
+        "Id": "174965be-764b-4b2b-a8bf-df19b5bceda3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_subsuelos",
@@ -532,7 +512,7 @@
         "Y": 520.0
       },
       {
-        "Id": "6978aa34-8d85-4094-b424-3ac4521755b4",
+        "Id": "3d36b24c-dc93-4790-845e-0a3de9843a1f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -542,7 +522,7 @@
         "Y": 650.0
       },
       {
-        "Id": "d25ecea2-db83-4edd-8610-28f7f2f79466",
+        "Id": "ed935501-d95a-4ca3-91e2-4ccfbaacf9fe",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Niveles",
@@ -552,7 +532,7 @@
         "Y": 0.0
       },
       {
-        "Id": "6b99438f-2699-4de0-9708-26847866fcf5",
+        "Id": "432f7523-93ea-4bf2-94fc-018bebba90dc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -562,7 +542,7 @@
         "Y": 910.0
       },
       {
-        "Id": "27a94b1f-c4d1-47d1-ade6-883ebc22aadd",
+        "Id": "d187f9fa-86dc-4338-a073-53153f592f1f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -572,7 +552,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "4ce43c02-b318-40a5-a1d0-22ecee8ba1a5",
+        "Id": "98682b2f-024b-4d58-977a-b2926c26efa7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Grilla",
@@ -582,7 +562,7 @@
         "Y": 910.0
       },
       {
-        "Id": "33204aff-0079-483b-86ed-2e9cd9e0f2d1",
+        "Id": "ae28b4a1-4d94-47d5-9699-ce49e07607ff",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -592,7 +572,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "f21c9e30-ea6a-43dd-b382-ead70f24434c",
+        "Id": "80cef83e-517f-4c57-b338-61ebc3c34815",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -602,7 +582,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "7da57e2f-2c37-4b16-9655-a7d90435ce9a",
+        "Id": "db7c5ccc-d3c7-49cd-bc0b-5041c433b0ba",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Plantas por Disciplina",

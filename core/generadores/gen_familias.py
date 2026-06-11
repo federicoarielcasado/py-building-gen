@@ -233,7 +233,7 @@ from Autodesk.Revit.DB import (
     MaterialFunctionAssignment, Material, ElementId,
     FilteredElementCollector, ElementCategoryFilter,
     BuiltInCategory, Transaction,
-    UnitUtils, UnitTypeId,
+    UnitUtils, UnitTypeId, OpeningWrappingCondition,
 )
 import System
 from System.Collections.Generic import List as NetList
@@ -266,50 +266,95 @@ def get_or_duplicate_floor_type(nombre_nuevo):
         raise Exception("No se encontraron FloorTypes OST_Floors en el modelo.")
     return fts[0].Duplicate(nombre_nuevo)
 
-def build_cs(doc, capas):
-    """Construye CompoundStructure con NetList explícito (PythonNet3 no convierte listas Python)."""
-    net_layers = NetList[CompoundStructureLayer]()
-    for esp, func, mat_nombre in capas:
-        mat_id = get_material_id(mat_nombre)
-        net_layers.Add(CompoundStructureLayer(m_to_ft(esp), func, mat_id))
-    try:
-        return CompoundStructure.Create(doc, net_layers)
-    except Exception:
-        return CompoundStructure.CreateSimpleCompoundStructure(net_layers)
-
 FA = MaterialFunctionAssignment
-tipos_creados = []
+
+def build_layers(capas):
+    """Construye NetList[CompoundStructureLayer] y devuelve (net, idx_estructura).
+
+    Regla de Revit: las capas de MEMBRANA deben tener espesor CERO. Cualquier otro
+    valor invalida el CompoundStructure.
+    """
+    net = NetList[CompoundStructureLayer]()
+    idx_struct = 0
+    for i, (esp, func, mat_nombre) in enumerate(capas):
+        mat_id = get_material_id(mat_nombre)
+        espesor_ft = 0.0 if func == FA.Membrane else m_to_ft(esp)
+        net.Add(CompoundStructureLayer(espesor_ft, func, mat_id))
+        if func == FA.Structure:
+            idx_struct = i
+    return net, idx_struct
+
+def construir_cs(ft, capas):
+    """Reemplaza capas en el CS existente del FloorType y fija la capa estructural."""
+    net, idx_struct = build_layers(capas)
+    cs = ft.GetCompoundStructure()
+    if cs is None:
+        cs = CompoundStructure.CreateSimpleCompoundStructure(net)
+    else:
+        cs.SetLayers(net)
+    # Tras SetLayers el índice estructural puede quedar apuntando a otra capa
+    try:
+        cs.StructuralMaterialIndex = idx_struct
+    except Exception:
+        pass
+    return cs
+
+def validar_cs(cs):
+    """Llama a CompoundStructure.IsValid y devuelve (ok, [errores...]).
+
+    IsValid(doc, out errors, out faultyLayers) → PythonNet3 lo expone como tupla.
+    """
+    try:
+        chk = cs.IsValid(doc)
+    except Exception as e:
+        return (None, ["IsValid lanzo excepcion: " + str(e)])
+    if isinstance(chk, tuple):
+        ok = chk[0]
+        errs = []
+        for extra in chk[1:]:
+            if extra is None:
+                continue
+            try:
+                errs.extend([str(x) for x in extra])
+            except Exception:
+                errs.append(str(extra))
+        return (ok, errs)
+    return (chk, [])
 
 espesor_m = espesor_losa_cm / 100.0
 nombre_mat_ha = f"Hormigón {tipo_hormigon}"
 
-with Transaction(doc, "py-building-gen: Tipos de losa") as t:
-    t.Start()
-
-    # Losa maciza de HA
-    nombre = f"Losa HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm"
-    ft = get_or_duplicate_floor_type(nombre)
-    capas = [
+definiciones = [
+    (f"Losa HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm", [
         (0.030,     FA.Substrate, "Mortero de cemento"),
         (espesor_m, FA.Structure, nombre_mat_ha),
-    ]
-    ft.SetCompoundStructure(build_cs(doc, capas))
-    tipos_creados.append(nombre)
-
-    # Losa azotea (con membrana)
-    nombre_azo = f"Losa azotea HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm"
-    ft_azo = get_or_duplicate_floor_type(nombre_azo)
-    capas_azo = [
-        (0.004,     FA.Membrane,  "Membrana asfáltica"),
+    ]),
+    (f"Losa azotea HA {tipo_hormigon} - {espesor_losa_cm:.0f}cm", [
+        (0.000,     FA.Membrane,  "Membrana asfáltica"),   # membrana = espesor cero
         (0.020,     FA.Substrate, "Mortero de cemento"),
         (espesor_m, FA.Structure, nombre_mat_ha),
-    ]
-    ft_azo.SetCompoundStructure(build_cs(doc, capas_azo))
-    tipos_creados.append(nombre_azo)
+    ]),
+]
 
+tipos_creados = []
+diagnostico = []
+
+with Transaction(doc, "py-building-gen: Tipos de losa") as t:
+    t.Start()
+    for nombre, capas in definiciones:
+        ft = get_or_duplicate_floor_type(nombre)
+        cs = construir_cs(ft, capas)
+        ok, errs = validar_cs(cs)
+        if ok:
+            ft.SetCompoundStructure(cs)
+            tipos_creados.append(nombre)
+        else:
+            # No hacemos SetCompoundStructure (lanzaria y cortaria la transaccion).
+            # Reportamos el error exacto para diagnostico.
+            diagnostico.append({"tipo": nombre, "valido": str(ok), "errores": errs})
     t.Commit()
 
-OUT = tipos_creados
+OUT = {"creados": tipos_creados, "diagnostico": diagnostico}
 '''
 
 # ---------------------------------------------------------------------------

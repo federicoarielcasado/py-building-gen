@@ -1,5 +1,5 @@
 {
-  "Uuid": "c95f182a-40a2-4c82-8567-898adea0f5b7",
+  "Uuid": "68863c70-8aeb-4230-8037-759777a3e40e",
   "IsCustomNode": false,
   "Description": "Crea muros exteriores, núcleo, pasillo, divisorias y tabiques internos por nivel.",
   "Name": "02_muros_perimetrales",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "caea3a6e-2fc8-40f6-a3c8-2c1ead057d92",
+      "Id": "497eac17-32d9-41d1-9704-b61956b63c10",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "99e1e0fc-50a6-4eb0-88f4-f44e69de4e52",
+          "Id": "552a8555-1176-43ec-87d8-d52915cdc8e5",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "989e36b0-266f-442b-b3da-f7153f53ed49",
+      "Id": "13d8eb9d-ae8e-42ec-8d6a-da99c52857f7",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ac25196a-568d-4f1e-aeeb-d5596517e5a5",
+          "Id": "4a7f3ed4-b87e-43e9-a90b-8dbc56cfeb22",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "75105e41-a83a-4fc2-81ef-984dfa063d81",
+      "Id": "1f4883dd-b411-44cf-b40e-fb45c21b5f47",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "9bebb1f7-20e2-4445-ab40-a44f5f297b2a",
+          "Id": "b349944a-eff0-482a-88f4-0d2ba35eae85",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2.8;",
-      "Id": "63c2be1f-a6ce-4bae-8693-82eb96790e56",
+      "Id": "d8cd23de-d548-43d0-8072-2473e2d869a2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8791d01b-993b-46cb-b83b-3130304a7900",
+          "Id": "ab8a6148-2b56-4490-a670-ffee3908fcc4",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "26c034ae-2ea6-4527-a0a9-65696d95ddb7",
+      "Id": "64ea88ee-38a9-40f6-a84f-41336052d45d",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "06b2adf4-2c27-4d9e-b52c-b3ef30f7cb10",
+          "Id": "4e3f6556-6a4f-4f49-a6cb-c027fc92d9aa",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2;",
-      "Id": "f6c38a5d-483e-430e-aa65-5f86bc1e7d5e",
+      "Id": "bba2c301-3c13-41fe-af9b-5cc8b1ea4f9e",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "0320acc9-dca2-4d43-bf19-2fa17823d9c0",
+          "Id": "988472f7-ed4e-4a86-8c42-7085913c7b62",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -132,32 +132,12 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "\"[{\"tipo\": \"2amb\", \"cantidad\": 1}, {\"tipo\": \"3amb\", \"cantidad\": 1}]\";",
-      "Id": "ba2a31dc-f9ed-48fd-9b68-c89d4e016079",
+      "Code": "\"2amb:1,3amb:1\";",
+      "Id": "97837913-500c-48a2-850f-4f294da5ff28",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "93f57d7c-5535-4192-996a-c4ca2eacc8a4",
-          "Name": "",
-          "Description": "Value of expression at line 1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "1;",
-      "Id": "38308af1-a6af-4168-81af-0051f18fd154",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "1f8f1cb0-47f0-476d-8c02-cae9d6cccb3e",
+          "Id": "b5ac408f-ad17-4113-9f0d-5f377fe04b3a",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -173,11 +153,31 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "6e020af6-9536-477a-ae5f-f644b8b2c9e1",
+      "Id": "96235194-cbe9-45f3-94ea-4d217d63262a",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1f3ee993-eef1-4ec2-a088-2287b06a6a00",
+          "Id": "e43aa888-b582-4642-a9c7-d8cccb4bd1c6",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "1;",
+      "Id": "d20f64f3-bb77-4eb4-8051-b99c87153c03",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "65def7bf-7def-4a1f-9e72-0ec302b76406",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -193,11 +193,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Muro exterior - 200mm\";",
-      "Id": "e8f46488-51bc-4dde-bd6c-7fd3e077aa2e",
+      "Id": "6e6c910b-b724-41e6-92ce-3b33267a4bce",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c5f0dac9-ae50-43d3-9dcd-f131c0dfe873",
+          "Id": "ee948a5a-a1a9-4af5-ab0f-60eeb10192b9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -213,11 +213,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Tabique interior - 100mm\";",
-      "Id": "b56c5d4b-920f-4ad5-b666-a3eae35edb3e",
+      "Id": "5b140269-180a-414d-a334-510edadf5665",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "27c6fd9b-bd63-48ae-99c3-403405c978d4",
+          "Id": "9cdd317b-1a87-4fb3-a5f7-194fa5be6ee0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -233,11 +233,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Muro cortafuego - 200mm\";",
-      "Id": "6b4feabb-bff8-4629-b043-23f40e61d711",
+      "Id": "983bb0a7-b937-483e-97f3-8a0b3dfe6417",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8a341d6e-3d45-47eb-9b29-1dd51f524c95",
+          "Id": "91e752f9-a1b8-4b02-8f88-0492a4bac5c7",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -252,14 +252,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Wall, WallType, Level, Line, XYZ,\n    FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m          = _fi(IN[0])\nfondo_m           = _fi(IN[1])\naltura_pb         = _fi(IN[2])\naltura_tipo       = _fi(IN[3])\npisos_tipo        = _ii(IN[4])\ncant_depto_tipo   = _ii(IN[5])\ntipologias_json   = _si(IN[6])   # [{\"tipo\":\"2amb\",\"cantidad\":1}, ...]\ncant_escaleras    = _ii(IN[7])\ncant_ascensores   = _ii(IN[8])\nnombre_muro_ext   = _si(IN[9])   # \"Muro exterior - 200mm\"\nnombre_tabique    = _si(IN[10])  # \"Tabique interior - 100mm\"\nnombre_cortafuego = _si(IN[11])  # \"Muro cortafuego - 200mm\"\n\ntipologias_raw = json.loads(tipologias_json)\n\n# Tipología por departamento (aplanada, en orden de izquierda a derecha)\napts = []\nfor t_item in tipologias_raw:\n    for _ in range(int(t_item.get(\"cantidad\", 1))):\n        apts.append(t_item.get(\"tipo\", \"2amb\"))\n\n# ── Constantes normativa CABA ─────────────────────────────────────────────────\nESC_ANCHO    = 3.00   # m — caja escalera\nESC_FONDO    = 5.50   # m — profundidad del núcleo\nASC_ANCHO    = 2.00   # m — caja ascensor\nPASILLO_PROF = 1.20   # m — pasillo común mínimo (Art. 4.8 CABA)\n\n# ── Geometría derivada ────────────────────────────────────────────────────────\n_n_apts      = max(cant_depto_tipo, 1)\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO        # frente del shaft (y positivo = hacia atrás)\ny_pasillo    = y_nucleo - PASILLO_PROF    # límite depto / pasillo\napt_ancho    = frente_m / _n_apts\n\n# Proporciones internas por tipología (fracción del fondo útil)\n_PROP_LIVING = {                          # fin de zona living (0 = sin separación)\n    \"1amb\": 0.00, \"estudio\": 0.00,\n    \"2amb\": 0.40, \"3amb\": 0.38, \"4amb\": 0.35, \"duplex\": 0.35,\n}\n_PROP_SERV = {                            # inicio de zona servicio (cocina + baños)\n    \"1amb\": 0.65, \"estudio\": 0.70,\n    \"2amb\": 0.70, \"3amb\": 0.68, \"4amb\": 0.65, \"duplex\": 0.65,\n}\n\n# ── Helpers ───────────────────────────────────────────────────────────────────\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_wall_type(nombre_exacto, fallback_kw):\n    tipos = FilteredElementCollector(doc).OfClass(WallType).ToElements()\n    match = next((wt for wt in tipos if wt.Name == nombre_exacto), None)\n    if match:\n        return match\n    return next((wt for wt in tipos if fallback_kw.lower() in wt.Name.lower()), tipos[0])\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef make_wall(lvl, x1, y1, x2, y2, h_m, wt):\n    \"\"\"Crea un muro Wall; retorna None si la longitud es prácticamente cero.\"\"\"\n    p1 = XYZ(m_to_ft(x1), m_to_ft(y1), 0)\n    p2 = XYZ(m_to_ft(x2), m_to_ft(y2), 0)\n    if p1.DistanceTo(p2) < 1e-3:\n        return None\n    return Wall.Create(doc, Line.CreateBound(p1, p2), wt.Id, lvl.Id, m_to_ft(h_m), 0, False, False)\n\n# ── Segmentos por zona ────────────────────────────────────────────────────────\nwt_ext = get_wall_type(nombre_muro_ext,    \"200\")\nwt_tab = get_wall_type(nombre_tabique,     \"100\")\nwt_cf  = get_wall_type(nombre_cortafuego,  \"cortafuego\")\n\ndef segs_perimetro():\n    \"\"\"4 muros exteriores del edificio.\"\"\"\n    return [\n        (0,        0,       frente_m, 0,       wt_ext),\n        (frente_m, 0,       frente_m, fondo_m, wt_ext),\n        (frente_m, fondo_m, 0,        fondo_m, wt_ext),\n        (0,        fondo_m, 0,        0,       wt_ext),\n    ]\n\ndef segs_nucleo():\n    \"\"\"Paredes del núcleo de escalera + ascensor (shaft).\"\"\"\n    x0 = x_nucleo\n    x1 = x_nucleo + ancho_nucleo\n    segs = []\n    # Frente del shaft (cara al pasillo)\n    segs.append((x0, y_nucleo, x1, y_nucleo, wt_ext))\n    # Laterales del shaft (sólo si no coinciden con medianeras)\n    if x0 > 0.02:\n        segs.append((x0, y_nucleo, x0, fondo_m, wt_ext))\n    if x1 < frente_m - 0.02:\n        segs.append((x1, y_nucleo, x1, fondo_m, wt_ext))\n    # División entre escalera y ascensor\n    if cant_escaleras > 0 and cant_ascensores > 0:\n        x_div = x_nucleo + cant_escaleras * ESC_ANCHO\n        segs.append((x_div, y_nucleo, x_div, fondo_m, wt_ext))\n    return segs\n\ndef segs_pasillo():\n    \"\"\"Muro separando los departamentos del pasillo común.\"\"\"\n    return [(0, y_pasillo, frente_m, y_pasillo, wt_tab)]\n\ndef segs_divisorias():\n    \"\"\"Muros cortafuego verticales entre departamentos (REI-120, CABA Art. 6.1).\"\"\"\n    segs = []\n    for i in range(1, _n_apts):\n        x = apt_ancho * i\n        segs.append((x, 0, x, y_pasillo, wt_cf))\n    return segs\n\ndef segs_internos_apt(apt_idx):\n    \"\"\"Tabiques internos de un departamento según su tipología.\"\"\"\n    if apt_idx >= len(apts):\n        return []\n    tipo = apts[apt_idx]\n    x0 = apt_ancho * apt_idx\n    x1 = x0 + apt_ancho\n\n    pct_living = _PROP_LIVING.get(tipo, _PROP_LIVING[\"2amb\"])\n    pct_serv   = _PROP_SERV.get(tipo, _PROP_SERV[\"2amb\"])\n    y_living   = y_pasillo * pct_living   # 0 → sin muro living/dorm\n    y_serv     = y_pasillo * pct_serv\n\n    segs = []\n\n    if tipo in (\"1amb\", \"estudio\"):\n        # Un solo ambiente + zona servicio al fondo\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo == \"2amb\":\n        # Living | Dormitorio | Servicio\n        segs.append((x0, y_living, x1, y_living, wt_tab))\n        segs.append((x0, y_serv,   x1, y_serv,   wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo == \"3amb\":\n        # Living | Dorm1 + Dorm2 | Servicio\n        segs.append((x0,              y_living, x1, y_living, wt_tab))\n        segs.append((x0 + apt_ancho * 0.50, y_living,\n                     x0 + apt_ancho * 0.50, y_serv,   wt_tab))\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo in (\"4amb\", \"duplex\"):\n        # Living | Dorm1 + Dorm2 + Dorm3 | Servicio\n        segs.append((x0, y_living, x1, y_living, wt_tab))\n        segs.append((x0 + apt_ancho * 0.33, y_living,\n                     x0 + apt_ancho * 0.33, y_serv,   wt_tab))\n        segs.append((x0 + apt_ancho * 0.67, y_living,\n                     x0 + apt_ancho * 0.67, y_serv,   wt_tab))\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    return segs\n\n# ── Crear muros por nivel ─────────────────────────────────────────────────────\nmuros_creados = []\n\ndef crear_nivel(nombre_nivel, altura_m, es_pb=False):\n    lvl = get_level(nombre_nivel)\n    todos = list(segs_perimetro()) + list(segs_nucleo()) + list(segs_pasillo())\n    if not es_pb:\n        todos.extend(segs_divisorias())\n        for i in range(_n_apts):\n            todos.extend(segs_internos_apt(i))\n    for x1, y1, x2, y2, wt in todos:\n        w = make_wall(lvl, x1, y1, x2, y2, altura_m, wt)\n        if w:\n            muros_creados.append({\"nivel\": nombre_nivel, \"id\": w.Id.Value})\n\nwith Transaction(doc, \"py-building-gen: Muros v2\") as t:\n    t.Start()\n    crear_nivel(\"PB\", altura_pb, es_pb=True)\n    for i in range(1, pisos_tipo + 1):\n        crear_nivel(f\"P{i:02d}\", altura_tipo)\n    t.Commit()\n\nOUT = {\"total\": len(muros_creados), \"detalle\": muros_creados}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Wall, WallType, Level, Line, XYZ,\n    FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m          = _fi(IN[0])\nfondo_m           = _fi(IN[1])\naltura_pb         = _fi(IN[2])\naltura_tipo       = _fi(IN[3])\npisos_tipo        = _ii(IN[4])\ncant_depto_tipo   = _ii(IN[5])\ntipologias_str    = _si(IN[6])   # \"2amb:1,3amb:1\" (quote-free para Code Block)\ncant_escaleras    = _ii(IN[7])\ncant_ascensores   = _ii(IN[8])\nnombre_muro_ext   = _si(IN[9])   # \"Muro exterior - 200mm\"\nnombre_tabique    = _si(IN[10])  # \"Tabique interior - 100mm\"\nnombre_cortafuego = _si(IN[11])  # \"Muro cortafuego - 200mm\"\n\n# Tipología por departamento (aplanada, izquierda a derecha).\n# Formato quote-free \"tipo:cant,tipo:cant\" — DesignScript no soporta comillas\n# escapadas en Code Blocks de forma confiable (bugs Dynamo #7425/#7781/#9117).\napts = []\nfor _par in tipologias_str.split(\",\"):\n    _par = _par.strip()\n    if not _par:\n        continue\n    _tipo, _, _cant = _par.partition(\":\")\n    _tipo = _tipo.strip() or \"2amb\"\n    try:\n        _n = int(_cant)\n    except Exception:\n        _n = 1\n    for _ in range(_n):\n        apts.append(_tipo)\n\n# ── Constantes normativa CABA ─────────────────────────────────────────────────\nESC_ANCHO    = 3.00   # m — caja escalera\nESC_FONDO    = 5.50   # m — profundidad del núcleo\nASC_ANCHO    = 2.00   # m — caja ascensor\nPASILLO_PROF = 1.20   # m — pasillo común mínimo (Art. 4.8 CABA)\n\n# ── Geometría derivada ────────────────────────────────────────────────────────\n_n_apts      = max(cant_depto_tipo, 1)\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO        # frente del shaft (y positivo = hacia atrás)\ny_pasillo    = y_nucleo - PASILLO_PROF    # límite depto / pasillo\napt_ancho    = frente_m / _n_apts\n\n# Proporciones internas por tipología (fracción del fondo útil)\n_PROP_LIVING = {                          # fin de zona living (0 = sin separación)\n    \"1amb\": 0.00, \"estudio\": 0.00,\n    \"2amb\": 0.40, \"3amb\": 0.38, \"4amb\": 0.35, \"duplex\": 0.35,\n}\n_PROP_SERV = {                            # inicio de zona servicio (cocina + baños)\n    \"1amb\": 0.65, \"estudio\": 0.70,\n    \"2amb\": 0.70, \"3amb\": 0.68, \"4amb\": 0.65, \"duplex\": 0.65,\n}\n\n# ── Helpers ───────────────────────────────────────────────────────────────────\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_wall_type(nombre_exacto, fallback_kw):\n    tipos = FilteredElementCollector(doc).OfClass(WallType).ToElements()\n    match = next((wt for wt in tipos if wt.Name == nombre_exacto), None)\n    if match:\n        return match\n    return next((wt for wt in tipos if fallback_kw.lower() in wt.Name.lower()), tipos[0])\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef make_wall(lvl, x1, y1, x2, y2, h_m, wt):\n    \"\"\"Crea un muro Wall; retorna None si la longitud es prácticamente cero.\"\"\"\n    p1 = XYZ(m_to_ft(x1), m_to_ft(y1), 0)\n    p2 = XYZ(m_to_ft(x2), m_to_ft(y2), 0)\n    if p1.DistanceTo(p2) < 1e-3:\n        return None\n    return Wall.Create(doc, Line.CreateBound(p1, p2), wt.Id, lvl.Id, m_to_ft(h_m), 0, False, False)\n\n# ── Segmentos por zona ────────────────────────────────────────────────────────\nwt_ext = get_wall_type(nombre_muro_ext,    \"200\")\nwt_tab = get_wall_type(nombre_tabique,     \"100\")\nwt_cf  = get_wall_type(nombre_cortafuego,  \"cortafuego\")\n\ndef segs_perimetro():\n    \"\"\"4 muros exteriores del edificio.\"\"\"\n    return [\n        (0,        0,       frente_m, 0,       wt_ext),\n        (frente_m, 0,       frente_m, fondo_m, wt_ext),\n        (frente_m, fondo_m, 0,        fondo_m, wt_ext),\n        (0,        fondo_m, 0,        0,       wt_ext),\n    ]\n\ndef segs_nucleo():\n    \"\"\"Paredes del núcleo de escalera + ascensor (shaft).\"\"\"\n    x0 = x_nucleo\n    x1 = x_nucleo + ancho_nucleo\n    segs = []\n    # Frente del shaft (cara al pasillo)\n    segs.append((x0, y_nucleo, x1, y_nucleo, wt_ext))\n    # Laterales del shaft (sólo si no coinciden con medianeras)\n    if x0 > 0.02:\n        segs.append((x0, y_nucleo, x0, fondo_m, wt_ext))\n    if x1 < frente_m - 0.02:\n        segs.append((x1, y_nucleo, x1, fondo_m, wt_ext))\n    # División entre escalera y ascensor\n    if cant_escaleras > 0 and cant_ascensores > 0:\n        x_div = x_nucleo + cant_escaleras * ESC_ANCHO\n        segs.append((x_div, y_nucleo, x_div, fondo_m, wt_ext))\n    return segs\n\ndef segs_pasillo():\n    \"\"\"Muro separando los departamentos del pasillo común.\"\"\"\n    return [(0, y_pasillo, frente_m, y_pasillo, wt_tab)]\n\ndef segs_divisorias():\n    \"\"\"Muros cortafuego verticales entre departamentos (REI-120, CABA Art. 6.1).\"\"\"\n    segs = []\n    for i in range(1, _n_apts):\n        x = apt_ancho * i\n        segs.append((x, 0, x, y_pasillo, wt_cf))\n    return segs\n\ndef segs_internos_apt(apt_idx):\n    \"\"\"Tabiques internos de un departamento según su tipología.\"\"\"\n    if apt_idx >= len(apts):\n        return []\n    tipo = apts[apt_idx]\n    x0 = apt_ancho * apt_idx\n    x1 = x0 + apt_ancho\n\n    pct_living = _PROP_LIVING.get(tipo, _PROP_LIVING[\"2amb\"])\n    pct_serv   = _PROP_SERV.get(tipo, _PROP_SERV[\"2amb\"])\n    y_living   = y_pasillo * pct_living   # 0 → sin muro living/dorm\n    y_serv     = y_pasillo * pct_serv\n\n    segs = []\n\n    if tipo in (\"1amb\", \"estudio\"):\n        # Un solo ambiente + zona servicio al fondo\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo == \"2amb\":\n        # Living | Dormitorio | Servicio\n        segs.append((x0, y_living, x1, y_living, wt_tab))\n        segs.append((x0, y_serv,   x1, y_serv,   wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo == \"3amb\":\n        # Living | Dorm1 + Dorm2 | Servicio\n        segs.append((x0,              y_living, x1, y_living, wt_tab))\n        segs.append((x0 + apt_ancho * 0.50, y_living,\n                     x0 + apt_ancho * 0.50, y_serv,   wt_tab))\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    elif tipo in (\"4amb\", \"duplex\"):\n        # Living | Dorm1 + Dorm2 + Dorm3 | Servicio\n        segs.append((x0, y_living, x1, y_living, wt_tab))\n        segs.append((x0 + apt_ancho * 0.33, y_living,\n                     x0 + apt_ancho * 0.33, y_serv,   wt_tab))\n        segs.append((x0 + apt_ancho * 0.67, y_living,\n                     x0 + apt_ancho * 0.67, y_serv,   wt_tab))\n        segs.append((x0, y_serv, x1, y_serv, wt_tab))\n        x_cx = x0 + apt_ancho * 0.55\n        segs.append((x_cx, y_serv, x_cx, y_pasillo, wt_tab))\n\n    return segs\n\n# ── Crear muros por nivel ─────────────────────────────────────────────────────\nmuros_creados = []\n\ndef crear_nivel(nombre_nivel, altura_m, es_pb=False):\n    lvl = get_level(nombre_nivel)\n    todos = list(segs_perimetro()) + list(segs_nucleo()) + list(segs_pasillo())\n    if not es_pb:\n        todos.extend(segs_divisorias())\n        for i in range(_n_apts):\n            todos.extend(segs_internos_apt(i))\n    for x1, y1, x2, y2, wt in todos:\n        w = make_wall(lvl, x1, y1, x2, y2, altura_m, wt)\n        if w:\n            muros_creados.append({\"nivel\": nombre_nivel, \"id\": w.Id.Value})\n\nwith Transaction(doc, \"py-building-gen: Muros v2\") as t:\n    t.Start()\n    crear_nivel(\"PB\", altura_pb, es_pb=True)\n    for i in range(1, pisos_tipo + 1):\n        crear_nivel(f\"P{i:02d}\", altura_tipo)\n    t.Commit()\n\nOUT = {\"total\": len(muros_creados), \"detalle\": muros_creados}\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "43aade73-a6cd-4693-876b-aeb154b609b7",
+      "Id": "d15db257-837f-4c97-8749-af8c72153017",
       "Inputs": [
         {
-          "Id": "2e8950de-4632-489d-8a27-b1d4df6aea39",
+          "Id": "292b0f07-db12-4eeb-9073-ee3e402180fe",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -268,7 +268,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2bdfefe0-7179-4b41-a422-284e77db2b2c",
+          "Id": "c51ab5b0-5809-4776-a82f-379596dc976b",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -277,7 +277,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b31e0ab5-abfa-49a5-b6e0-0058a3e37dfd",
+          "Id": "65a1986d-c689-4c1a-825a-ebda2ad84e96",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -286,7 +286,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "cf120824-ff8d-4cf5-876a-5d57a8c63e09",
+          "Id": "b7a266f1-4289-424d-998a-612ee84c2cdb",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -295,7 +295,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5fbb686c-2468-4ad9-835b-3334856652fa",
+          "Id": "404aa39f-2715-4aea-bd7a-7f04b9e097c7",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -304,7 +304,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2785bd0c-ebaa-4f06-8893-7a3c75adaf41",
+          "Id": "5143c141-0c84-4c74-9000-63ded148e96c",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -313,7 +313,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f9f02e92-2025-48a3-9b7b-1713986819ce",
+          "Id": "2a78d44d-37b0-418a-88d4-993f355ec1be",
           "Name": "IN[6]",
           "Description": "Input 6",
           "UsingDefaultValue": false,
@@ -322,7 +322,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "018f031d-1086-4786-939e-a44831c6617c",
+          "Id": "6f0e3dcb-050f-4ed4-aa99-53b486ed3e88",
           "Name": "IN[7]",
           "Description": "Input 7",
           "UsingDefaultValue": false,
@@ -331,7 +331,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "877b2992-f567-49c0-9c36-da7b40485d20",
+          "Id": "4d3f1bd9-a279-4100-a8d4-6846af7dcc02",
           "Name": "IN[8]",
           "Description": "Input 8",
           "UsingDefaultValue": false,
@@ -340,7 +340,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f4400b5d-9270-4594-b147-887d5f83d8b6",
+          "Id": "b3c9dda2-1bba-438a-a69a-031a899dd36c",
           "Name": "IN[9]",
           "Description": "Input 9",
           "UsingDefaultValue": false,
@@ -349,7 +349,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5c95d89a-931a-4cc3-87fb-674d194a8a55",
+          "Id": "748ff018-3963-4d11-9128-da68a9148604",
           "Name": "IN[10]",
           "Description": "Input 10",
           "UsingDefaultValue": false,
@@ -358,7 +358,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e8b106f7-fac6-4c86-bcda-0923e93bce5e",
+          "Id": "a931463d-e72d-49e4-833d-42728a85fced",
           "Name": "IN[11]",
           "Description": "Input 11",
           "UsingDefaultValue": false,
@@ -369,7 +369,7 @@
       ],
       "Outputs": [
         {
-          "Id": "d6ec5267-599c-40de-8dcc-921e84eb3866",
+          "Id": "3aa74bd9-73c6-458c-a21b-680286ee3327",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -384,100 +384,76 @@
   ],
   "Connectors": [
     {
-      "Start": "caea3a6e-2fc8-40f6-a3c8-2c1ead057d92",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "39177445-1d93-431f-abb1-98872c12e5d3",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "552a8555-1176-43ec-87d8-d52915cdc8e5",
+      "End": "292b0f07-db12-4eeb-9073-ee3e402180fe",
+      "Id": "e5576d52-6d03-4e7f-89b0-70684666b9a5",
+      "IsHidden": "False"
     },
     {
-      "Start": "989e36b0-266f-442b-b3da-f7153f53ed49",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "9e9f66d9-19dd-47bb-8b3f-81283d19a3d8",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "4a7f3ed4-b87e-43e9-a90b-8dbc56cfeb22",
+      "End": "c51ab5b0-5809-4776-a82f-379596dc976b",
+      "Id": "0d89752f-5ba0-414e-8740-295c7d039f65",
+      "IsHidden": "False"
     },
     {
-      "Start": "75105e41-a83a-4fc2-81ef-984dfa063d81",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "bc3227fc-0257-4fd3-91cd-5f499bc210e9",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "b349944a-eff0-482a-88f4-0d2ba35eae85",
+      "End": "65a1986d-c689-4c1a-825a-ebda2ad84e96",
+      "Id": "3cc34269-f1f3-4763-9273-e69d98a4769f",
+      "IsHidden": "False"
     },
     {
-      "Start": "63c2be1f-a6ce-4bae-8693-82eb96790e56",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "08b1f7f8-2b9f-4bdb-8a45-39d118fc6b17",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "ab8a6148-2b56-4490-a670-ffee3908fcc4",
+      "End": "b7a266f1-4289-424d-998a-612ee84c2cdb",
+      "Id": "eb8cd736-bbaf-4a63-9e16-e9b624fa8edc",
+      "IsHidden": "False"
     },
     {
-      "Start": "26c034ae-2ea6-4527-a0a9-65696d95ddb7",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "0c5a2ef7-0528-4949-89ac-f4c81489eef5",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "4e3f6556-6a4f-4f49-a6cb-c027fc92d9aa",
+      "End": "404aa39f-2715-4aea-bd7a-7f04b9e097c7",
+      "Id": "42408501-2900-4cff-a3eb-662aa57254d2",
+      "IsHidden": "False"
     },
     {
-      "Start": "f6c38a5d-483e-430e-aa65-5f86bc1e7d5e",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "a2d44493-be9b-4c4a-8d7c-4ff9181bab7f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "988472f7-ed4e-4a86-8c42-7085913c7b62",
+      "End": "5143c141-0c84-4c74-9000-63ded148e96c",
+      "Id": "52db9663-e007-4db2-a6a3-3698285b5ea1",
+      "IsHidden": "False"
     },
     {
-      "Start": "ba2a31dc-f9ed-48fd-9b68-c89d4e016079",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "5e8ffa91-7b84-4611-8452-1f01a275d536",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 6
+      "Start": "b5ac408f-ad17-4113-9f0d-5f377fe04b3a",
+      "End": "2a78d44d-37b0-418a-88d4-993f355ec1be",
+      "Id": "27978c06-752d-49d4-8a71-b07e25163cba",
+      "IsHidden": "False"
     },
     {
-      "Start": "38308af1-a6af-4168-81af-0051f18fd154",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "6233049d-87c2-476d-80c1-4eab6cafd028",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 7
+      "Start": "e43aa888-b582-4642-a9c7-d8cccb4bd1c6",
+      "End": "6f0e3dcb-050f-4ed4-aa99-53b486ed3e88",
+      "Id": "21ee8f39-0f64-4211-bb5e-6fcdc6c6ab2c",
+      "IsHidden": "False"
     },
     {
-      "Start": "6e020af6-9536-477a-ae5f-f644b8b2c9e1",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "0a2351fd-6058-423e-8365-d8f90d23d0ae",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 8
+      "Start": "65def7bf-7def-4a1f-9e72-0ec302b76406",
+      "End": "4d3f1bd9-a279-4100-a8d4-6846af7dcc02",
+      "Id": "34d1505f-1afb-47e1-be15-e96ccdad26ee",
+      "IsHidden": "False"
     },
     {
-      "Start": "e8f46488-51bc-4dde-bd6c-7fd3e077aa2e",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "2047c5ba-59d9-48ef-b9dc-a7e540c185f1",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 9
+      "Start": "ee948a5a-a1a9-4af5-ab0f-60eeb10192b9",
+      "End": "b3c9dda2-1bba-438a-a69a-031a899dd36c",
+      "Id": "ede4c73d-7cf7-415d-a434-37d3db5e76e4",
+      "IsHidden": "False"
     },
     {
-      "Start": "b56c5d4b-920f-4ad5-b666-a3eae35edb3e",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "680fa34d-ed89-49c6-99e5-ce9fcaa7edce",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 10
+      "Start": "9cdd317b-1a87-4fb3-a5f7-194fa5be6ee0",
+      "End": "748ff018-3963-4d11-9128-da68a9148604",
+      "Id": "faae179f-03aa-4358-94fa-357210e69542",
+      "IsHidden": "False"
     },
     {
-      "Start": "6b4feabb-bff8-4629-b043-23f40e61d711",
-      "End": "43aade73-a6cd-4693-876b-aeb154b609b7",
-      "Id": "1308ef4e-29b4-4897-a309-b0c68574b2ee",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 11
+      "Start": "91e752f9-a1b8-4b02-8f88-0492a4bac5c7",
+      "End": "a931463d-e72d-49e4-833d-42728a85fced",
+      "Id": "25b2db35-bd54-4420-933a-a7675eeef92f",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -508,7 +484,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "caea3a6e-2fc8-40f6-a3c8-2c1ead057d92",
+        "Id": "497eac17-32d9-41d1-9704-b61956b63c10",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -518,7 +494,7 @@
         "Y": 0.0
       },
       {
-        "Id": "989e36b0-266f-442b-b3da-f7153f53ed49",
+        "Id": "13d8eb9d-ae8e-42ec-8d6a-da99c52857f7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -528,7 +504,7 @@
         "Y": 130.0
       },
       {
-        "Id": "75105e41-a83a-4fc2-81ef-984dfa063d81",
+        "Id": "1f4883dd-b411-44cf-b40e-fb45c21b5f47",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -538,7 +514,7 @@
         "Y": 260.0
       },
       {
-        "Id": "63c2be1f-a6ce-4bae-8693-82eb96790e56",
+        "Id": "d8cd23de-d548-43d0-8072-2473e2d869a2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_tipo_m",
@@ -548,7 +524,7 @@
         "Y": 390.0
       },
       {
-        "Id": "26c034ae-2ea6-4527-a0a9-65696d95ddb7",
+        "Id": "64ea88ee-38a9-40f6-a84f-41336052d45d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -558,7 +534,7 @@
         "Y": 520.0
       },
       {
-        "Id": "f6c38a5d-483e-430e-aa65-5f86bc1e7d5e",
+        "Id": "bba2c301-3c13-41fe-af9b-5cc8b1ea4f9e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_depto_tipo",
@@ -568,17 +544,17 @@
         "Y": 650.0
       },
       {
-        "Id": "ba2a31dc-f9ed-48fd-9b68-c89d4e016079",
+        "Id": "97837913-500c-48a2-850f-4f294da5ff28",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "tipologias_json",
+        "Name": "tipologias",
         "ShowGeometry": true,
         "Excluded": false,
         "X": 0.0,
         "Y": 780.0
       },
       {
-        "Id": "38308af1-a6af-4168-81af-0051f18fd154",
+        "Id": "96235194-cbe9-45f3-94ea-4d217d63262a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_escaleras",
@@ -588,7 +564,7 @@
         "Y": 910.0
       },
       {
-        "Id": "6e020af6-9536-477a-ae5f-f644b8b2c9e1",
+        "Id": "d20f64f3-bb77-4eb4-8051-b99c87153c03",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_ascensores",
@@ -598,7 +574,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "e8f46488-51bc-4dde-bd6c-7fd3e077aa2e",
+        "Id": "6e6c910b-b724-41e6-92ce-3b33267a4bce",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_muro_ext",
@@ -608,7 +584,7 @@
         "Y": 1170.0
       },
       {
-        "Id": "b56c5d4b-920f-4ad5-b666-a3eae35edb3e",
+        "Id": "5b140269-180a-414d-a334-510edadf5665",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_tabique",
@@ -618,7 +594,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "6b4feabb-bff8-4629-b043-23f40e61d711",
+        "Id": "983bb0a7-b937-483e-97f3-8a0b3dfe6417",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_cortafuego",
@@ -628,7 +604,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "43aade73-a6cd-4693-876b-aeb154b609b7",
+        "Id": "d15db257-837f-4c97-8749-af8c72153017",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Muros v2",

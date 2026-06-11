@@ -233,20 +233,20 @@ class WatchNode(_BaseNode):
 
 @dataclass
 class _Connector:
-    start_node_id: str
-    start_index: int
-    end_node_id: str
-    end_index: int
+    start_port_id: str   # Id del PUERTO de salida del nodo origen
+    end_port_id: str     # Id del PUERTO de entrada del nodo destino
     id: str = field(default_factory=_uid)
 
     def to_dict(self) -> dict:
+        # Formato estandar Dynamo 2.x+: Start/End referencian IDs de PUERTO
+        # (los Id dentro de Inputs/Outputs), NO IDs de nodo. Sin StartIndex/
+        # EndIndex ni PortType. Usar IDs de nodo deja todo desconectado y los
+        # nodos Python reciben IN[x] = None -> defaults (bug sistemico).
         return {
-            "Start": self.start_node_id,
-            "End": self.end_node_id,
+            "Start": self.start_port_id,
+            "End": self.end_port_id,
             "Id": self.id,
-            "PortType": 0,
-            "StartIndex": self.start_index,
-            "EndIndex": self.end_index,
+            "IsHidden": "False",
         }
 
 
@@ -352,12 +352,34 @@ class DynScript:
         # Watch nodes son placeholders — no se agregan al grafo
         if to_node not in self._nodes or from_node not in self._nodes:
             return
+        start_port = self._resolve_output_port(from_node, from_output)
+        end_port = self._resolve_input_port(to_node, to_input)
+        if start_port is None or end_port is None:
+            return
         self._connectors.append(_Connector(
-            start_node_id=from_node.id,
-            start_index=from_output,
-            end_node_id=to_node.id,
-            end_index=to_input,
+            start_port_id=start_port,
+            end_port_id=end_port,
         ))
+
+    @staticmethod
+    def _resolve_output_port(node, index: int) -> Optional[str]:
+        """Devuelve el Id del puerto de SALIDA del nodo.
+
+        Todos los nodos del builder tienen una sola salida (`output_port_id`).
+        """
+        return getattr(node, "output_port_id", None)
+
+    @staticmethod
+    def _resolve_input_port(node, index: int) -> Optional[str]:
+        """Devuelve el Id del puerto de ENTRADA `index` del nodo destino."""
+        if isinstance(node, PythonNode):
+            try:
+                return node.input_port_id(index)
+            except IndexError:
+                return None
+        if isinstance(node, WatchNode):
+            return node.input_port_id
+        return None
 
     # ------------------------------------------------------------------
     # Serialización

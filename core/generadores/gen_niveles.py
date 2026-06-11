@@ -97,47 +97,84 @@ clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 from Autodesk.Revit.DB import (
     Grid, Line, XYZ, Transaction,
+    FilteredElementCollector,
     UnitUtils, UnitTypeId,
 )
 doc = DocumentManager.Instance.CurrentDBDocument
 
 frente_m = _fi(IN[0])
 fondo_m  = _fi(IN[1])
-paso_m   = 5.0
+PASO     = 5.0    # m — modulo objetivo entre ejes
+MIN_BAY  = 2.5    # m — bahia minima; si el resto es menor, se absorbe
 
 def m_to_ft(m):
     return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
 
+def ejes(span, paso=PASO, min_bay=MIN_BAY):
+    """Posiciones de eje en [0, span]: modulo de 5m + eje de cierre en el borde.
+
+    Siempre incluye 0 y span (medianeras/fachada). Si el ultimo paño quedaria
+    mas chico que min_bay, se fusiona con el anterior (evita bahias minusculas).
+    """
+    if span <= paso + 1e-9:
+        return [0.0, round(span, 4)]
+    pos = []
+    x = 0.0
+    while x < span - 1e-6:
+        pos.append(round(x, 4))
+        x += paso
+    resto = span - pos[-1]
+    if resto < min_bay and len(pos) >= 2:
+        pos.pop()            # absorber: la ultima bahia queda paso+resto
+    pos.append(round(span, 4))
+    return pos
+
+def es_grid_nuestro(nombre):
+    # Ejes de py-building-gen: una sola letra A-Z, o solo digitos
+    return (len(nombre) == 1 and nombre.isalpha()) or nombre.isdigit()
+
+xs = ejes(frente_m)   # ejes verticales (A, B, C…) a lo ancho del frente
+ys = ejes(fondo_m)    # ejes horizontales (1, 2, 3…) a lo largo del fondo
 grillas_creadas = []
 
 with Transaction(doc, "py-building-gen: Grilla") as t:
     t.Start()
 
-    # Ejes verticales (A, B, C …)
-    x = 0.0; col_idx = 0
-    while x <= frente_m + 0.001:
-        nombre = chr(ord("A") + col_idx)
+    # Idempotencia: borrar ejes previos de py-building-gen y reposicionarlos.
+    # (Grid.Create + asignar un nombre ya usado lanza error al re-correr.)
+    for g in list(FilteredElementCollector(doc).OfClass(Grid).ToElements()):
+        if es_grid_nuestro(g.Name):
+            try: doc.Delete(g.Id)
+            except Exception: pass
+
+    # Ejes verticales A, B, C … (x constante, corren en Y)
+    for i, x in enumerate(xs):
+        nombre = chr(ord("A") + i)
         p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)
         p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)
         g = Grid.Create(doc, Line.CreateBound(p1, p2))
         g.Name = nombre
         grillas_creadas.append(nombre)
-        x += paso_m; col_idx += 1
 
-    # Ejes horizontales (1, 2, 3 …)
-    y = 0.0; row_idx = 1
-    while y <= fondo_m + 0.001:
-        nombre = str(row_idx)
+    # Ejes horizontales 1, 2, 3 … (y constante, corren en X)
+    for i, y in enumerate(ys):
+        nombre = str(i + 1)
         p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)
         p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)
         g = Grid.Create(doc, Line.CreateBound(p1, p2))
         g.Name = nombre
         grillas_creadas.append(nombre)
-        y += paso_m; row_idx += 1
 
     t.Commit()
 
-OUT = {"ejes": grillas_creadas, "total": len(grillas_creadas)}
+OUT = {
+    "ejes": grillas_creadas,
+    "total": len(grillas_creadas),
+    "frente_m_recibido": frente_m,
+    "fondo_m_recibido": fondo_m,
+    "x_ejes_m": [round(v, 2) for v in xs],
+    "y_ejes_m": [round(v, 2) for v in ys],
+}
 '''
 
 # ---------------------------------------------------------------------------

@@ -252,7 +252,7 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     ViewPlan, ViewSheet, FamilySymbol, FamilyInstance,
     FilteredElementCollector, BuiltInCategory,
-    Transaction, TextNote, TextNoteOptions,
+    Transaction, TextNote, TextNoteOptions, TextNoteType,
     XYZ, UV, UnitUtils, UnitTypeId, ElementId,
 )
 from Autodesk.Revit.DB.Structure import StructuralType as ST
@@ -295,9 +295,10 @@ with Transaction(doc, "py-building-gen: Norte y cuadro superficies") as t:
     if north_sym and vista_pb:
         if not north_sym.IsActive:
             north_sym.Activate()
-        # Colocar en el ángulo superior izquierdo de la planta
+        # Colocar en el ángulo superior izquierdo de la planta.
+        # Símbolo de anotación 2D → overload NewFamilyInstance(XYZ, FamilySymbol, View).
         pt_norte = XYZ(m_to_ft(-2.0), m_to_ft(fondo_m + 1.5), 0)
-        inst = doc.Create.NewFamilyInstance(pt_norte, north_sym, vista_pb, ST.NonStructural)
+        inst = doc.Create.NewFamilyInstance(pt_norte, north_sym, vista_pb)
         resultado.append({"tipo": "norte", "id": inst.Id.Value})
     else:
         resultado.append({"tipo": "norte", "status": "familia no encontrada en template"})
@@ -325,7 +326,10 @@ with Transaction(doc, "py-building-gen: Norte y cuadro superficies") as t:
         texto = "\\n".join(lineas)
 
         try:
-            tnOpts = TextNoteOptions(ElementId.InvalidElementId)
+            # TextNote.Create requiere un TextNoteType válido (no InvalidElementId)
+            tnt = FilteredElementCollector(doc).OfClass(TextNoteType).FirstElement()
+            tnt_id = tnt.Id if tnt else ElementId.InvalidElementId
+            tnOpts = TextNoteOptions(tnt_id)
             # Colocar en la esquina inferior derecha de la hoja (en coordenadas de hoja)
             pt_txt = XYZ(m_to_ft(0.300), m_to_ft(0.035), 0)
             tn = TextNote.Create(doc, sheet_a01.Id, pt_txt, texto, tnOpts)

@@ -116,7 +116,7 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     ViewPlan, ViewSection, Wall, Level, Line, XYZ,
     ReferenceArray, FilteredElementCollector,
-    Transaction, UnitUtils, UnitTypeId, WallSide,
+    Transaction, UnitUtils, UnitTypeId,
 )
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
@@ -171,38 +171,29 @@ if vista_pb:
     with Transaction(doc, "py-building-gen: Dimensiones") as t:
         t.Start()
 
-        # Dimensión frente (a lo largo de X, debajo del edificio)
-        walls_frente = get_walls_at_y(0.0)
-        if walls_frente:
-            w_frt = walls_frente[0]
-            refs = ReferenceArray()
-            # Referencia a la cara exterior de la pared izquierda (x=0)
-            walls_izq = get_walls_at_x(0.0)
-            walls_der = get_walls_at_x(frente_m)
-            for w in walls_izq[:1] + walls_der[:1]:
-                for ref in (w.GetReferences(WallSide.Exterior)
-                        if hasattr(w, "GetReferences") else []):
-                refs.Append(ref)
+        # Dimensión frente (a lo largo de X, debajo del edificio).
+        # Se toma un endpoint de referencia de cada muro lateral (x=0 y x=frente);
+        # la distancia entre ambos es el frente del edificio.
+        walls_izq = get_walls_at_x(0.0)
+        walls_der = get_walls_at_x(frente_m)
+        refs = ReferenceArray()
+        for ww in walls_izq[:1] + walls_der[:1]:
+            loc = ww.Location
+            if hasattr(loc, "Curve"):
+                refs.Append(loc.Curve.GetEndPointReference(0))
 
-            # Alternativa: usar la curva de la pared directamente
-            if refs.Size < 2:
-                refs = ReferenceArray()
-                for ww in walls_izq[:1]:
-                    loc = ww.Location
-                    if hasattr(loc, "Curve"):
-                        refs.Append(loc.Curve.GetEndPointReference(0))
-                        refs.Append(loc.Curve.GetEndPointReference(1))
-
-            if refs.Size >= 2:
-                dim_line = Line.CreateBound(
-                    XYZ(m_to_ft(0), m_to_ft(-2.0), 0),
-                    XYZ(m_to_ft(frente_m), m_to_ft(-2.0), 0)
-                )
-                try:
-                    dim = doc.Create.NewDimension(vista_pb, dim_line, refs)
-                    dims_creadas.append({"tipo": "frente", "id": dim.Id.Value})
-                except Exception as e:
-                    dims_creadas.append({"tipo": "frente_error", "error": str(e)})
+        if refs.Size >= 2:
+            dim_line = Line.CreateBound(
+                XYZ(m_to_ft(0), m_to_ft(-2.0), 0),
+                XYZ(m_to_ft(frente_m), m_to_ft(-2.0), 0)
+            )
+            try:
+                dim = doc.Create.NewDimension(vista_pb, dim_line, refs)
+                dims_creadas.append({"tipo": "frente", "id": dim.Id.Value})
+            except Exception as e:
+                dims_creadas.append({"tipo": "frente_error", "error": str(e)})
+        else:
+            dims_creadas.append({"tipo": "frente", "status": "muros laterales no encontrados"})
 
         t.Commit()
 else:

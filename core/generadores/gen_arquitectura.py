@@ -44,20 +44,29 @@ altura_pb         = _fi(IN[2])
 altura_tipo       = _fi(IN[3])
 pisos_tipo        = _ii(IN[4])
 cant_depto_tipo   = _ii(IN[5])
-tipologias_json   = _si(IN[6])   # [{"tipo":"2amb","cantidad":1}, ...]
+tipologias_str    = _si(IN[6])   # "2amb:1,3amb:1" (quote-free para Code Block)
 cant_escaleras    = _ii(IN[7])
 cant_ascensores   = _ii(IN[8])
 nombre_muro_ext   = _si(IN[9])   # "Muro exterior - 200mm"
 nombre_tabique    = _si(IN[10])  # "Tabique interior - 100mm"
 nombre_cortafuego = _si(IN[11])  # "Muro cortafuego - 200mm"
 
-tipologias_raw = json.loads(tipologias_json)
-
-# Tipología por departamento (aplanada, en orden de izquierda a derecha)
+# Tipología por departamento (aplanada, izquierda a derecha).
+# Formato quote-free "tipo:cant,tipo:cant" — DesignScript no soporta comillas
+# escapadas en Code Blocks de forma confiable (bugs Dynamo #7425/#7781/#9117).
 apts = []
-for t_item in tipologias_raw:
-    for _ in range(int(t_item.get("cantidad", 1))):
-        apts.append(t_item.get("tipo", "2amb"))
+for _par in tipologias_str.split(","):
+    _par = _par.strip()
+    if not _par:
+        continue
+    _tipo, _, _cant = _par.partition(":")
+    _tipo = _tipo.strip() or "2amb"
+    try:
+        _n = int(_cant)
+    except Exception:
+        _n = 1
+    for _ in range(_n):
+        apts.append(_tipo)
 
 # ── Constantes normativa CABA ─────────────────────────────────────────────────
 ESC_ANCHO    = 3.00   # m — caja escalera
@@ -356,15 +365,23 @@ fondo_m         = _fi(IN[1])
 altura_tipo     = _fi(IN[2])
 pisos_tipo      = _ii(IN[3])
 cant_depto_tipo = _ii(IN[4])
-tipologias_json = _si(IN[5])
+tipologias_str  = _si(IN[5])   # "2amb:1,3amb:1" (quote-free para Code Block)
 cant_escaleras  = _ii(IN[6])
 cant_ascensores = _ii(IN[7])
 
-tipologias_raw = json.loads(tipologias_json)
 apts = []
-for t_item in tipologias_raw:
-    for _ in range(int(t_item.get("cantidad", 1))):
-        apts.append(t_item.get("tipo", "2amb"))
+for _par in tipologias_str.split(","):
+    _par = _par.strip()
+    if not _par:
+        continue
+    _tipo, _, _cant = _par.partition(":")
+    _tipo = _tipo.strip() or "2amb"
+    try:
+        _n = int(_cant)
+    except Exception:
+        _n = 1
+    for _ in range(_n):
+        apts.append(_tipo)
 
 # ── Layout geometry (same constants as Script 02) ─────────────────────────────
 ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20
@@ -519,12 +536,19 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import (
     Level, Line, XYZ, FilteredElementCollector,
     Transaction, UnitUtils, UnitTypeId,
-    Opening, CurveArray, FailureHandlingOptions,
+    Opening, CurveArray,
+    IFailuresPreprocessor, FailureProcessingResult,
 )
 from Autodesk.Revit.DB.Architecture import (
     Stairs, StairsEditScope, StairsRun, StairsType,
     StairsRunJustification,
 )
+
+# Preprocesador de fallos requerido por StairsEditScope.Commit (IFailuresPreprocessor).
+# Continúa ante warnings (p.ej. escalones fuera de rango), evita diálogos modales.
+class _StairFailures(IFailuresPreprocessor):
+    def PreprocessFailures(self, failuresAccessor):
+        return FailureProcessingResult.Continue
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 
@@ -599,31 +623,43 @@ if stair_type:
             lvl_top = get_level(niveles[idx + 1])
             if lvl_bot is None or lvl_top is None:
                 continue
-            scope = None
+            # Riser count y elevaciones derivados de la altura REAL del tramo
+            # (PB→P01 usa altura_pb; el resto altura_tipo). lvl.Elevation ya está en pies.
+            h_seg_ft = lvl_top.Elevation - lvl_bot.Elevation
+            n_seg = max(2, int(round(h_seg_ft / m_to_ft(0.175))))
+            if n_seg % 2 != 0:
+                n_seg += 1                       # par → dos tramos iguales
+            z_base = lvl_bot.Elevation           # base de la escalera (pies, modelo)
+            z_mid  = z_base + h_seg_ft / 2.0     # nivel del descanso intermedio
+
+            scope = StairsEditScope(doc, f"Esc{i_esc+1}_{niveles[idx+1]}")
             try:
-                scope = StairsEditScope(doc, f"Esc{i_esc+1}_{niveles[idx+1]}")
-                stair_id = Stairs.Create(doc, stair_type.Id, lvl_bot.Id, lvl_top.Id)
-                elem = doc.GetElement(stair_id)
-                elem.DesiredRisersNumber = n_risers
-                # Tramo 1
-                StairsRun.CreateStraightRun(doc, stair_id,
-                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r1_ini), 0),
-                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r1_fin), 0)),
-                    StairsRunJustification.Center)
-                # Tramo 2
-                StairsRun.CreateStraightRun(doc, stair_id,
-                    Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r2_ini), 0),
-                                     XYZ(m_to_ft(x_cen), m_to_ft(y_r2_fin), 0)),
-                    StairsRunJustification.Center)
-                scope.Commit(FailureHandlingOptions())
-                scope = None
+                # Start crea una escalera vacía con tipo por defecto y devuelve su Id
+                stair_id = scope.Start(lvl_bot.Id, lvl_top.Id)
+                # Crear los tramos dentro de una Transaction abierta en el scope
+                with Transaction(doc, "py-building-gen: Tramos escalera") as tr:
+                    tr.Start()
+                    stair_elem = doc.GetElement(stair_id)
+                    stair_elem.DesiredRisersNumber = n_seg
+                    # Tramo 1 — arranca en la base del tramo (Z = z_base)
+                    StairsRun.CreateStraightRun(doc, stair_id,
+                        Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r1_ini), z_base),
+                                         XYZ(m_to_ft(x_cen), m_to_ft(y_r1_fin), z_base)),
+                        StairsRunJustification.Center)
+                    # Tramo 2 — arranca en el descanso (Z = z_mid)
+                    StairsRun.CreateStraightRun(doc, stair_id,
+                        Line.CreateBound(XYZ(m_to_ft(x_cen), m_to_ft(y_r2_ini), z_mid),
+                                         XYZ(m_to_ft(x_cen), m_to_ft(y_r2_fin), z_mid)),
+                        StairsRunJustification.Center)
+                    tr.Commit()
+                scope.Commit(_StairFailures())
                 escaleras.append({"tipo": "escalera_real", "nivel": niveles[idx+1],
-                                   "id": stair_id.Value, "risers": n_risers,
+                                   "id": stair_id.Value, "risers": n_seg,
                                    "huella_m": round(huella_m, 3)})
             except Exception as e:
-                if scope is not None:
-                    try: scope.Cancel()
-                    except Exception: pass
+                # Cancelar el scope si quedó abierto (idempotente bajo try/except)
+                try: scope.Cancel()
+                except Exception: pass
                 escaleras.append({"tipo": "error", "nivel": niveles[idx+1], "msg": str(e)})
 else:
     # Fallback: shaft openings si no hay StairsType en el template
@@ -665,14 +701,12 @@ OUT = {
 
 
 def _script_muros(params: "ParametrosEdificio", output_dir: Path) -> Path:
-    import json as _json
     nombres = nombres_tipos(params)
 
-    tipologias_list = [
-        {"tipo": t.tipo, "cantidad": t.cantidad}
-        for t in params.mix_tipologias
-    ]
-    tipologias_json = _json.dumps(tipologias_list, ensure_ascii=False)
+    # Formato quote-free para Code Block DesignScript: "2amb:1,3amb:1"
+    tipologias_str = ",".join(
+        f"{t.tipo}:{t.cantidad}" for t in params.mix_tipologias
+    )
 
     s = DynScript(
         "02_muros_perimetrales",
@@ -684,7 +718,7 @@ def _script_muros(params: "ParametrosEdificio", output_dir: Path) -> Path:
     cb_alt_t   = s.add_code_block(str(params.altura_tipo),   label="altura_tipo_m",    col=0, row=3)
     cb_pisos   = s.add_code_block(str(params.pisos_tipo),    label="pisos_tipo",       col=0, row=4)
     cb_ndepto  = s.add_code_block(str(params.cant_depto_tipo), label="cant_depto_tipo", col=0, row=5)
-    cb_tipol   = s.add_code_block(f'"{tipologias_json}"',    label="tipologias_json",  col=0, row=6)
+    cb_tipol   = s.add_code_block(f'"{tipologias_str}"',     label="tipologias",       col=0, row=6)
     cb_nesc    = s.add_code_block(str(params.cant_cajas_escalera), label="cant_escaleras", col=0, row=7)
     cb_nasc    = s.add_code_block(str(params.cant_ascensores),     label="cant_ascensores", col=0, row=8)
     cb_ext     = s.add_code_block(f'"{nombres["muro_ext"]}"',   label="nombre_muro_ext",   col=0, row=9)
@@ -730,13 +764,11 @@ def _script_losas(params: "ParametrosEdificio", output_dir: Path) -> Path:
 
 
 def _script_aberturas(params: "ParametrosEdificio", output_dir: Path) -> Path:
-    import json as _json
     nombres = nombres_tipos(params)
-    tipologias_list = [
-        {"tipo": t.tipo, "cantidad": t.cantidad}
-        for t in params.mix_tipologias
-    ]
-    tipologias_json = _json.dumps(tipologias_list, ensure_ascii=False)
+    # Formato quote-free para Code Block DesignScript: "2amb:1,3amb:1"
+    tipologias_str = ",".join(
+        f"{t.tipo}:{t.cantidad}" for t in params.mix_tipologias
+    )
 
     s = DynScript(
         "05_aberturas",
@@ -747,7 +779,7 @@ def _script_aberturas(params: "ParametrosEdificio", output_dir: Path) -> Path:
     cb_alt_t   = s.add_code_block(str(params.altura_tipo),     label="altura_tipo_m",    col=0, row=2)
     cb_pisos   = s.add_code_block(str(params.pisos_tipo),      label="pisos_tipo",       col=0, row=3)
     cb_ndepto  = s.add_code_block(str(params.cant_depto_tipo), label="cant_depto_tipo",  col=0, row=4)
-    cb_tipol   = s.add_code_block(f'"{tipologias_json}"',      label="tipologias_json",  col=0, row=5)
+    cb_tipol   = s.add_code_block(f'"{tipologias_str}"',       label="tipologias",       col=0, row=5)
     cb_nesc    = s.add_code_block(str(params.cant_cajas_escalera), label="cant_escaleras", col=0, row=6)
     cb_nasc    = s.add_code_block(str(params.cant_ascensores),     label="cant_ascensores", col=0, row=7)
 

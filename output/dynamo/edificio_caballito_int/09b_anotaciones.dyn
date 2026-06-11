@@ -1,5 +1,5 @@
 {
-  "Uuid": "88c3cf88-bbaf-4324-8c5e-fe6fac4675be",
+  "Uuid": "9ca0dd09-fa48-4732-933f-7991b16e5de0",
   "IsCustomNode": false,
   "Description": "Coloca room tags con área, tags de puertas/ventanas y dimensiones generales. Ejecutar después de 09_sheets, 11_habitaciones y 05_aberturas.",
   "Name": "09b_anotaciones",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "c109b691-5147-4134-990a-4c05482ccf44",
+      "Id": "144057d5-8ec6-492b-9983-b9eb377914d2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "384dcc62-cedf-4be3-86d7-c091371b2e37",
+          "Id": "48da368e-ca49-49a7-8461-34efca20c002",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -36,10 +36,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "11850854-6e61-411f-a5c9-7dc6d86f43ac",
+      "Id": "c3d94cc3-faea-44c2-a249-3c39a033122b",
       "Inputs": [
         {
-          "Id": "45f20a76-e5e3-4cb3-8985-b15da1d835f1",
+          "Id": "96e6f6ca-8050-438a-b5b5-efe4559bf572",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -50,7 +50,7 @@
       ],
       "Outputs": [
         {
-          "Id": "6e0415f7-5f30-441a-be42-0e77484dc7ff",
+          "Id": "909b1185-3db6-47be-823b-4703b0d55dcf",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -66,11 +66,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "a288244c-d974-47c2-a1a4-e0ccdd922b01",
+      "Id": "68a9acf6-bb04-4894-8a7a-9755edea53b3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "42dcb591-f9c9-4f70-be7a-7872ab1df0b0",
+          "Id": "25fc69e1-2e0f-40c2-88b3-b1e1ff534528",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -86,11 +86,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "0e592c4e-2df5-4ebd-ad38-7f755ffd7c18",
+      "Id": "c34d5d0a-6a5a-4ad9-a46c-2052f3e25ee3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "be33374e-a4ff-44a4-b2bf-1b8d36f6341a",
+          "Id": "f7c13bb5-e919-4d14-aebb-dcc01ac7c3fb",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -105,14 +105,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewSection, Wall, Level, Line, XYZ,\n    ReferenceArray, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId, WallSide,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ft_to_m(ft):\n    return UnitUtils.ConvertFromInternalUnits(ft, UnitTypeId.Meters)\n\ndef get_planta_pb():\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if \"PLANTA PB\" in v.Name and not v.IsTemplate), None)\n\ndef get_walls_at_y(target_y, tol=0.40):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        y1 = ft_to_m(c.GetEndPoint(0).Y)\n        y2 = ft_to_m(c.GetEndPoint(1).Y)\n        if abs(y1 - target_y) < tol and abs(y2 - target_y) < tol:\n            result.append(w)\n    return result\n\ndef get_walls_at_x(target_x, tol=0.30):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        x1 = ft_to_m(c.GetEndPoint(0).X)\n        x2 = ft_to_m(c.GetEndPoint(1).X)\n        if abs(x1 - target_x) < tol and abs(x2 - target_x) < tol:\n            result.append(w)\n    return result\n\ndims_creadas = []\nvista_pb = get_planta_pb()\n\nif vista_pb:\n    with Transaction(doc, \"py-building-gen: Dimensiones\") as t:\n        t.Start()\n\n        # Dimensión frente (a lo largo de X, debajo del edificio)\n        walls_frente = get_walls_at_y(0.0)\n        if walls_frente:\n            w_frt = walls_frente[0]\n            refs = ReferenceArray()\n            # Referencia a la cara exterior de la pared izquierda (x=0)\n            walls_izq = get_walls_at_x(0.0)\n            walls_der = get_walls_at_x(frente_m)\n            for w in walls_izq[:1] + walls_der[:1]:\n                for ref in (w.GetReferences(WallSide.Exterior)\n                        if hasattr(w, \"GetReferences\") else []):\n                refs.Append(ref)\n\n            # Alternativa: usar la curva de la pared directamente\n            if refs.Size < 2:\n                refs = ReferenceArray()\n                for ww in walls_izq[:1]:\n                    loc = ww.Location\n                    if hasattr(loc, \"Curve\"):\n                        refs.Append(loc.Curve.GetEndPointReference(0))\n                        refs.Append(loc.Curve.GetEndPointReference(1))\n\n            if refs.Size >= 2:\n                dim_line = Line.CreateBound(\n                    XYZ(m_to_ft(0), m_to_ft(-2.0), 0),\n                    XYZ(m_to_ft(frente_m), m_to_ft(-2.0), 0)\n                )\n                try:\n                    dim = doc.Create.NewDimension(vista_pb, dim_line, refs)\n                    dims_creadas.append({\"tipo\": \"frente\", \"id\": dim.Id.Value})\n                except Exception as e:\n                    dims_creadas.append({\"tipo\": \"frente_error\", \"error\": str(e)})\n\n        t.Commit()\nelse:\n    dims_creadas.append({\"error\": \"Vista PLANTA PB no encontrada. Correr 08_vistas primero.\"})\n\nOUT = {\"total\": len(dims_creadas), \"detalle\": dims_creadas}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewSection, Wall, Level, Line, XYZ,\n    ReferenceArray, FilteredElementCollector,\n    Transaction, UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ft_to_m(ft):\n    return UnitUtils.ConvertFromInternalUnits(ft, UnitTypeId.Meters)\n\ndef get_planta_pb():\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if \"PLANTA PB\" in v.Name and not v.IsTemplate), None)\n\ndef get_walls_at_y(target_y, tol=0.40):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        y1 = ft_to_m(c.GetEndPoint(0).Y)\n        y2 = ft_to_m(c.GetEndPoint(1).Y)\n        if abs(y1 - target_y) < tol and abs(y2 - target_y) < tol:\n            result.append(w)\n    return result\n\ndef get_walls_at_x(target_x, tol=0.30):\n    walls = FilteredElementCollector(doc).OfClass(Wall).ToElements()\n    result = []\n    for w in walls:\n        loc = w.Location\n        if not hasattr(loc, \"Curve\"):\n            continue\n        c = loc.Curve\n        x1 = ft_to_m(c.GetEndPoint(0).X)\n        x2 = ft_to_m(c.GetEndPoint(1).X)\n        if abs(x1 - target_x) < tol and abs(x2 - target_x) < tol:\n            result.append(w)\n    return result\n\ndims_creadas = []\nvista_pb = get_planta_pb()\n\nif vista_pb:\n    with Transaction(doc, \"py-building-gen: Dimensiones\") as t:\n        t.Start()\n\n        # Dimensión frente (a lo largo de X, debajo del edificio).\n        # Se toma un endpoint de referencia de cada muro lateral (x=0 y x=frente);\n        # la distancia entre ambos es el frente del edificio.\n        walls_izq = get_walls_at_x(0.0)\n        walls_der = get_walls_at_x(frente_m)\n        refs = ReferenceArray()\n        for ww in walls_izq[:1] + walls_der[:1]:\n            loc = ww.Location\n            if hasattr(loc, \"Curve\"):\n                refs.Append(loc.Curve.GetEndPointReference(0))\n\n        if refs.Size >= 2:\n            dim_line = Line.CreateBound(\n                XYZ(m_to_ft(0), m_to_ft(-2.0), 0),\n                XYZ(m_to_ft(frente_m), m_to_ft(-2.0), 0)\n            )\n            try:\n                dim = doc.Create.NewDimension(vista_pb, dim_line, refs)\n                dims_creadas.append({\"tipo\": \"frente\", \"id\": dim.Id.Value})\n            except Exception as e:\n                dims_creadas.append({\"tipo\": \"frente_error\", \"error\": str(e)})\n        else:\n            dims_creadas.append({\"tipo\": \"frente\", \"status\": \"muros laterales no encontrados\"})\n\n        t.Commit()\nelse:\n    dims_creadas.append({\"error\": \"Vista PLANTA PB no encontrada. Correr 08_vistas primero.\"})\n\nOUT = {\"total\": len(dims_creadas), \"detalle\": dims_creadas}\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "a4715637-4ae8-4f7d-aae7-64cc7615a8ca",
+      "Id": "cfa7d3a5-4771-48af-948e-7c337fb79ceb",
       "Inputs": [
         {
-          "Id": "963b0139-9594-4d57-8015-6c58e072afac",
+          "Id": "d6283a3d-23c5-4fd4-aa4b-dd63a8f5f431",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -121,7 +121,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "82b2fa6c-9494-40be-bb92-fcfbbf8be380",
+          "Id": "ab41e2a9-4055-4495-a875-15f5c1e2560d",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -132,7 +132,7 @@
       ],
       "Outputs": [
         {
-          "Id": "63d006c4-9e8c-4af1-9b70-9b077da7d8a1",
+          "Id": "7d1b5797-a35d-4a23-878f-2060b6ce0afc",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -148,11 +148,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "9db50f24-c11d-4471-a423-d887b5bee107",
+      "Id": "852df9ea-4afd-4d17-9fec-1812aacaa049",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "313c6ad9-25a1-4b63-8072-a83e22cfc197",
+          "Id": "ffb31241-64ea-4291-a65a-744b81c7ea0f",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -171,10 +171,10 @@
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "2cf2452a-a4d1-4c49-9ea3-ef3bd524abe5",
+      "Id": "88e25fe1-2c02-42af-822b-ef8839abe942",
       "Inputs": [
         {
-          "Id": "7c78405f-af5d-4f3e-92f4-a9db7a03220c",
+          "Id": "0a7346da-27e6-42e9-addf-8600389d33d5",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -185,7 +185,7 @@
       ],
       "Outputs": [
         {
-          "Id": "958ab123-68df-44e9-ab01-536375dad2db",
+          "Id": "e0124759-8491-434a-8fdf-d6244a18a67d",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -200,33 +200,33 @@
   ],
   "Connectors": [
     {
-      "Start": "c109b691-5147-4134-990a-4c05482ccf44",
-      "End": "11850854-6e61-411f-a5c9-7dc6d86f43ac",
-      "Id": "d1ec1be4-b5e5-4e4a-9d19-4220e38e80c1",
+      "Start": "144057d5-8ec6-492b-9983-b9eb377914d2",
+      "End": "c3d94cc3-faea-44c2-a249-3c39a033122b",
+      "Id": "83b25d30-ee80-4011-83b5-b25b57f9dc15",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "a288244c-d974-47c2-a1a4-e0ccdd922b01",
-      "End": "a4715637-4ae8-4f7d-aae7-64cc7615a8ca",
-      "Id": "e014aa72-9517-4fa5-b994-ee3e53be5141",
+      "Start": "68a9acf6-bb04-4894-8a7a-9755edea53b3",
+      "End": "cfa7d3a5-4771-48af-948e-7c337fb79ceb",
+      "Id": "4484af68-929c-4044-bdae-207780d3cc76",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
     },
     {
-      "Start": "0e592c4e-2df5-4ebd-ad38-7f755ffd7c18",
-      "End": "a4715637-4ae8-4f7d-aae7-64cc7615a8ca",
-      "Id": "c429d36d-313c-4b4a-9780-9b7b78359791",
+      "Start": "c34d5d0a-6a5a-4ad9-a46c-2052f3e25ee3",
+      "End": "cfa7d3a5-4771-48af-948e-7c337fb79ceb",
+      "Id": "fcab75f0-a56f-4911-980b-2cec70cf6ffd",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 1
     },
     {
-      "Start": "9db50f24-c11d-4471-a423-d887b5bee107",
-      "End": "2cf2452a-a4d1-4c49-9ea3-ef3bd524abe5",
-      "Id": "11f5a63d-7703-4a20-ad76-04587102213a",
+      "Start": "852df9ea-4afd-4d17-9fec-1812aacaa049",
+      "End": "88e25fe1-2c02-42af-822b-ef8839abe942",
+      "Id": "844789d5-183a-4cf0-a402-a3e3dee9c78a",
       "PortType": 0,
       "StartIndex": 0,
       "EndIndex": 0
@@ -260,7 +260,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "c109b691-5147-4134-990a-4c05482ccf44",
+        "Id": "144057d5-8ec6-492b-9983-b9eb377914d2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -270,7 +270,7 @@
         "Y": 0.0
       },
       {
-        "Id": "11850854-6e61-411f-a5c9-7dc6d86f43ac",
+        "Id": "c3d94cc3-faea-44c2-a249-3c39a033122b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Room Tags",
@@ -280,7 +280,7 @@
         "Y": 0.0
       },
       {
-        "Id": "a288244c-d974-47c2-a1a4-e0ccdd922b01",
+        "Id": "68a9acf6-bb04-4894-8a7a-9755edea53b3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -290,7 +290,7 @@
         "Y": 390.0
       },
       {
-        "Id": "0e592c4e-2df5-4ebd-ad38-7f755ffd7c18",
+        "Id": "c34d5d0a-6a5a-4ad9-a46c-2052f3e25ee3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -300,7 +300,7 @@
         "Y": 520.0
       },
       {
-        "Id": "a4715637-4ae8-4f7d-aae7-64cc7615a8ca",
+        "Id": "cfa7d3a5-4771-48af-948e-7c337fb79ceb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Dimensiones",
@@ -310,7 +310,7 @@
         "Y": 390.0
       },
       {
-        "Id": "9db50f24-c11d-4471-a423-d887b5bee107",
+        "Id": "852df9ea-4afd-4d17-9fec-1812aacaa049",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -320,7 +320,7 @@
         "Y": 910.0
       },
       {
-        "Id": "2cf2452a-a4d1-4c49-9ea3-ef3bd524abe5",
+        "Id": "88e25fe1-2c02-42af-822b-ef8839abe942",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Tags Aberturas",

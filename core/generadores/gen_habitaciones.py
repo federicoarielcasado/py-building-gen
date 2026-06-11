@@ -37,15 +37,23 @@ frente_m        = _fi(IN[0])
 fondo_m         = _fi(IN[1])
 pisos_tipo      = _ii(IN[2])
 cant_depto_tipo = _ii(IN[3])
-tipologias_json = _si(IN[4])
+tipologias_str  = _si(IN[4])   # "2amb:1,3amb:1" (quote-free para Code Block)
 cant_escaleras  = _ii(IN[5])
 cant_ascensores = _ii(IN[6])
 
-tipologias_raw = json.loads(tipologias_json)
 apts = []
-for t_item in tipologias_raw:
-    for _ in range(int(t_item.get("cantidad", 1))):
-        apts.append(t_item.get("tipo", "2amb"))
+for _par in tipologias_str.split(","):
+    _par = _par.strip()
+    if not _par:
+        continue
+    _tipo, _, _cant = _par.partition(":")
+    _tipo = _tipo.strip() or "2amb"
+    try:
+        _n = int(_cant)
+    except Exception:
+        _n = 1
+    for _ in range(_n):
+        apts.append(_tipo)
 
 # ── Layout geometry (identical constants to Scripts 02 y 05) ─────────────────
 ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20
@@ -163,13 +171,11 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> Pat
     Returns:
         Path al archivo .dyn generado.
     """
-    import json as _json
     output_dir = Path(output_dir)
-    tipologias_list = [
-        {"tipo": t.tipo, "cantidad": t.cantidad}
-        for t in params.mix_tipologias
-    ]
-    tipologias_json = _json.dumps(tipologias_list, ensure_ascii=False)
+    # Formato quote-free para Code Block DesignScript: "2amb:1,3amb:1"
+    tipologias_str = ",".join(
+        f"{t.tipo}:{t.cantidad}" for t in params.mix_tipologias
+    )
 
     s = DynScript(
         "11_habitaciones",
@@ -181,7 +187,7 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> Pat
     cb_fondo   = s.add_code_block(str(params.fondo),                label="fondo_m",          col=0, row=1)
     cb_pisos   = s.add_code_block(str(params.pisos_tipo),           label="pisos_tipo",       col=0, row=2)
     cb_ndepto  = s.add_code_block(str(params.cant_depto_tipo),      label="cant_depto_tipo",  col=0, row=3)
-    cb_tipol   = s.add_code_block(f'"{tipologias_json}"',           label="tipologias_json",  col=0, row=4)
+    cb_tipol   = s.add_code_block(f'"{tipologias_str}"',            label="tipologias",       col=0, row=4)
     cb_nesc    = s.add_code_block(str(params.cant_cajas_escalera),  label="cant_escaleras",   col=0, row=5)
     cb_nasc    = s.add_code_block(str(params.cant_ascensores),      label="cant_ascensores",  col=0, row=6)
 
