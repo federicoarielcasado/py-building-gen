@@ -27,6 +27,10 @@ output/portfolio/
 # Scripts Dynamo generados: se versionan (son el output principal)
 # output/dynamo/  ← incluido intencionalmente
 
+# Auto-reportes de verificación: artefactos de cada corrida en Revit, no se versionan
+output/dynamo/_reports/
+output/dynamo/**/_reports/
+
 # Archivos de proyecto Revit (binarios pesados)
 *.rvt
 *.rfa

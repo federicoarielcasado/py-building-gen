@@ -293,33 +293,44 @@ def get_level(nombre):
     return match or sorted(levels, key=lambda l: l.Elevation)[0]
 
 def curve_loops_losa():
-    """Contorno exterior + hueco de shaft (contra-horario + horario)."""
-    # Outer boundary — counter-clockwise
-    outer = CurveLoop()
-    pts_out = [
-        XYZ(m_to_ft(0),        m_to_ft(0),       0),
-        XYZ(m_to_ft(frente_m), m_to_ft(0),       0),
-        XYZ(m_to_ft(frente_m), m_to_ft(fondo_m), 0),
-        XYZ(m_to_ft(0),        m_to_ft(fondo_m), 0),
-    ]
-    for i in range(4):
-        outer.Append(Line.CreateBound(pts_out[i], pts_out[(i+1)%4]))
+    """Contorno de la losa como un único loop contra-horario.
 
-    loops = [outer]
+    El núcleo (escalera + ascensor) está contra la medianera de fondo, así que su
+    borde trasero coincide con la arista trasera de la losa. Un loop interior que
+    comparte esa arista NO es un hueco válido (Revit: "curve loops intersect").
+    Por eso el contorno se recorta en U alrededor del shaft en vez de perforarlo.
+    """
+    F  = m_to_ft(frente_m)
+    D  = m_to_ft(fondo_m)
 
-    # Shaft hole — clockwise (inner loop)
-    if ancho_nucleo > 0.1:
-        x0 = m_to_ft(x_nucleo)
-        x1 = m_to_ft(x_nucleo + ancho_nucleo)
-        y0 = m_to_ft(y_nucleo)
-        y1 = m_to_ft(fondo_m)
-        shaft = CurveLoop()
-        pts_sh = [XYZ(x0,y0,0), XYZ(x0,y1,0), XYZ(x1,y1,0), XYZ(x1,y0,0)]
-        for i in range(4):
-            shaft.Append(Line.CreateBound(pts_sh[i], pts_sh[(i+1)%4]))
-        loops.append(shaft)
+    # Recorte en U sólo si el shaft existe y queda holgura a ambos lados.
+    margen = m_to_ft(0.02)
+    x0 = m_to_ft(x_nucleo)
+    x1 = m_to_ft(x_nucleo + ancho_nucleo)
+    yn = m_to_ft(y_nucleo)
+    notch = ancho_nucleo > 0.1 and x0 > margen and x1 < F - margen
 
-    return loops
+    if notch:
+        # CCW: perímetro con entrante rectangular en el borde de fondo.
+        pts = [
+            XYZ(0,  0,  0),
+            XYZ(F,  0,  0),
+            XYZ(F,  D,  0),
+            XYZ(x1, D,  0),
+            XYZ(x1, yn, 0),
+            XYZ(x0, yn, 0),
+            XYZ(x0, D,  0),
+            XYZ(0,  D,  0),
+        ]
+    else:
+        pts = [XYZ(0, 0, 0), XYZ(F, 0, 0), XYZ(F, D, 0), XYZ(0, D, 0)]
+
+    loop = CurveLoop()
+    n = len(pts)
+    for i in range(n):
+        loop.Append(Line.CreateBound(pts[i], pts[(i+1) % n]))
+
+    return [loop]
 
 ft_tipo = get_floor_type(nombre_losa)
 ft_azo  = get_floor_type(nombre_losa_azo)
@@ -439,7 +450,11 @@ def set_size(inst, ancho_m, alto_m):
 def place(sym, wall, lvl, x, y, z=0.0):
     if wall is None or sym is None:
         return None
-    pt = XYZ(m_to_ft(x), m_to_ft(y), m_to_ft(z))
+    # Z absoluto = elevación del nivel + offset (sill). Sin sumar lvl.Elevation la
+    # abertura cae en z absoluto: en pisos altos queda FUERA del muro ("No es
+    # posible cortar del muro") y se apila con las de los demás pisos en el mismo
+    # punto ("ejemplares idénticos"). lvl.Elevation ya está en pies.
+    pt = XYZ(m_to_ft(x), m_to_ft(y), lvl.Elevation + m_to_ft(z))
     try:
         return doc.Create.NewFamilyInstance(pt, sym, wall, lvl, ST.NonStructural)
     except Exception:
@@ -459,9 +474,13 @@ def crear_nivel(nombre, es_pb=False):
     w_pasillo = find_wall_at_y(lvl.Id, y_pasillo)
 
     if es_pb:
-        # PB: puerta de acceso al edificio (centrada en el frente)
+        # PB: puerta de acceso al edificio. frente/2 cae sobre una divisoria
+        # cuando hay un número par de deptos → la corremos al centro del 1er depto.
+        x_acc = frente_m / 2.0
+        if _n_apts > 1 and _n_apts % 2 == 0:
+            x_acc = apt_ancho * 0.5
         if sym_p and w_frente:
-            inst = place(sym_p, w_frente, lvl, frente_m / 2, 0.0)
+            inst = place(sym_p, w_frente, lvl, x_acc, 0.0)
             if inst:
                 set_size(inst, 1.20, 2.40)
                 aberturas.append({"nivel": nombre, "tipo": "puerta_acceso_edificio", "id": inst.Id.Value})
@@ -474,27 +493,33 @@ def crear_nivel(nombre, es_pb=False):
         pct_l = _PROP_LIVING.get(tipo, 0.40)
         y_l   = y_pasillo * pct_l   # y-coord del muro living/dorm (0 si no hay)
 
-        # ── 1. Ventana de living — fachada principal, zona izq del apt ────
-        if sym_v and w_frente:
-            x_vl  = x0 + apt_ancho * 0.30
-            ancho_v = min(apt_ancho * 0.55, 2.40)
-            inst = place(sym_v, w_frente, lvl, x_vl, 0.0, 0.90)
-            if inst:
-                set_size(inst, ancho_v, 1.50)
-                aberturas.append({"nivel": nombre, "tipo": "ventana_living", "id": inst.Id.Value})
-
-        # ── 2. Ventanas de dormitorios — fachada principal, zona der del apt
+        # ── 1+2. Ventanas de fachada (living + dormitorios) ───────────────
+        # Se reparten en slots NO solapados: 1 living + n_dorms ventanas, cada
+        # una centrada en su slot con un gap. Dos huecos que se intersecan en el
+        # mismo muro disparan "No es posible cortar del muro", así que el ancho
+        # se acota al slot disponible en lugar de usar posiciones fijas.
         n_dorms = {"1amb":0,"estudio":0,"2amb":1,"3amb":2,"4amb":3,"duplex":3}.get(tipo, 1)
-        if sym_v and w_frente and n_dorms > 0:
-            x_start = x0 + apt_ancho * 0.60
-            paso_d  = apt_ancho * 0.35 / max(n_dorms, 1)
-            for d in range(n_dorms):
-                x_vd = x_start + paso_d * d
-                if x_vd < x0 + apt_ancho - 0.30:
-                    inst = place(sym_v, w_frente, lvl, x_vd, 0.0, 0.90)
-                    if inst:
-                        set_size(inst, 1.20, 1.20)
-                        aberturas.append({"nivel": nombre, "tipo": f"ventana_dorm{d+1}", "id": inst.Id.Value})
+        if sym_v and w_frente:
+            GAP_W    = 0.30   # m — separación entre borde de ventana y borde de slot
+            # Margen contra los muros divisorios/medianeras del apt. Debe cubrir
+            # media pared (cortafuego 200mm) + jamba para no caer en la unión de
+            # muros ("Conflictos de inserción con muro unido" / "No es posible
+            # cortar del muro").
+            MARGEN_A = 0.45
+            n_win    = 1 + n_dorms
+            slot     = (apt_ancho - 2 * MARGEN_A) / n_win
+            for k in range(n_win):
+                cx = x0 + MARGEN_A + slot * (k + 0.5)
+                if k == 0:
+                    ancho_w, alto_w, tag = min(2.40, slot - GAP_W), 1.50, "ventana_living"
+                else:
+                    ancho_w, alto_w, tag = min(1.20, slot - GAP_W), 1.20, "ventana_dorm%d" % k
+                if ancho_w < 0.40:        # slot demasiado angosto para una ventana
+                    continue
+                inst = place(sym_v, w_frente, lvl, cx, 0.0, 0.90)
+                if inst:
+                    set_size(inst, ancho_w, alto_w)
+                    aberturas.append({"nivel": nombre, "tipo": tag, "id": inst.Id.Value})
 
         # ── 3. Puerta de entrada al depto — muro del pasillo ─────────────
         if sym_p and w_pasillo:

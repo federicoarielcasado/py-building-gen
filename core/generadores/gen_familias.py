@@ -492,6 +492,195 @@ else:
 
 
 # ---------------------------------------------------------------------------
+# Nodo 5 — Familia de fundación (cascada: .rfa propia → template → autogenerar)
+# ---------------------------------------------------------------------------
+
+_CODE_FUNDACION = '''\
+import clr, os
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import (
+    FamilySymbol, Family, Material, ElementId,
+    FilteredElementCollector, BuiltInCategory,
+    Transaction, UnitUtils, UnitTypeId,
+    IFamilyLoadOptions, FamilySource,
+    XYZ, Line, CurveArray, CurveArrArray, Plane, SketchPlane,
+)
+clr.AddReference("RevitServices")
+from RevitServices.Persistence import DocumentManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+app = doc.Application
+
+lado_zap_cm    = _fi(IN[0], 120.0)
+espesor_zap_cm = _fi(IN[1], 50.0)
+tipo_hormigon  = _si(IN[2], "H-21")
+familias_dir   = _si(IN[3], "")
+
+lado_m      = lado_zap_cm / 100.0
+espesor_m   = espesor_zap_cm / 100.0
+nombre_tipo = "Zapata HA %dx%dcm" % (int(round(lado_zap_cm)), int(round(lado_zap_cm)))
+CAT     = BuiltInCategory.OST_StructuralFoundation
+KW_RFA  = ("zapata", "footing", "fundac", "base", "foundation")
+KW_RFT  = ("structural foundation", "base estructural", "cimentaci", "foundation")
+log = []
+
+def m_to_ft(m):
+    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)
+
+def get_material_id(nombre):
+    col = FilteredElementCollector(doc).OfClass(Material).ToElements()
+    mat = next((m for m in col if m.Name == nombre), None)
+    return mat.Id if mat else ElementId.InvalidElementId
+
+def foundation_syms():
+    return list(FilteredElementCollector(doc)
+                .OfClass(FamilySymbol).OfCategory(CAT).ToElements())
+
+# IFamilyLoadOptions — en PythonNet3 los parametros 'out' se devuelven como tupla
+# (mismo patron que CompoundStructure.IsValid en _CODE_LOSA_TIPO).
+class _Opts(IFamilyLoadOptions):
+    def OnFamilyFound(self, familyInUse, overwriteParameterValues):
+        return (True, True)
+    def OnSharedFamilyFound(self, sharedFamily, familyInUse, source, overwriteParameterValues):
+        return (True, FamilySource.Family, True)
+
+def set_seccion(sym):
+    for n in ("Width", "Ancho", "b", "w", "Length", "Largo", "l"):
+        p = sym.LookupParameter(n)
+        if p and not p.IsReadOnly:
+            try: p.Set(m_to_ft(lado_m))
+            except Exception: pass
+    for n in ("Thickness", "Espesor", "h", "d", "t", "Depth"):
+        p = sym.LookupParameter(n)
+        if p and not p.IsReadOnly:
+            try: p.Set(m_to_ft(espesor_m)); break
+            except Exception: pass
+    mat_id = get_material_id("Hormigón " + tipo_hormigon)
+    if mat_id != ElementId.InvalidElementId:
+        p = (sym.LookupParameter("Material estructural")
+             or sym.LookupParameter("Structural Material")
+             or sym.LookupParameter("Material"))
+        if p and not p.IsReadOnly:
+            try: p.Set(mat_id)
+            except Exception: pass
+
+# ── Tier 1: familia .rfa propia versionada en data/familias/ ───────────────────
+def tier_rfa():
+    if not familias_dir or not os.path.isdir(familias_dir):
+        return None
+    rfas = []
+    for root, dirs, files in os.walk(familias_dir):
+        for f in files:
+            low = f.lower()
+            if low.endswith(".rfa") and any(k in low for k in KW_RFA):
+                rfas.append(os.path.join(root, f))
+    for path in rfas:
+        antes = set(s.Id.Value for s in foundation_syms())
+        try:
+            doc.LoadFamily(path, _Opts())   # LoadFamily abre su propia transaccion
+        except Exception as e:
+            log.append("rfa fail %s: %s" % (os.path.basename(path), e))
+            continue
+        nuevos = [s for s in foundation_syms() if s.Id.Value not in antes]
+        if nuevos:
+            return nuevos[0]
+        existentes = foundation_syms()      # ya estaba cargada
+        if existentes:
+            return existentes[0]
+    return None
+
+# ── Tier 2: familia de fundacion ya presente en el template ────────────────────
+def tier_template():
+    syms = foundation_syms()
+    return syms[0] if syms else None
+
+# ── Tier 3: autogenerar familia parametrica (extrusion de caja desde .rft) ─────
+def find_rft():
+    base = app.FamilyTemplatePath
+    if not base or not os.path.isdir(base):
+        return None
+    cands = []
+    for root, dirs, files in os.walk(base):
+        for f in files:
+            low = f.lower()
+            if low.endswith(".rft") and any(k in low for k in KW_RFT):
+                cands.append(os.path.join(root, f))
+    # preferir base aislada: penalizar plantillas de losa/corrida
+    cands.sort(key=lambda p: any(b in p.lower() for b in ("slab", "wall", "losa", "corrid")))
+    return cands[0] if cands else None
+
+def tier_autogen():
+    rft = find_rft()
+    if not rft:
+        log.append("Sin .rft de fundacion en FamilyTemplatePath=%s" % app.FamilyTemplatePath)
+        return None
+    famdoc = app.NewFamilyDocument(rft)
+    try:
+        with Transaction(famdoc, "py-building-gen: geometria zapata") as t:
+            t.Start()
+            half = m_to_ft(lado_m / 2.0)
+            pts = [XYZ(-half, -half, 0), XYZ(half, -half, 0),
+                   XYZ(half, half, 0), XYZ(-half, half, 0)]
+            ca = CurveArray()
+            for i in range(4):
+                ca.Append(Line.CreateBound(pts[i], pts[(i + 1) % 4]))
+            caa = CurveArrArray(); caa.Append(ca)
+            sk = SketchPlane.Create(famdoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, XYZ.Zero))
+            famdoc.FamilyCreate.NewExtrusion(True, caa, sk, m_to_ft(espesor_m))
+            t.Commit()
+        antes = set(s.Id.Value for s in foundation_syms())
+        famdoc.LoadFamily(doc, _Opts())
+        famdoc.Close(False)
+        nuevos = [s for s in foundation_syms() if s.Id.Value not in antes]
+        if nuevos:
+            return nuevos[0]
+        return foundation_syms()[0] if foundation_syms() else None
+    except Exception as e:
+        log.append("autogen fail: %s" % e)
+        try: famdoc.Close(False)
+        except Exception: pass
+        return None
+
+# ── Cascada ─────────────────────────────────────────────────────────────────
+base_sym = None
+metodo = None
+for nombre_metodo, fn in (("rfa_propia", tier_rfa),
+                          ("template", tier_template),
+                          ("autogenerada", tier_autogen)):
+    base_sym = fn()
+    if base_sym is not None:
+        metodo = nombre_metodo
+        break
+
+if base_sym is None:
+    OUT = {
+        "resultado": "No se pudo resolver una familia de fundacion.",
+        "log": log,
+        "accion_requerida": ("Colocar una familia .rfa de zapata en data/familias/ "
+                             "o cargar una plantilla de fundacion en Revit."),
+    }
+else:
+    with Transaction(doc, "py-building-gen: Tipo de zapata") as t:
+        t.Start()
+        sym = next((s for s in foundation_syms() if s.Name == nombre_tipo), None)
+        if sym is None:
+            try:
+                sym = base_sym.Duplicate(nombre_tipo)
+            except Exception:
+                sym = base_sym
+        set_seccion(sym)
+        if not sym.IsActive:
+            sym.Activate()
+        t.Commit()
+    OUT = {
+        "tipo_creado": nombre_tipo, "metodo": metodo,
+        "familia": sym.Family.Name, "lado_cm": lado_zap_cm,
+        "espesor_cm": espesor_zap_cm, "log": log,
+    }
+'''
+
+
+# ---------------------------------------------------------------------------
 # Función pública
 # ---------------------------------------------------------------------------
 
@@ -506,10 +695,13 @@ def nombres_tipos(params: "ParametrosEdificio") -> dict[str, str]:
     viga_base = res.vigas[0]    if res.vigas    else None
     losa_base = res.losas[0]    if res.losas    else None
 
+    zapata_base = getattr(res, "zapata", None)
+
     lado_col_cm   = round(col_base.lado_m   * 100) if col_base  else 25
     alto_viga_cm  = round(viga_base.alto_m  * 100) if viga_base else 50
     ancho_viga_cm = round(viga_base.ancho_m * 100) if viga_base else 25
     espesor_cm    = round(losa_base.espesor_cm)     if losa_base else 20
+    lado_zap_cm   = round(zapata_base.lado_m * 100) if zapata_base and zapata_base.lado_m else 120
     ha = params.hormigon_tipo
 
     return {
@@ -523,6 +715,7 @@ def nombres_tipos(params: "ParametrosEdificio") -> dict[str, str]:
         "losa_azo":     f"Losa azotea HA {ha} - {espesor_cm:.0f}cm",
         "columna":      f"Columna HA {lado_col_cm:.0f}x{lado_col_cm:.0f}cm",
         "viga":         f"Viga HA {ancho_viga_cm:.0f}x{alto_viga_cm:.0f}cm",
+        "zapata":       f"Zapata HA {lado_zap_cm:.0f}x{lado_zap_cm:.0f}cm",
     }
 
 
@@ -543,10 +736,13 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> Pat
 
     col_base  = res.columnas[0] if res.columnas else None
     viga_base = res.vigas[0]    if res.vigas    else None
+    zapata_base = getattr(res, "zapata", None)
     lado_col_cm   = round(col_base.lado_m  * 100) if col_base  else 25
     alto_viga_cm  = round(viga_base.alto_m  * 100) if viga_base else 50
     ancho_viga_cm = round(viga_base.ancho_m * 100) if viga_base else 25
     espesor_losa_cm = round(res.losas[0].espesor_cm) if res.losas else 20
+    lado_zap_cm   = round(zapata_base.lado_m * 100) if zapata_base and zapata_base.lado_m else 120
+    espesor_zap_cm = 50
 
     s = DynScript(
         "00_familias",
@@ -589,5 +785,17 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> Pat
     s.connect(cb_ha3,   py_str, to_input=3)
     w_str   = s.add_watch(label="Tipos estructurales", col=2, row=8)
     s.connect(py_str, w_str)
+
+    # --- Nodo 5: Familia de fundación (cascada .rfa → template → autogenerar) ---
+    familias_dir = Path("data/familias").resolve().as_posix()
+    cb_zlado = s.add_code_block(str(lado_zap_cm),            label="lado_zap_cm",    col=0, row=13)
+    cb_zesp  = s.add_code_block(str(espesor_zap_cm),         label="espesor_zap_cm", col=0, row=14)
+    cb_zha   = s.add_code_block(f'"{params.hormigon_tipo}"', label="tipo_hormigon",  col=0, row=15)
+    cb_zdir  = s.add_code_block(f'"{familias_dir}"',         label="familias_dir",   col=0, row=16)
+    py_fund  = s.add_python_node(_CODE_FUNDACION, n_inputs=4, label="Crear/Resolver Familia Zapata", col=1, row=13)
+    for i, cb in enumerate([cb_zlado, cb_zesp, cb_zha, cb_zdir]):
+        s.connect(cb, py_fund, to_input=i)
+    w_fund = s.add_watch(label="Familia zapata", col=2, row=13)
+    s.connect(py_fund, w_fund)
 
     return s.save(output_dir / "00_familias.dyn")

@@ -22,6 +22,22 @@ Los archivos se escriben en `output/dynamo/` y `output/computo/`. Luego ejecutar
 
 ---
 
+## Verificación automatizada
+
+Para no tener que abrir Revit y revisar a ojo el resultado de cada script, cada nodo Python deja en disco un auto-reporte JSON (qué creó + advertencias de Revit) y `core/verificador.py` decide **PASS/FAIL** comparando contra los parámetros del proyecto. El ciclo de trabajo es:
+
+```bash
+python generar.py              # 1. genera .dyn + limpia reportes viejos
+# 2. correr los .dyn en Revit → cada nodo escribe en output/dynamo/_reports/
+python generar.py --verificar  # 3. PASS/FAIL + _verificacion.html (exit 1 si falla)
+```
+
+La verificación cubre los 10 scripts en tres capas: **cobertura** (cada nodo de cada script debe haber corrido — se deriva de los propios `.dyn`), **genérica** (nodo que se rompió, advertencias de Revit, nodo que creó 0 elementos) y **cuantitativa exacta** (conteos contra los parámetros; implementada para `01_niveles_grilla`, extensible al resto). Detalle en [`docs/dev/verificacion_automatizada.md`](docs/dev/verificacion_automatizada.md).
+
+> La ejecución headless de los `.dyn` (correrlos sin apretar Run) está pendiente: RevitBatchProcessor aún no soporta Revit 2027. Mientras tanto la verificación funciona igual, corras los scripts a mano o en batch.
+
+---
+
 ## Parámetros del usuario
 
 Todos los parámetros se definen en `core/parametros.py` como un dataclass. Se pueden cargar y guardar en formato `.pbg` (JSON):
@@ -580,6 +596,7 @@ py-building-gen/
 ├── core/
 │   ├── parametros.py              # Dataclass ParametrosEdificio
 │   ├── predimensionado.py         # Cálculo estructural CIRSOC 201-2005
+│   ├── verificador.py             # Verificación automatizada (lee reportes → PASS/FAIL)
 │   ├── generadores/
 │   │   ├── gen_familias.py        # Script 00 — materiales y tipos
 │   │   ├── gen_niveles.py         # Script 01 — niveles, grilla, plantas disciplina
@@ -596,7 +613,7 @@ py-building-gen/
 │   │   ├── analisis_precios.py    # Análisis de precios unitarios
 │   │   └── exportador.py          # Export Excel (.xlsx) y PDF
 │   └── dynamo/
-│       └── dyn_builder.py         # Constructor de archivos .dyn (JSON)
+│       └── dyn_builder.py         # Constructor de .dyn (JSON) + auto-reporte por nodo
 ├── data/
 │   ├── normativa/
 │   │   ├── cirsoc_101_cargas.json
@@ -611,7 +628,9 @@ py-building-gen/
 │       └── topografia.csv
 ├── output/
 │   ├── dynamo/                    # Scripts .dyn generados
+│   │   └── _reports/              # Auto-reportes JSON por nodo + _verificacion.html
 │   └── computo/                   # Excel y PDF de presupuesto
+├── docs/dev/                      # dynamo4_revitapi.md · verificacion_automatizada.md
 ├── tests/
 └── requirements.txt
 ```
@@ -631,7 +650,7 @@ py-building-gen/
 | Cómputo y presupuesto | openpyxl · reportlab |
 | Geoespacial | shapely · pyproj · ezdxf |
 | Visualización previa | matplotlib |
-| Tests | pytest (70 tests) |
+| Tests | pytest (89 tests) |
 
 ---
 

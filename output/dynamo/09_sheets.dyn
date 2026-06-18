@@ -1,5 +1,5 @@
 {
-  "Uuid": "1a88a8ae-fe7a-4da8-aa8e-887778c18251",
+  "Uuid": "91ff96b8-b33b-4381-9c73-4cb6b4078b4f",
   "IsCustomNode": false,
   "Description": "Crea 13 láminas A3 IRAM organizadas por disciplina (ARQ, EST, MEP, 3D) con vistas colocadas.",
   "Name": "09_sheets",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Edificio Caballito\";",
-      "Id": "4f994910-5a8d-4299-bd24-3580a4630c72",
+      "Id": "cbefc5c4-b9f0-4748-a730-e94d7a96123c",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3a689945-6d80-48d1-a345-015156ed38f3",
+          "Id": "c528a820-b850-4ec5-bde2-b83269f96a36",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Federico A. Casado\";",
-      "Id": "6eb6cd47-60ae-4b21-b524-7659b019ee53",
+      "Id": "822e4e58-c6ea-4e3d-9f55-ef37cdabcb83",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f8dc9637-2bb2-4658-8c22-823d4578a8c7",
+          "Id": "f373e34f-22b9-4276-a679-d1b6bdbb8346",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "1e624d0e-6d0a-405b-8d8e-ea8b49bfb63c",
+      "Id": "ad467eea-a557-4981-935c-8d41b12c2bc6",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "02fdcbed-17d5-4aed-9bac-54ca2f579230",
+          "Id": "39391691-f986-483b-a64d-412166c52a84",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "ed6b0c05-2e29-487b-8cc1-340f42a15178",
+      "Id": "5fd05755-1f29-424c-a5e0-a803fcf2e62e",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "640eaf24-98ca-4603-ba9c-bc995f054727",
+          "Id": "fabad1a3-8f9e-46d3-b63b-20e13ed6d626",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -92,14 +92,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSheet, FamilySymbol, ViewPlan, ViewSection, View3D,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, Viewport, XYZ, UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nproyecto      = _si(IN[0])\nautor         = _si(IN[1])\npisos_tipo    = _ii(IN[2])\ntiene_azotea  = bool(IN[3])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\n# Centro A3 horizontal (420 × 297 mm)\nCENTRO_A3 = XYZ(m_to_ft(0.210), m_to_ft(0.1485), 0)\n\ndef get_title_block():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_TitleBlocks)\n           .ToElements())\n    for kw in (\"iram\",\"a3\",\"A3\"):\n        match = next((s for s in col if kw.lower() in s.Name.lower()), None)\n        if match:\n            return match\n    return col[0] if col else None\n\ndef todas_las_vistas():\n    return (list(FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()) +\n            list(FilteredElementCollector(doc).OfClass(ViewSection).ToElements()) +\n            list(FilteredElementCollector(doc).OfClass(View3D).ToElements()))\n\ndef set_meta(sheet, proyecto, autor):\n    for nombres, val in [\n        ([\"Drawn By\",\"Dibujado por\",\"Elaborado por\"], autor),\n        ([\"Designed By\",\"Diseñado por\",\"Proyectado por\"], autor),\n        ([\"Project Name\",\"Nombre del proyecto\",\"Proyecto\"], proyecto),\n    ]:\n        for n in nombres:\n            p = sheet.LookupParameter(n)\n            if p and not p.IsReadOnly:\n                p.Set(val)\n                break\n\ndef create_sheet(tb, numero, titulo, filtro, vistas):\n    sheet = ViewSheet.Create(doc, tb.Id)\n    sheet.SheetNumber = numero\n    sheet.Name = titulo\n    set_meta(sheet, proyecto, autor)\n    filtro_l = filtro.lower()\n    vm = next((v for v in vistas if filtro_l in v.Name.lower()\n               and sheet.CanAddViewToSheet(v)), None)\n    if vm:\n        Viewport.Create(doc, sheet.Id, vm.Id, CENTRO_A3)\n    return sheet.Id.Value\n\ntb = get_title_block()\nsheets_creados = []\n\nif not tb:\n    OUT = {\"error\": \"No se encontró title block. Cargar familia IRAM A3 antes de correr este script.\"}\nelse:\n    if not tb.IsActive:\n        tb.Activate()\n\n    vistas = todas_las_vistas()\n\n    # ── Configuración de láminas por disciplina ─────────────────────────────\n    config_laminas = [\n        # ARQ — plantas\n        (\"A-01\", \"ARQ - PLANTA BAJA\",             \"PLANTA PB\"),\n        (\"A-02\", \"ARQ - PLANTA TIPO (P01)\",        \"PLANTA P01\"),\n        (\"A-03\", \"ARQ - PLANTA AZOTEA\",            \"PLANTA AZO\"),\n        # ARQ — cortes y alzados\n        (\"A-04\", \"ARQ - CORTE A-A\",                \"CORTE A-A\"),\n        (\"A-05\", \"ARQ - CORTE B-B\",                \"CORTE B-B\"),\n        (\"A-06\", \"ARQ - FACHADA PRINCIPAL\",        \"FACHADA PRINCIPAL\"),\n        (\"A-07\", \"ARQ - FACHADA CONTRAFRENTE\",     \"FACHADA CONTRAFRENTE\"),\n        (\"A-08\", \"ARQ - FACHADAS LATERALES\",       \"FACHADA LATERAL\"),\n        # EST — estructura\n        (\"E-01\", \"EST - PLANTA FUNDACIONES\",        \"EST PB\"),\n        (\"E-02\", \"EST - PLANTA ESTRUCTURA TIPO\",    \"EST P01\"),\n        # MEP — instalaciones\n        (\"M-01\", \"MEP - PLANTA INSTALACIONES PB\",   \"MEP PB\"),\n        (\"M-02\", \"MEP - PLANTA INSTALACIONES TIPO\", \"MEP P01\"),\n        # General\n        (\"G-01\", \"3D - VISTA GENERAL\",             \"3D\"),\n    ]\n\n    with Transaction(doc, \"py-building-gen: Sheets v2\") as t:\n        t.Start()\n        for numero, titulo, filtro in config_laminas:\n            sid = create_sheet(tb, numero, titulo, filtro, vistas)\n            sheets_creados.append({\"numero\": numero, \"titulo\": titulo, \"id\": sid})\n        t.Commit()\n\nOUT = {\"total\": len(sheets_creados), \"laminas\": sheets_creados}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\_reports'\n_PBG_SCRIPT = '09_sheets'\n_PBG_NODE = 'Crear Sheets v2'\n_PBG_KEY = '09_sheets__00_crear_sheets_v2'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSheet, FamilySymbol, ViewPlan, ViewSection, View3D,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, Viewport, XYZ, UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nproyecto      = _si(IN[0])\nautor         = _si(IN[1])\npisos_tipo    = _ii(IN[2])\ntiene_azotea  = bool(IN[3])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\n# Centro A3 horizontal (420 × 297 mm)\nCENTRO_A3 = XYZ(m_to_ft(0.210), m_to_ft(0.1485), 0)\n\ndef get_title_block():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_TitleBlocks)\n           .ToElements())\n    for kw in (\"iram\",\"a3\",\"A3\"):\n        match = next((s for s in col if kw.lower() in s.Name.lower()), None)\n        if match:\n            return match\n    return col[0] if col else None\n\ndef todas_las_vistas():\n    return (list(FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()) +\n            list(FilteredElementCollector(doc).OfClass(ViewSection).ToElements()) +\n            list(FilteredElementCollector(doc).OfClass(View3D).ToElements()))\n\ndef set_meta(sheet, proyecto, autor):\n    for nombres, val in [\n        ([\"Drawn By\",\"Dibujado por\",\"Elaborado por\"], autor),\n        ([\"Designed By\",\"Diseñado por\",\"Proyectado por\"], autor),\n        ([\"Project Name\",\"Nombre del proyecto\",\"Proyecto\"], proyecto),\n    ]:\n        for n in nombres:\n            p = sheet.LookupParameter(n)\n            if p and not p.IsReadOnly:\n                p.Set(val)\n                break\n\ndef create_sheet(tb, numero, titulo, filtro, vistas):\n    sheet = ViewSheet.Create(doc, tb.Id)\n    sheet.SheetNumber = numero\n    sheet.Name = titulo\n    set_meta(sheet, proyecto, autor)\n    filtro_l = filtro.lower()\n    vm = next((v for v in vistas if filtro_l in v.Name.lower()\n               and sheet.CanAddViewToSheet(v)), None)\n    if vm:\n        Viewport.Create(doc, sheet.Id, vm.Id, CENTRO_A3)\n    return sheet.Id.Value\n\ntb = get_title_block()\nsheets_creados = []\n\nif not tb:\n    OUT = {\"error\": \"No se encontró title block. Cargar familia IRAM A3 antes de correr este script.\"}\nelse:\n    if not tb.IsActive:\n        tb.Activate()\n\n    vistas = todas_las_vistas()\n\n    # ── Configuración de láminas por disciplina ─────────────────────────────\n    config_laminas = [\n        # ARQ — plantas\n        (\"A-01\", \"ARQ - PLANTA BAJA\",             \"PLANTA PB\"),\n        (\"A-02\", \"ARQ - PLANTA TIPO (P01)\",        \"PLANTA P01\"),\n        (\"A-03\", \"ARQ - PLANTA AZOTEA\",            \"PLANTA AZO\"),\n        # ARQ — cortes y alzados\n        (\"A-04\", \"ARQ - CORTE A-A\",                \"CORTE A-A\"),\n        (\"A-05\", \"ARQ - CORTE B-B\",                \"CORTE B-B\"),\n        (\"A-06\", \"ARQ - FACHADA PRINCIPAL\",        \"FACHADA PRINCIPAL\"),\n        (\"A-07\", \"ARQ - FACHADA CONTRAFRENTE\",     \"FACHADA CONTRAFRENTE\"),\n        (\"A-08\", \"ARQ - FACHADAS LATERALES\",       \"FACHADA LATERAL\"),\n        # EST — estructura\n        (\"E-01\", \"EST - PLANTA FUNDACIONES\",        \"EST PB\"),\n        (\"E-02\", \"EST - PLANTA ESTRUCTURA TIPO\",    \"EST P01\"),\n        # MEP — instalaciones\n        (\"M-01\", \"MEP - PLANTA INSTALACIONES PB\",   \"MEP PB\"),\n        (\"M-02\", \"MEP - PLANTA INSTALACIONES TIPO\", \"MEP P01\"),\n        # General\n        (\"G-01\", \"3D - VISTA GENERAL\",             \"3D\"),\n    ]\n\n    with Transaction(doc, \"py-building-gen: Sheets v2\") as t:\n        t.Start()\n        for numero, titulo, filtro in config_laminas:\n            sid = create_sheet(tb, numero, titulo, filtro, vistas)\n            sheets_creados.append({\"numero\": numero, \"titulo\": titulo, \"id\": sid})\n        t.Commit()\n\nOUT = {\"total\": len(sheets_creados), \"laminas\": sheets_creados}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "dbb6dd56-6174-42aa-a8b4-80b55ecc1df5",
+      "Id": "fa4257fc-c3a8-4068-9bde-8fee7175609b",
       "Inputs": [
         {
-          "Id": "9cd27a8e-3853-4a31-8503-75bf61da939e",
+          "Id": "dbba4767-04d1-4716-94ca-5cf0d9244a0e",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -108,7 +108,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c5f49bd3-3a1a-45a2-a283-018fc0519704",
+          "Id": "5c3b7664-3f1a-4814-978c-0cf51a1a2ea5",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -117,7 +117,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8673dedf-874b-4a50-8179-fd6c5df8a0ca",
+          "Id": "2dbce19b-ebb4-42e7-a548-1e8bd3cd4e78",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -126,7 +126,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6849cfae-9d77-4fb4-98ea-8ee30121eecb",
+          "Id": "a729594d-0498-48c7-99bd-36c751e23107",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -137,7 +137,7 @@
       ],
       "Outputs": [
         {
-          "Id": "b051a8a6-d12b-4453-9c72-7f2ffa947da2",
+          "Id": "82a5c7fe-d8ba-40e3-9856-805e6c18e975",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -153,11 +153,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "d115f9ce-fcbc-4c73-91f1-16ad5d662f24",
+      "Id": "af9b9798-78ed-493a-b1c9-a76993bda103",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b9b88944-007a-4c04-8684-1524793bb662",
+          "Id": "375cab55-5772-4f49-bda2-2609d4096967",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -173,11 +173,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "054738f2-9535-4d9d-a217-bc7784164af3",
+      "Id": "9abb135b-78e6-44d2-a9f7-af0c439047e2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "48537168-6f54-49bf-aa2c-42fd92b0a765",
+          "Id": "40ece1d8-518c-4974-8648-ee91e4b6f1b9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -193,11 +193,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "0286a2df-a30f-40cf-b027-c21fdb959e06",
+      "Id": "03f59dd2-f1cd-44e4-8570-87e9c5530eb4",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b428c007-447b-4324-ae95-58882ba29e84",
+          "Id": "4babfb38-7728-4709-b7b6-0a0eede54f90",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -212,14 +212,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewSheet, FamilySymbol, FamilyInstance,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, TextNote, TextNoteOptions, TextNoteType,\n    XYZ, UV, UnitUtils, UnitTypeId, ElementId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m  = _fi(IN[0])\nfondo_m   = _fi(IN[1])\npisos_tipo = _ii(IN[2])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_planta_pb():\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if \"PLANTA PB\" in v.Name and not v.IsTemplate), None)\n\ndef get_sheet(numero):\n    sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()\n    return next((s for s in sheets if s.SheetNumber == numero), None)\n\nresultado = []\nvista_pb  = get_planta_pb()\n\nwith Transaction(doc, \"py-building-gen: Norte y cuadro superficies\") as t:\n    t.Start()\n\n    # ── Símbolo de Norte ───────────────────────────────────────────────────\n    # Buscar familia \"North Arrow\" o \"Flecha Norte\" en anotaciones genéricas\n    north_col = (FilteredElementCollector(doc)\n                 .OfClass(FamilySymbol)\n                 .OfCategory(BuiltInCategory.OST_GenericAnnotation)\n                 .ToElements())\n    _kw_norte = (\"north\",\"norte\",\"arrow\",\"flecha\",\"nort\")\n    north_sym = next((s for s in north_col\n                      if any(k in s.FamilyName.lower() for k in _kw_norte)), None)\n\n    if north_sym and vista_pb:\n        if not north_sym.IsActive:\n            north_sym.Activate()\n        # Colocar en el ángulo superior izquierdo de la planta.\n        # Símbolo de anotación 2D → overload NewFamilyInstance(XYZ, FamilySymbol, View).\n        pt_norte = XYZ(m_to_ft(-2.0), m_to_ft(fondo_m + 1.5), 0)\n        inst = doc.Create.NewFamilyInstance(pt_norte, north_sym, vista_pb)\n        resultado.append({\"tipo\": \"norte\", \"id\": inst.Id.Value})\n    else:\n        resultado.append({\"tipo\": \"norte\", \"status\": \"familia no encontrada en template\"})\n\n    # ── Cuadro de superficies (TextNote en hoja A-01) ────────────────────\n    sheet_a01 = get_sheet(\"A-01\")\n    if sheet_a01 and vista_pb:\n        # Calcular superficies\n        ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO = 1.20\n        ancho_nuc = 1 * ESC_ANCHO + 1 * ASC_ANCHO   # default: 1 esc + 1 asc\n        y_nuc   = fondo_m - ESC_FONDO\n        y_pas   = y_nuc - PASILLO\n        sup_planta = frente_m * fondo_m\n        sup_util   = frente_m * y_pas   # área de departamentos\n        sup_circ   = frente_m * (fondo_m - y_pas)  # pasillo + shaft\n\n        lineas = [\n            f\"CUADRO DE SUPERFICIES\",\n            f\"Lote:                {frente_m:.2f} x {fondo_m:.2f} = {sup_planta:.1f} m²\",\n            f\"Sup. útil/piso tipo: {sup_util:.1f} m²\",\n            f\"Sup. circulación:    {sup_circ:.1f} m²\",\n            f\"Pisos tipo:          {pisos_tipo}\",\n            f\"Sup. total construida: {sup_planta * (pisos_tipo + 2):.1f} m²\",\n        ]\n        texto = \"\\n\".join(lineas)\n\n        try:\n            # TextNote.Create requiere un TextNoteType válido (no InvalidElementId)\n            tnt = FilteredElementCollector(doc).OfClass(TextNoteType).FirstElement()\n            tnt_id = tnt.Id if tnt else ElementId.InvalidElementId\n            tnOpts = TextNoteOptions(tnt_id)\n            # Colocar en la esquina inferior derecha de la hoja (en coordenadas de hoja)\n            pt_txt = XYZ(m_to_ft(0.300), m_to_ft(0.035), 0)\n            tn = TextNote.Create(doc, sheet_a01.Id, pt_txt, texto, tnOpts)\n            resultado.append({\"tipo\": \"cuadro_superficies\", \"id\": tn.Id.Value})\n        except Exception as e:\n            resultado.append({\"tipo\": \"cuadro_superficies\", \"error\": str(e)})\n\n    t.Commit()\n\nOUT = {\"resultado\": resultado}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\_reports'\n_PBG_SCRIPT = '09_sheets'\n_PBG_NODE = 'Norte y Cuadro'\n_PBG_KEY = '09_sheets__01_norte_y_cuadro'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewSheet, FamilySymbol, FamilyInstance,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, TextNote, TextNoteOptions, TextNoteType,\n    XYZ, UV, UnitUtils, UnitTypeId, ElementId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m  = _fi(IN[0])\nfondo_m   = _fi(IN[1])\npisos_tipo = _ii(IN[2])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_planta_pb():\n    todas = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    return next((v for v in todas if \"PLANTA PB\" in v.Name and not v.IsTemplate), None)\n\ndef get_sheet(numero):\n    sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()\n    return next((s for s in sheets if s.SheetNumber == numero), None)\n\nresultado = []\nvista_pb  = get_planta_pb()\n\nwith Transaction(doc, \"py-building-gen: Norte y cuadro superficies\") as t:\n    t.Start()\n\n    # ── Símbolo de Norte ───────────────────────────────────────────────────\n    # Buscar familia \"North Arrow\" o \"Flecha Norte\" en anotaciones genéricas\n    north_col = (FilteredElementCollector(doc)\n                 .OfClass(FamilySymbol)\n                 .OfCategory(BuiltInCategory.OST_GenericAnnotation)\n                 .ToElements())\n    _kw_norte = (\"north\",\"norte\",\"arrow\",\"flecha\",\"nort\")\n    north_sym = next((s for s in north_col\n                      if any(k in s.FamilyName.lower() for k in _kw_norte)), None)\n\n    if north_sym and vista_pb:\n        if not north_sym.IsActive:\n            north_sym.Activate()\n        # Colocar en el ángulo superior izquierdo de la planta.\n        # Símbolo de anotación 2D → overload NewFamilyInstance(XYZ, FamilySymbol, View).\n        pt_norte = XYZ(m_to_ft(-2.0), m_to_ft(fondo_m + 1.5), 0)\n        inst = doc.Create.NewFamilyInstance(pt_norte, north_sym, vista_pb)\n        resultado.append({\"tipo\": \"norte\", \"id\": inst.Id.Value})\n    else:\n        resultado.append({\"tipo\": \"norte\", \"status\": \"familia no encontrada en template\"})\n\n    # ── Cuadro de superficies (TextNote en hoja A-01) ────────────────────\n    sheet_a01 = get_sheet(\"A-01\")\n    if sheet_a01 and vista_pb:\n        # Calcular superficies\n        ESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO = 1.20\n        ancho_nuc = 1 * ESC_ANCHO + 1 * ASC_ANCHO   # default: 1 esc + 1 asc\n        y_nuc   = fondo_m - ESC_FONDO\n        y_pas   = y_nuc - PASILLO\n        sup_planta = frente_m * fondo_m\n        sup_util   = frente_m * y_pas   # área de departamentos\n        sup_circ   = frente_m * (fondo_m - y_pas)  # pasillo + shaft\n\n        lineas = [\n            f\"CUADRO DE SUPERFICIES\",\n            f\"Lote:                {frente_m:.2f} x {fondo_m:.2f} = {sup_planta:.1f} m²\",\n            f\"Sup. útil/piso tipo: {sup_util:.1f} m²\",\n            f\"Sup. circulación:    {sup_circ:.1f} m²\",\n            f\"Pisos tipo:          {pisos_tipo}\",\n            f\"Sup. total construida: {sup_planta * (pisos_tipo + 2):.1f} m²\",\n        ]\n        texto = \"\\n\".join(lineas)\n\n        try:\n            # TextNote.Create requiere un TextNoteType válido (no InvalidElementId)\n            tnt = FilteredElementCollector(doc).OfClass(TextNoteType).FirstElement()\n            tnt_id = tnt.Id if tnt else ElementId.InvalidElementId\n            tnOpts = TextNoteOptions(tnt_id)\n            # Colocar en la esquina inferior derecha de la hoja (en coordenadas de hoja)\n            pt_txt = XYZ(m_to_ft(0.300), m_to_ft(0.035), 0)\n            tn = TextNote.Create(doc, sheet_a01.Id, pt_txt, texto, tnOpts)\n            resultado.append({\"tipo\": \"cuadro_superficies\", \"id\": tn.Id.Value})\n        except Exception as e:\n            resultado.append({\"tipo\": \"cuadro_superficies\", \"error\": str(e)})\n\n    t.Commit()\n\nOUT = {\"resultado\": resultado}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "cca2a884-8afc-4485-8c24-3bdbd32f7504",
+      "Id": "13ef3970-388e-44fe-bb54-93746cd9296e",
       "Inputs": [
         {
-          "Id": "8c5e20d5-a65f-44bb-b817-028f9cc44111",
+          "Id": "a334e601-fa4d-4352-923b-de923a53fa69",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -228,7 +228,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "844cbfbc-45dd-419f-8ca1-54a3904832b9",
+          "Id": "69848040-71a4-4a99-bf8d-8a7482d8b093",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -237,7 +237,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6c20f799-4462-4f43-aeb7-dee04b7bf47d",
+          "Id": "c78568b2-0eeb-499e-aff2-1c718894c1d1",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -248,7 +248,7 @@
       ],
       "Outputs": [
         {
-          "Id": "c022238f-f023-4d63-b2b8-971722f42dcd",
+          "Id": "2087286b-5039-483f-9cab-ea66d67be0e5",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -263,45 +263,45 @@
   ],
   "Connectors": [
     {
-      "Start": "3a689945-6d80-48d1-a345-015156ed38f3",
-      "End": "9cd27a8e-3853-4a31-8503-75bf61da939e",
-      "Id": "cad5b1ed-d9f7-4e85-a303-7f39f4cf926a",
+      "Start": "c528a820-b850-4ec5-bde2-b83269f96a36",
+      "End": "dbba4767-04d1-4716-94ca-5cf0d9244a0e",
+      "Id": "72e35bd3-0c10-41ee-a1f7-058520b5c714",
       "IsHidden": "False"
     },
     {
-      "Start": "f8dc9637-2bb2-4658-8c22-823d4578a8c7",
-      "End": "c5f49bd3-3a1a-45a2-a283-018fc0519704",
-      "Id": "faba3388-d248-4deb-9bcc-a7ceb73e8389",
+      "Start": "f373e34f-22b9-4276-a679-d1b6bdbb8346",
+      "End": "5c3b7664-3f1a-4814-978c-0cf51a1a2ea5",
+      "Id": "95f4a8f8-703f-4bb0-ad7d-5b74d8f4504d",
       "IsHidden": "False"
     },
     {
-      "Start": "02fdcbed-17d5-4aed-9bac-54ca2f579230",
-      "End": "8673dedf-874b-4a50-8179-fd6c5df8a0ca",
-      "Id": "e4d6cfc7-5783-4669-8818-42ae739fa260",
+      "Start": "39391691-f986-483b-a64d-412166c52a84",
+      "End": "2dbce19b-ebb4-42e7-a548-1e8bd3cd4e78",
+      "Id": "6da9929b-95e2-49a8-a9a4-81e71d4387d9",
       "IsHidden": "False"
     },
     {
-      "Start": "640eaf24-98ca-4603-ba9c-bc995f054727",
-      "End": "6849cfae-9d77-4fb4-98ea-8ee30121eecb",
-      "Id": "d62e0c4d-04ce-4aaa-b7e7-d67761dadc37",
+      "Start": "fabad1a3-8f9e-46d3-b63b-20e13ed6d626",
+      "End": "a729594d-0498-48c7-99bd-36c751e23107",
+      "Id": "c3e5f4b6-2fde-4327-88aa-69d079dc8b02",
       "IsHidden": "False"
     },
     {
-      "Start": "b9b88944-007a-4c04-8684-1524793bb662",
-      "End": "8c5e20d5-a65f-44bb-b817-028f9cc44111",
-      "Id": "e4339668-e587-43ae-8f40-f63d98c0f279",
+      "Start": "375cab55-5772-4f49-bda2-2609d4096967",
+      "End": "a334e601-fa4d-4352-923b-de923a53fa69",
+      "Id": "104176ce-3a05-46ea-a738-a09802119094",
       "IsHidden": "False"
     },
     {
-      "Start": "48537168-6f54-49bf-aa2c-42fd92b0a765",
-      "End": "844cbfbc-45dd-419f-8ca1-54a3904832b9",
-      "Id": "3db1385f-9a81-48e4-93ab-d582cb9df811",
+      "Start": "40ece1d8-518c-4974-8648-ee91e4b6f1b9",
+      "End": "69848040-71a4-4a99-bf8d-8a7482d8b093",
+      "Id": "4ebe9bb5-36e1-426e-a1d7-be08c1fe9048",
       "IsHidden": "False"
     },
     {
-      "Start": "b428c007-447b-4324-ae95-58882ba29e84",
-      "End": "6c20f799-4462-4f43-aeb7-dee04b7bf47d",
-      "Id": "732d5aca-de24-42ae-9706-7849a4dcf52a",
+      "Start": "4babfb38-7728-4709-b7b6-0a0eede54f90",
+      "End": "c78568b2-0eeb-499e-aff2-1c718894c1d1",
+      "Id": "b12755f3-468c-42ad-9df3-b7a535aff377",
       "IsHidden": "False"
     }
   ],
@@ -333,7 +333,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "4f994910-5a8d-4299-bd24-3580a4630c72",
+        "Id": "cbefc5c4-b9f0-4748-a730-e94d7a96123c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_proyecto",
@@ -343,7 +343,7 @@
         "Y": 0.0
       },
       {
-        "Id": "6eb6cd47-60ae-4b21-b524-7659b019ee53",
+        "Id": "822e4e58-c6ea-4e3d-9f55-ef37cdabcb83",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "autor",
@@ -353,7 +353,7 @@
         "Y": 130.0
       },
       {
-        "Id": "1e624d0e-6d0a-405b-8d8e-ea8b49bfb63c",
+        "Id": "ad467eea-a557-4981-935c-8d41b12c2bc6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -363,7 +363,7 @@
         "Y": 260.0
       },
       {
-        "Id": "ed6b0c05-2e29-487b-8cc1-340f42a15178",
+        "Id": "5fd05755-1f29-424c-a5e0-a803fcf2e62e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -373,7 +373,7 @@
         "Y": 390.0
       },
       {
-        "Id": "dbb6dd56-6174-42aa-a8b4-80b55ecc1df5",
+        "Id": "fa4257fc-c3a8-4068-9bde-8fee7175609b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Sheets v2",
@@ -383,7 +383,7 @@
         "Y": 0.0
       },
       {
-        "Id": "d115f9ce-fcbc-4c73-91f1-16ad5d662f24",
+        "Id": "af9b9798-78ed-493a-b1c9-a76993bda103",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -393,7 +393,7 @@
         "Y": 780.0
       },
       {
-        "Id": "054738f2-9535-4d9d-a217-bc7784164af3",
+        "Id": "9abb135b-78e6-44d2-a9f7-af0c439047e2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -403,7 +403,7 @@
         "Y": 910.0
       },
       {
-        "Id": "0286a2df-a30f-40cf-b027-c21fdb959e06",
+        "Id": "03f59dd2-f1cd-44e4-8570-87e9c5530eb4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -413,7 +413,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "cca2a884-8afc-4485-8c24-3bdbd32f7504",
+        "Id": "13ef3970-388e-44fe-bb54-93746cd9296e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Norte y Cuadro",

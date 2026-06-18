@@ -1,5 +1,5 @@
 {
-  "Uuid": "3a7a553d-2d00-41a9-9886-acdb2571f869",
+  "Uuid": "1ee88398-5464-49af-8608-32aaa94d2211",
   "IsCustomNode": false,
   "Description": "Crea plantas, cortes, alzados y vista 3D para documentación técnica.",
   "Name": "08_vistas",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "5aa7981b-ce7b-425a-bfe2-3ad8e7c07b81",
+      "Id": "26d1a168-f4eb-46ff-ad48-cc40e7421fe8",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "abe3cbeb-2454-4d20-acd9-6ae9b638a8d3",
+          "Id": "4bf415eb-392f-4484-b820-328a0cb0b256",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "2a5aeb83-f55f-4072-9c07-180896f8832d",
+      "Id": "e3a4384d-a17a-4368-b0fd-2cc56fb7ee30",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "427e933a-0d43-4dd2-a283-a2a607abac2b",
+          "Id": "5023f7fe-11d8-44c4-8c47-6031dc920300",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -52,14 +52,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector, Transaction,\n    ElementId,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = _ii(IN[0])\ntiene_azotea = bool(IN[1])\n\ndef get_view_family_type(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_planta = get_view_family_type(ViewFamily.FloorPlan)\nplantas = []\n\nif vft_planta:\n    with Transaction(doc, \"py-building-gen: Plantas\") as t:\n        t.Start()\n\n        nombres_nivel = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n        if tiene_azotea:\n            nombres_nivel.append(\"AZO\")\n\n        for nombre in nombres_nivel:\n            lvl = get_level(nombre)\n            if lvl is None:\n                continue\n            nombre_vista = f\"PLANTA {nombre}\"\n            existente = next(\n                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n                 if v.Name == nombre_vista), None\n            )\n            if existente:\n                plantas.append({\"nivel\": nombre, \"id\": existente.Id.Value})\n                continue\n            vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)\n            vista.Name = nombre_vista\n            plantas.append({\"nivel\": nombre, \"id\": vista.Id.Value})\n\n        t.Commit()\n\nOUT = plantas\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '08_vistas'\n_PBG_NODE = 'Crear Plantas'\n_PBG_KEY = '08_vistas__00_crear_plantas'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector, Transaction,\n    ElementId,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = _ii(IN[0])\ntiene_azotea = bool(IN[1])\n\ndef get_view_family_type(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_planta = get_view_family_type(ViewFamily.FloorPlan)\nplantas = []\n\nif vft_planta:\n    with Transaction(doc, \"py-building-gen: Plantas\") as t:\n        t.Start()\n\n        nombres_nivel = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n        if tiene_azotea:\n            nombres_nivel.append(\"AZO\")\n\n        for nombre in nombres_nivel:\n            lvl = get_level(nombre)\n            if lvl is None:\n                continue\n            nombre_vista = f\"PLANTA {nombre}\"\n            existente = next(\n                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n                 if v.Name == nombre_vista), None\n            )\n            if existente:\n                plantas.append({\"nivel\": nombre, \"id\": existente.Id.Value})\n                continue\n            vista = ViewPlan.Create(doc, vft_planta.Id, lvl.Id)\n            vista.Name = nombre_vista\n            plantas.append({\"nivel\": nombre, \"id\": vista.Id.Value})\n\n        t.Commit()\n\nOUT = plantas\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "cfaf1a10-223e-41e8-ad5f-1e5899bbd194",
+      "Id": "86d95c22-6c41-4cc8-a783-1ea2b597269f",
       "Inputs": [
         {
-          "Id": "e3293d06-d15e-4e98-8d78-0e48ef341367",
+          "Id": "99ef7d25-87bc-4980-9336-7e314c7fc4c8",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -68,7 +68,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "86748ab9-b85f-4e00-bbd5-d003f0e7c289",
+          "Id": "a3fd69c8-b45f-47c8-aaef-cb041ca9bbff",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -79,7 +79,7 @@
       ],
       "Outputs": [
         {
-          "Id": "2dc45efe-e641-4493-9066-ad0a1acf97b7",
+          "Id": "9d7cd611-bfcf-44d6-a369-87d4939a54cc",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -95,11 +95,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "6dc8e190-19a1-4e6f-b1d1-2483b7d534b0",
+      "Id": "4f4d0efb-711f-40af-86ab-d79cf80ab2ec",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "106a6dc6-e56c-48a3-8081-8cb69961007b",
+          "Id": "2ef0105c-4dc7-479b-9a8f-aeed7ed0e0b4",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -115,11 +115,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "7cdc5ee4-88eb-4655-a0a6-5d6d938b6d16",
+      "Id": "8c458151-20fd-4db5-b033-ca85a85623d3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "fa094d1a-030b-45a5-91be-aa188c716eeb",
+          "Id": "bf4fa462-85c1-44ed-99a1-9e0ecf645cba",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -135,11 +135,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "20.299999999999997;",
-      "Id": "c0ded07d-5ea1-44fe-8c9b-b9a0866024f0",
+      "Id": "ead21aac-f808-493c-b0ef-c2880b478e91",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "bde4322e-9044-4ebc-acd5-2d074648e200",
+          "Id": "b7f80275-c392-4da6-a5f7-c6fba37d78ad",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -154,14 +154,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSection, ViewFamilyType, ViewFamily, BoundingBoxXYZ,\n    XYZ, Transform, FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m     = _fi(IN[0])\nfondo_m      = _fi(IN[1])\naltura_total = _fi(IN[2])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_vft_section():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.Section), None)\n\ndef make_section(vft, origen, basis_x, basis_z, half_w, h, profundidad):\n    \"\"\"Crea una ViewSection con los vectores dados.\"\"\"\n    bbox = BoundingBoxXYZ()\n    xf = Transform.Identity\n    xf.BasisX = basis_x\n    xf.BasisY = XYZ(0, 0, 1)\n    xf.BasisZ = basis_z\n    xf.Origin = origen\n    bbox.Transform = xf\n    margen = m_to_ft(1.0)\n    bbox.Min = XYZ(-half_w - margen, 0, -margen)\n    bbox.Max = XYZ( half_w + margen, h,  profundidad + margen)\n    return ViewSection.CreateSection(doc, vft.Id, bbox)\n\nvft  = get_vft_section()\nvistas = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Cortes y Alzados v2\") as t:\n        t.Start()\n\n        h      = m_to_ft(altura_total + 1.0)\n        hf_x   = m_to_ft(frente_m / 2)\n        hf_y   = m_to_ft(fondo_m  / 2)\n        prof   = m_to_ft(fondo_m + 2.0)\n\n        # ── Corte A-A transversal (perpendicular al frente) ───────────────\n        v = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(1,0,0), XYZ(0,-1,0),\n            hf_x, h, m_to_ft(fondo_m / 2 + 1.0))\n        v.Name = \"CORTE A-A\"\n        vistas.append({\"tipo\": \"corte_transversal\", \"id\": v.Id.Value})\n\n        # ── Corte B-B longitudinal (paralelo al frente) ───────────────────\n        v2 = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(0,1,0), XYZ(1,0,0),\n            hf_y, h, m_to_ft(frente_m / 2 + 1.0))\n        v2.Name = \"CORTE B-B\"\n        vistas.append({\"tipo\": \"corte_longitudinal\", \"id\": v2.Id.Value})\n\n        # ── Fachada principal (mirando desde el frente, Y negativo) ───────\n        v3 = make_section(vft,\n            XYZ(hf_x, m_to_ft(-2.0), 0),\n            XYZ(1,0,0), XYZ(0,1,0),\n            hf_x, h, prof)\n        v3.Name = \"FACHADA PRINCIPAL\"\n        vistas.append({\"tipo\": \"fachada_principal\", \"id\": v3.Id.Value})\n\n        # ── Fachada contrafrente (mirando desde el fondo, Y positivo) ─────\n        v4 = make_section(vft,\n            XYZ(hf_x, m_to_ft(fondo_m + 2.0), 0),\n            XYZ(-1,0,0), XYZ(0,-1,0),\n            hf_x, h, prof)\n        v4.Name = \"FACHADA CONTRAFRENTE\"\n        vistas.append({\"tipo\": \"fachada_contrafrente\", \"id\": v4.Id.Value})\n\n        # ── Fachada lateral izquierda (X = 0) ────────────────────────────\n        v5 = make_section(vft,\n            XYZ(m_to_ft(-2.0), hf_y, 0),\n            XYZ(0,1,0), XYZ(-1,0,0),\n            hf_y, h, prof)\n        v5.Name = \"FACHADA LATERAL IZQ\"\n        vistas.append({\"tipo\": \"fachada_lateral_izq\", \"id\": v5.Id.Value})\n\n        # ── Fachada lateral derecha (X = frente_m) ───────────────────────\n        v6 = make_section(vft,\n            XYZ(m_to_ft(frente_m + 2.0), hf_y, 0),\n            XYZ(0,-1,0), XYZ(1,0,0),\n            hf_y, h, prof)\n        v6.Name = \"FACHADA LATERAL DER\"\n        vistas.append({\"tipo\": \"fachada_lateral_der\", \"id\": v6.Id.Value})\n\n        t.Commit()\n\nOUT = vistas\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '08_vistas'\n_PBG_NODE = 'Crear Cortes y Alzados'\n_PBG_KEY = '08_vistas__01_crear_cortes_y_alzados'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewSection, ViewFamilyType, ViewFamily, BoundingBoxXYZ,\n    XYZ, Transform, FilteredElementCollector, Transaction,\n    UnitUtils, UnitTypeId,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m     = _fi(IN[0])\nfondo_m      = _fi(IN[1])\naltura_total = _fi(IN[2])\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_vft_section():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.Section), None)\n\ndef make_section(vft, origen, basis_x, basis_z, half_w, h, profundidad):\n    \"\"\"Crea una ViewSection con los vectores dados.\"\"\"\n    bbox = BoundingBoxXYZ()\n    xf = Transform.Identity\n    xf.BasisX = basis_x\n    xf.BasisY = XYZ(0, 0, 1)\n    xf.BasisZ = basis_z\n    xf.Origin = origen\n    bbox.Transform = xf\n    margen = m_to_ft(1.0)\n    bbox.Min = XYZ(-half_w - margen, 0, -margen)\n    bbox.Max = XYZ( half_w + margen, h,  profundidad + margen)\n    return ViewSection.CreateSection(doc, vft.Id, bbox)\n\nvft  = get_vft_section()\nvistas = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Cortes y Alzados v2\") as t:\n        t.Start()\n\n        h      = m_to_ft(altura_total + 1.0)\n        hf_x   = m_to_ft(frente_m / 2)\n        hf_y   = m_to_ft(fondo_m  / 2)\n        prof   = m_to_ft(fondo_m + 2.0)\n\n        # ── Corte A-A transversal (perpendicular al frente) ───────────────\n        v = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(1,0,0), XYZ(0,-1,0),\n            hf_x, h, m_to_ft(fondo_m / 2 + 1.0))\n        v.Name = \"CORTE A-A\"\n        vistas.append({\"tipo\": \"corte_transversal\", \"id\": v.Id.Value})\n\n        # ── Corte B-B longitudinal (paralelo al frente) ───────────────────\n        v2 = make_section(vft,\n            XYZ(hf_x, hf_y, 0),\n            XYZ(0,1,0), XYZ(1,0,0),\n            hf_y, h, m_to_ft(frente_m / 2 + 1.0))\n        v2.Name = \"CORTE B-B\"\n        vistas.append({\"tipo\": \"corte_longitudinal\", \"id\": v2.Id.Value})\n\n        # ── Fachada principal (mirando desde el frente, Y negativo) ───────\n        v3 = make_section(vft,\n            XYZ(hf_x, m_to_ft(-2.0), 0),\n            XYZ(1,0,0), XYZ(0,1,0),\n            hf_x, h, prof)\n        v3.Name = \"FACHADA PRINCIPAL\"\n        vistas.append({\"tipo\": \"fachada_principal\", \"id\": v3.Id.Value})\n\n        # ── Fachada contrafrente (mirando desde el fondo, Y positivo) ─────\n        v4 = make_section(vft,\n            XYZ(hf_x, m_to_ft(fondo_m + 2.0), 0),\n            XYZ(-1,0,0), XYZ(0,-1,0),\n            hf_x, h, prof)\n        v4.Name = \"FACHADA CONTRAFRENTE\"\n        vistas.append({\"tipo\": \"fachada_contrafrente\", \"id\": v4.Id.Value})\n\n        # ── Fachada lateral izquierda (X = 0) ────────────────────────────\n        v5 = make_section(vft,\n            XYZ(m_to_ft(-2.0), hf_y, 0),\n            XYZ(0,1,0), XYZ(-1,0,0),\n            hf_y, h, prof)\n        v5.Name = \"FACHADA LATERAL IZQ\"\n        vistas.append({\"tipo\": \"fachada_lateral_izq\", \"id\": v5.Id.Value})\n\n        # ── Fachada lateral derecha (X = frente_m) ───────────────────────\n        v6 = make_section(vft,\n            XYZ(m_to_ft(frente_m + 2.0), hf_y, 0),\n            XYZ(0,-1,0), XYZ(1,0,0),\n            hf_y, h, prof)\n        v6.Name = \"FACHADA LATERAL DER\"\n        vistas.append({\"tipo\": \"fachada_lateral_der\", \"id\": v6.Id.Value})\n\n        t.Commit()\n\nOUT = vistas\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "c33425bf-03ca-48b1-9224-4adda3177b51",
+      "Id": "80847ddc-8e82-4614-bc5c-e350d8950b4d",
       "Inputs": [
         {
-          "Id": "c5771856-71ec-4fe6-88b2-8db6e35ab7e4",
+          "Id": "4e6d2b89-b3c6-4c8e-84c0-e9e716b69236",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -170,7 +170,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "010aed7d-6f03-4451-8dd0-3489bdd4a177",
+          "Id": "0bf7e830-4188-476d-97ca-5ef2e9e0c26d",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -179,7 +179,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "66a052da-aac0-48d6-b1b9-2ed8e21128fc",
+          "Id": "8915fcdb-c0b0-4313-8bfa-bfd7a3c5da34",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -190,7 +190,7 @@
       ],
       "Outputs": [
         {
-          "Id": "883aefe1-0da9-42a2-b135-393960e357fe",
+          "Id": "d914b468-771f-4bdc-888a-03b8ee00a30a",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -205,15 +205,15 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    View3D, ViewFamilyType, ViewFamily,\n    FilteredElementCollector, Transaction,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ndef get_vft_3d():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.ThreeDimensional), None)\n\nvft = get_vft_3d()\nresultado = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Vista 3D\") as t:\n        t.Start()\n        v3d = View3D.CreateIsometric(doc, vft.Id)\n        v3d.Name = \"3D - Vista General\"\n        resultado.append({\"tipo\": \"3d_isometrica\", \"id\": v3d.Id.Value})\n        t.Commit()\n\nOUT = resultado\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '08_vistas'\n_PBG_NODE = 'Crear Vista 3D'\n_PBG_KEY = '08_vistas__02_crear_vista_3d'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    View3D, ViewFamilyType, ViewFamily,\n    FilteredElementCollector, Transaction,\n)\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ndef get_vft_3d():\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == ViewFamily.ThreeDimensional), None)\n\nvft = get_vft_3d()\nresultado = []\n\nif vft:\n    with Transaction(doc, \"py-building-gen: Vista 3D\") as t:\n        t.Start()\n        v3d = View3D.CreateIsometric(doc, vft.Id)\n        v3d.Name = \"3D - Vista General\"\n        resultado.append({\"tipo\": \"3d_isometrica\", \"id\": v3d.Id.Value})\n        t.Commit()\n\nOUT = resultado\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "5bad9ff6-28f1-437c-860d-434ea26fc273",
+      "Id": "06d461ce-21fa-44e7-8924-d72245b49574",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a3ad1294-5372-40a2-9545-cc0d41d5e123",
+          "Id": "96ee638c-1015-43f3-9c07-fcda0b764495",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -228,15 +228,15 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, View, BuiltInCategory, ElementId,\n    OverrideGraphicSettings, FilteredElementCollector,\n    Transaction,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\n# Categorías a ocultar según disciplina de la vista\nCAT_ESTRUCTURA = [\n    int(BuiltInCategory.OST_StructuralColumns),\n    int(BuiltInCategory.OST_StructuralFraming),\n    int(BuiltInCategory.OST_StructuralFoundation),\n    int(BuiltInCategory.OST_StructuralStiffener),\n]\nCAT_ARQ = [\n    int(BuiltInCategory.OST_Walls),\n    int(BuiltInCategory.OST_Floors),\n    int(BuiltInCategory.OST_Doors),\n    int(BuiltInCategory.OST_Windows),\n    int(BuiltInCategory.OST_Stairs),\n    int(BuiltInCategory.OST_Rooms),\n]\n\ndef is_arq_view(v):\n    return v.Name.startswith(\"PLANTA\") or v.Name.startswith(\"CORTE\") or v.Name.startswith(\"FACHADA\")\n\ndef is_est_view(v):\n    return v.Name.startswith(\"EST \")\n\ndef is_mep_view(v):\n    return v.Name.startswith(\"MEP \")\n\ndef set_hidden(view, cat_ids, hidden):\n    for cat_id in cat_ids:\n        eid = ElementId(cat_id)\n        try:\n            view.SetCategoryHidden(eid, hidden)\n        except Exception:\n            pass\n\nvistas_config = []\n\nwith Transaction(doc, \"py-building-gen: Visibility Overrides\") as t:\n    t.Start()\n    all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    for v in all_views:\n        if v.IsTemplate:\n            continue\n        try:\n            if is_arq_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)    # oculta estructura en ARQ\n                vistas_config.append({\"vista\": v.Name, \"config\": \"ARQ — estructura oculta\"})\n            elif is_est_view(v):\n                set_hidden(v, CAT_ARQ, True)            # oculta elementos ARQ en EST\n                vistas_config.append({\"vista\": v.Name, \"config\": \"EST — elementos ARQ ocultos\"})\n            elif is_mep_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)\n                vistas_config.append({\"vista\": v.Name, \"config\": \"MEP — estructura oculta\"})\n        except Exception as e:\n            vistas_config.append({\"vista\": v.Name, \"error\": str(e)})\n    t.Commit()\n\nOUT = {\"vistas_configuradas\": len(vistas_config), \"detalle\": vistas_config}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '08_vistas'\n_PBG_NODE = 'Visibility Overrides'\n_PBG_KEY = '08_vistas__03_visibility_overrides'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, View, BuiltInCategory, ElementId,\n    OverrideGraphicSettings, FilteredElementCollector,\n    Transaction,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\n# Categorías a ocultar según disciplina de la vista\nCAT_ESTRUCTURA = [\n    int(BuiltInCategory.OST_StructuralColumns),\n    int(BuiltInCategory.OST_StructuralFraming),\n    int(BuiltInCategory.OST_StructuralFoundation),\n    int(BuiltInCategory.OST_StructuralStiffener),\n]\nCAT_ARQ = [\n    int(BuiltInCategory.OST_Walls),\n    int(BuiltInCategory.OST_Floors),\n    int(BuiltInCategory.OST_Doors),\n    int(BuiltInCategory.OST_Windows),\n    int(BuiltInCategory.OST_Stairs),\n    int(BuiltInCategory.OST_Rooms),\n]\n\ndef is_arq_view(v):\n    return v.Name.startswith(\"PLANTA\") or v.Name.startswith(\"CORTE\") or v.Name.startswith(\"FACHADA\")\n\ndef is_est_view(v):\n    return v.Name.startswith(\"EST \")\n\ndef is_mep_view(v):\n    return v.Name.startswith(\"MEP \")\n\ndef set_hidden(view, cat_ids, hidden):\n    for cat_id in cat_ids:\n        eid = ElementId(cat_id)\n        try:\n            view.SetCategoryHidden(eid, hidden)\n        except Exception:\n            pass\n\nvistas_config = []\n\nwith Transaction(doc, \"py-building-gen: Visibility Overrides\") as t:\n    t.Start()\n    all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n    for v in all_views:\n        if v.IsTemplate:\n            continue\n        try:\n            if is_arq_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)    # oculta estructura en ARQ\n                vistas_config.append({\"vista\": v.Name, \"config\": \"ARQ — estructura oculta\"})\n            elif is_est_view(v):\n                set_hidden(v, CAT_ARQ, True)            # oculta elementos ARQ en EST\n                vistas_config.append({\"vista\": v.Name, \"config\": \"EST — elementos ARQ ocultos\"})\n            elif is_mep_view(v):\n                set_hidden(v, CAT_ESTRUCTURA, True)\n                vistas_config.append({\"vista\": v.Name, \"config\": \"MEP — estructura oculta\"})\n        except Exception as e:\n            vistas_config.append({\"vista\": v.Name, \"error\": str(e)})\n    t.Commit()\n\nOUT = {\"vistas_configuradas\": len(vistas_config), \"detalle\": vistas_config}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "189cba7e-952b-472e-b899-2b93d0f8189e",
+      "Id": "cefc3e07-b138-422a-8ca1-f67eeb1ca3fb",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b865e548-7cbe-4dcd-a2b7-d2a80e74541b",
+          "Id": "db277c0e-1787-4627-a7c2-780270804d25",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -251,44 +251,34 @@
   ],
   "Connectors": [
     {
-      "Start": "5aa7981b-ce7b-425a-bfe2-3ad8e7c07b81",
-      "End": "cfaf1a10-223e-41e8-ad5f-1e5899bbd194",
-      "Id": "14e10361-82fa-44fd-956b-00b2a05d3649",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "4bf415eb-392f-4484-b820-328a0cb0b256",
+      "End": "99ef7d25-87bc-4980-9336-7e314c7fc4c8",
+      "Id": "363cade0-39ac-446b-b0e7-77b9655c4234",
+      "IsHidden": "False"
     },
     {
-      "Start": "2a5aeb83-f55f-4072-9c07-180896f8832d",
-      "End": "cfaf1a10-223e-41e8-ad5f-1e5899bbd194",
-      "Id": "4392c262-7fb5-4ca6-9634-cc8652c13cbe",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "5023f7fe-11d8-44c4-8c47-6031dc920300",
+      "End": "a3fd69c8-b45f-47c8-aaef-cb041ca9bbff",
+      "Id": "52ad3af8-c99c-44ec-9d79-76ccebf0b8a7",
+      "IsHidden": "False"
     },
     {
-      "Start": "6dc8e190-19a1-4e6f-b1d1-2483b7d534b0",
-      "End": "c33425bf-03ca-48b1-9224-4adda3177b51",
-      "Id": "048fc059-7167-4475-8e1e-acb6bb62a1d7",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "2ef0105c-4dc7-479b-9a8f-aeed7ed0e0b4",
+      "End": "4e6d2b89-b3c6-4c8e-84c0-e9e716b69236",
+      "Id": "15c5e92f-f07c-4251-949e-1736448fb3b9",
+      "IsHidden": "False"
     },
     {
-      "Start": "7cdc5ee4-88eb-4655-a0a6-5d6d938b6d16",
-      "End": "c33425bf-03ca-48b1-9224-4adda3177b51",
-      "Id": "19f06714-0847-41ce-9efc-028a35bd711d",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "bf4fa462-85c1-44ed-99a1-9e0ecf645cba",
+      "End": "0bf7e830-4188-476d-97ca-5ef2e9e0c26d",
+      "Id": "33dda7ce-bad0-4815-91b0-971509589233",
+      "IsHidden": "False"
     },
     {
-      "Start": "c0ded07d-5ea1-44fe-8c9b-b9a0866024f0",
-      "End": "c33425bf-03ca-48b1-9224-4adda3177b51",
-      "Id": "2074b952-d5ea-4684-b405-42c4127ef5cd",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "b7f80275-c392-4da6-a5f7-c6fba37d78ad",
+      "End": "8915fcdb-c0b0-4313-8bfa-bfd7a3c5da34",
+      "Id": "a5f30ba5-1879-45a4-b677-32ac35e1fa91",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -319,7 +309,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "5aa7981b-ce7b-425a-bfe2-3ad8e7c07b81",
+        "Id": "26d1a168-f4eb-46ff-ad48-cc40e7421fe8",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -329,7 +319,7 @@
         "Y": 0.0
       },
       {
-        "Id": "2a5aeb83-f55f-4072-9c07-180896f8832d",
+        "Id": "e3a4384d-a17a-4368-b0fd-2cc56fb7ee30",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -339,7 +329,7 @@
         "Y": 130.0
       },
       {
-        "Id": "cfaf1a10-223e-41e8-ad5f-1e5899bbd194",
+        "Id": "86d95c22-6c41-4cc8-a783-1ea2b597269f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Plantas",
@@ -349,7 +339,7 @@
         "Y": 0.0
       },
       {
-        "Id": "6dc8e190-19a1-4e6f-b1d1-2483b7d534b0",
+        "Id": "4f4d0efb-711f-40af-86ab-d79cf80ab2ec",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -359,7 +349,7 @@
         "Y": 390.0
       },
       {
-        "Id": "7cdc5ee4-88eb-4655-a0a6-5d6d938b6d16",
+        "Id": "8c458151-20fd-4db5-b033-ca85a85623d3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -369,7 +359,7 @@
         "Y": 520.0
       },
       {
-        "Id": "c0ded07d-5ea1-44fe-8c9b-b9a0866024f0",
+        "Id": "ead21aac-f808-493c-b0ef-c2880b478e91",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_total_m",
@@ -379,7 +369,7 @@
         "Y": 650.0
       },
       {
-        "Id": "c33425bf-03ca-48b1-9224-4adda3177b51",
+        "Id": "80847ddc-8e82-4614-bc5c-e350d8950b4d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Cortes y Alzados",
@@ -389,7 +379,7 @@
         "Y": 390.0
       },
       {
-        "Id": "5bad9ff6-28f1-437c-860d-434ea26fc273",
+        "Id": "06d461ce-21fa-44e7-8924-d72245b49574",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Vista 3D",
@@ -399,7 +389,7 @@
         "Y": 910.0
       },
       {
-        "Id": "189cba7e-952b-472e-b899-2b93d0f8189e",
+        "Id": "cefc3e07-b138-422a-8ca1-f67eeb1ca3fb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Visibility Overrides",

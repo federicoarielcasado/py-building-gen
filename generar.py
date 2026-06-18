@@ -3,10 +3,16 @@
 Uso:
     python generar.py                      # parámetros default
     python generar.py --load proyecto.pbg  # cargar parámetros guardados
+    python generar.py --verificar          # leer reportes de Revit y dar PASS/FAIL
 
 Genera en output/:
     dynamo/   — 12 scripts .dyn para Revit 2027 + Dynamo 4.0
     computo/  — presupuesto_<proyecto>.xlsx + .pdf
+
+Ciclo de trabajo sin revisar a mano (ver docs/dev/verificacion_automatizada.md):
+    1. python generar.py            # genera .dyn y limpia reportes viejos
+    2. correr los .dyn en Revit     # cada nodo deja su JSON en dynamo/_reports
+    3. python generar.py --verificar  # PASS/FAIL automático, sin abrir el 3D
 """
 
 from __future__ import annotations
@@ -32,6 +38,9 @@ from core.computo.mediciones import calcular as calcular_mediciones
 from core.computo.precios import cargar as cargar_precios
 from core.computo.analisis_precios import analizar as analizar_precios
 from core.computo.exportador import exportar_excel, exportar_pdf
+from core.verificador import limpiar_reportes, verificar_y_guardar
+
+_REPORT_DIR = Path("output/dynamo/_reports")
 
 
 def _slug(nombre: str) -> str:
@@ -89,6 +98,12 @@ def generar_todo(params: ParametrosEdificio) -> dict[str, list[Path]]:
     archivos["computo"].extend([xls, pdf])
     print(f"{time.perf_counter()-t0:.2f}s")
 
+    # Reportes viejos de una corrida anterior engañarían a la verificación:
+    # se borran para que la próxima ejecución en Revit empiece limpia.
+    n = limpiar_reportes(_REPORT_DIR)
+    if n:
+        print(f"  Reportes de verificación previos borrados: {n}")
+
     return archivos
 
 
@@ -129,10 +144,25 @@ def _print_resumen(params: ParametrosEdificio, archivos: dict) -> None:
         print(f"    {i:2d}. {p.name}")
 
 
+def _verificar(params: ParametrosEdificio) -> int:
+    """Lee los reportes dejados por Revit y devuelve el código de salida."""
+    print("\nVerificando ejecución de los scripts en Revit...")
+    print("-" * 60)
+    rep = verificar_y_guardar(params, _REPORT_DIR)
+    print(rep.to_text())
+    print(f"\nHTML: {_REPORT_DIR / '_verificacion.html'}")
+    return 0 if rep.ok else 1
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Genera scripts Dynamo y cómputo para py-building-gen.")
     parser.add_argument("--load", metavar="ARCHIVO.pbg", help="Cargar parámetros desde JSON.")
     parser.add_argument("--save", metavar="ARCHIVO.pbg", help="Guardar parámetros default a JSON.")
+    parser.add_argument(
+        "--verificar", action="store_true",
+        help="No genera: lee los reportes de Revit (output/dynamo/_reports) y "
+             "da PASS/FAIL. Correr después de ejecutar los .dyn en Revit.",
+    )
     args = parser.parse_args()
 
     if args.load:
@@ -150,6 +180,9 @@ def main() -> None:
         for e in errores:
             print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
+
+    if args.verificar:
+        sys.exit(_verificar(params))
 
     print(f"\nGenerando proyecto: {params.nombre_proyecto}")
     print("-" * 60)

@@ -201,14 +201,18 @@ if sym:
 
         for nombre_nivel in [f"P{i:02d}" for i in range(1, pisos_tipo + 1)]:
             lvl = get_level(nombre_nivel)
+            # La curva de una viga vive en coordenadas del modelo: el Level solo
+            # fija el "Nivel de referencia", NO la altura física. Sin este z las
+            # vigas de todos los pisos se apilan en z=0 → "ejemplares idénticos".
+            z = lvl.Elevation
 
             # Vigas en dirección X (paralelas al frente) — una por eje Y
             y = 0.0
             while y <= fondo_m + 0.001:
                 x = 0.0
                 while x + paso_m <= frente_m + 0.001:
-                    p1 = XYZ(m_to_ft(x),        m_to_ft(y), 0)
-                    p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), 0)
+                    p1 = XYZ(m_to_ft(x),        m_to_ft(y), z)
+                    p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), z)
                     inst = doc.Create.NewFamilyInstance(
                         Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam
                     )
@@ -221,8 +225,8 @@ if sym:
             while x <= frente_m + 0.001:
                 y = 0.0
                 while y + paso_m <= fondo_m + 0.001:
-                    p1 = XYZ(m_to_ft(x), m_to_ft(y),        0)
-                    p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), 0)
+                    p1 = XYZ(m_to_ft(x), m_to_ft(y),        z)
+                    p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), z)
                     inst = doc.Create.NewFamilyInstance(
                         Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam
                     )
@@ -351,6 +355,7 @@ fondo_m        = _fi(IN[1])
 lado_zapata_cm = _fi(IN[2])   # lado de la zapata cuadrada (predimensionado)
 altura_pb      = _fi(IN[3])
 tiene_subsuelo = bool(IN[4])
+nombre_zapata  = _si(IN[5], "")   # tipo exacto creado por 00_familias.dyn
 paso_m         = 5.0
 
 def m_to_ft(m):
@@ -361,6 +366,10 @@ def get_foundation_sym():
            .OfClass(FamilySymbol)
            .OfCategory(BuiltInCategory.OST_StructuralFoundation)
            .ToElements())
+    # 1° intento: tipo exacto resuelto/creado por 00_familias.dyn
+    match = next((s for s in col if s.Name == nombre_zapata), None)
+    if match:
+        return match
     _kw = ("pad","isolated","zapata","footing","aislada","foundation")
     match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)
     return match or (col[0] if col else None)
@@ -372,6 +381,7 @@ def get_level(nombre):
 
 sym = get_foundation_sym()
 zapatas = []
+nom_fund = "SS01" if tiene_subsuelo else "PB"   # nivel de fundación (def. siempre)
 
 if sym:
     # Tamaño de zapata
@@ -390,7 +400,6 @@ if sym:
         sym.Activate()
 
     # Nivel de fundación: PB si no hay subsuelo, SS01 si hay
-    nom_fund = "SS01" if tiene_subsuelo else "PB"
     lvl_fund = get_level(nom_fund)
 
     with Transaction(doc, "py-building-gen: Zapatas") as t:
@@ -406,11 +415,23 @@ if sym:
             x += paso_m
         t.Commit()
 
-OUT = {
-    "total": len(zapatas),
-    "lado_cm": lado_zapata_cm,
-    "nivel": nom_fund,
-}
+if sym:
+    OUT = {
+        "total": len(zapatas),
+        "lado_cm": lado_zapata_cm,
+        "nivel": nom_fund,
+        "familia": sym.FamilyName,
+    }
+else:
+    OUT = {
+        "total": 0,
+        "resultado": "No se encontro familia de fundacion (OST_StructuralFoundation) cargada en el modelo.",
+        "accion_requerida": (
+            "Cargar una familia de zapata/base estructural (p.ej. "
+            "'Base estructural rectangular' o 'Footing-Rectangular') desde "
+            "Insertar -> Cargar familia, luego volver a correr 04_estructura.dyn."
+        ),
+    }
 '''
 
 
@@ -425,12 +446,12 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> lis
 
     col_base  = res.columnas[0] if res.columnas else None
     viga_base = res.vigas[0]    if res.vigas    else None
-    zapata_base = res.zapatas[0] if hasattr(res, "zapatas") and res.zapatas else None
+    zapata_base = getattr(res, "zapata", None)
 
     lado_col_cm   = round(col_base.lado_m  * 100) if col_base  else 25
     alto_viga_cm  = round(viga_base.alto_m  * 100) if viga_base else 50
     ancho_viga_cm = round(viga_base.ancho_m * 100) if viga_base else 25
-    lado_zap_cm   = round(getattr(zapata_base, "lado_m", 1.20) * 100) if zapata_base else 120
+    lado_zap_cm   = round(zapata_base.lado_m * 100) if zapata_base and zapata_base.lado_m else 120
 
     nombres = nombres_tipos(params)
 
@@ -489,9 +510,10 @@ def generar(params: "ParametrosEdificio", output_dir: Path = _OUTPUT_DIR) -> lis
     cb_zap_lado   = s.add_code_block(str(lado_zap_cm),                  label="lado_zapata_cm", col=0, row=22)
     cb_zap_altpb  = s.add_code_block(str(params.altura_pb),             label="altura_pb_m",    col=0, row=23)
     cb_zap_sub    = s.add_code_block(str(params.tiene_subsuelo).lower(), label="tiene_subsuelo", col=0, row=24)
+    cb_zap_nombre = s.add_code_block(f'"{nombres["zapata"]}"',           label="nombre_zapata",  col=0, row=25)
 
-    py_zap = s.add_python_node(_CODE_ZAPATAS, n_inputs=5, label="Crear Zapatas", col=1, row=20)
-    for i, cb in enumerate([cb_zap_frente, cb_zap_fondo, cb_zap_lado, cb_zap_altpb, cb_zap_sub]):
+    py_zap = s.add_python_node(_CODE_ZAPATAS, n_inputs=6, label="Crear Zapatas", col=1, row=20)
+    for i, cb in enumerate([cb_zap_frente, cb_zap_fondo, cb_zap_lado, cb_zap_altpb, cb_zap_sub, cb_zap_nombre]):
         s.connect(cb, py_zap, to_input=i)
     w_zap = s.add_watch(label="Zapatas", col=2, row=20)
     s.connect(py_zap, w_zap)

@@ -1,5 +1,5 @@
 {
-  "Uuid": "b2074a2f-13c7-412a-9416-fd4a4ef041fd",
+  "Uuid": "46fab472-1306-49ed-8fcb-dc6d69a33a4e",
   "IsCustomNode": false,
   "Description": "Crea espacios MEP, matafuegos (NFPA 13) y tableros eléctricos seccionales por nivel.",
   "Name": "07_instalaciones_mep",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "d4a4db4c-37eb-4850-852c-4dc6d5fb4c85",
+      "Id": "70583545-1583-4414-a1fa-674ebfe4954c",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "0c622a07-4d45-4e67-a2e0-13cfed35241d",
+          "Id": "6ddad6e3-f643-4700-a6c1-176b6a8b703d",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "74cabc3f-49eb-459b-8299-3e8fe02c46b3",
+      "Id": "ab2d1bf1-6e6a-41b7-ba00-585c7f3b2300",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d86c71be-5096-4440-b8ea-3d9bdcdbe2e8",
+          "Id": "8b07b83c-c8c0-4b89-b861-b8fd21d997cc",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "ceeeac3d-dbc0-4118-a454-3671e547f4a5",
+      "Id": "c8dc419d-ee2a-43b8-b016-baec81782c90",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ac00d207-dd9f-476d-bcbd-54402241834a",
+          "Id": "14832460-837e-41a0-8c9a-0a087cbb37ec",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "5246be95-a3dc-45a0-9676-ae270df3374b",
+      "Id": "cb586f96-70ff-42de-a2a0-606740723c50",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "ac5e5d77-c2de-4c6d-84f6-e013d586ce0e",
+          "Id": "3c5a3627-7a0a-4036-9280-4418762983db",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "55d42344-461a-42b1-b4fc-f588d3245741",
+      "Id": "5d8152ab-69ff-48a7-826e-84cb346fbcba",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "171cdada-37d9-4764-a53a-fc796cd9c0e2",
+          "Id": "1d7aa225-ccab-4a6b-a408-6f0ce008d3cd",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "6575f868-351a-4717-be8a-0c152bb5f2f5",
+      "Id": "561792ef-8b69-4274-b4c3-77d18360368d",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "33e14990-194d-4980-bf97-0a9ec0ffc5b5",
+          "Id": "6fbd3e1e-1b73-4e5a-a25a-4912f1bda7e7",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -133,11 +133,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "34864b68-be88-404c-afce-ae817855fc8f",
+      "Id": "38cec856-b590-4f6d-a54e-ff1d158cb9be",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "96be7766-4b99-4efb-8ebe-8c2ce73832fe",
+          "Id": "6bb7b797-c885-45c0-926f-2ba18f6415b0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -153,11 +153,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "70f5be4d-6ac7-4037-a948-d63bcca5c7e3",
+      "Id": "29edc342-4ab1-40e7-a4bd-0f8ba1183a3e",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f962386c-5bbe-4228-9712-17d4fff81750",
+          "Id": "9bbed46d-d315-49d3-8324-0cff713f54e0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -172,14 +172,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, XYZ, UV, FamilySymbol,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo      = _ii(IN[0])\nfrente_m        = _fi(IN[1])\nfondo_m         = _fi(IN[2])\ncant_escaleras  = _ii(IN[3])\ncant_ascensores = _ii(IN[4])\ninst_san        = bool(IN[5])\ninst_elec       = bool(IN[6])\ninst_inc        = bool(IN[7])\n\n# ── Layout geometry ────────────────────────────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\ny_pasillo    = y_nucleo - PASILLO_PROF\n# Matafuego y tablero: contra pared del pasillo, lado izquierdo del núcleo\nx_mat = max(0.30, x_nucleo - 0.50)   # 0.50m antes del shaft\ny_mat = y_pasillo + 0.60              # en el pasillo, cerca del inicio del shaft\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_levels_tipo():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(\n        [l for l in levels if l.Name.startswith(\"P\") and l.Name[1:].isdigit()],\n        key=lambda l: l.Elevation\n    )\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\ndef get_sym(categoria, keywords):\n    col = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(categoria).ToElements()\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in keywords)), None)\n    return match or (col[0] if col else None)\n\n# ── Symbols ────────────────────────────────────────────────────────────────────\n_KW_MAT  = (\"fire\",\"extintor\",\"matafuego\",\"extinguisher\",\"sprinkler\")\n_KW_TAB  = (\"panel\",\"tablero\",\"board\",\"electrical\",\"distribution\",\"cuadro\")\n\nsym_mat = get_sym(BuiltInCategory.OST_FireAlarmDevices,   _KW_MAT) or           get_sym(BuiltInCategory.OST_GenericModel,        _KW_MAT)\nsym_tab = get_sym(BuiltInCategory.OST_ElectricalEquipment, _KW_TAB) or           get_sym(BuiltInCategory.OST_GenericModel,         _KW_TAB)\n\nartefactos = []\nspaces_creados = []\n\nwith Transaction(doc, \"py-building-gen: Artefactos MEP v2\") as t:\n    t.Start()\n\n    # Activar símbolos\n    for sym in [sym_mat, sym_tab]:\n        if sym and not sym.IsActive:\n            sym.Activate()\n\n    for lvl in get_levels_tipo():\n        # MEP Space (para análisis de cargas)\n        uv_sp = UV(m_to_ft(frente_m * 0.5), m_to_ft(fondo_m * 0.5))\n        try:\n            sp = doc.Create.NewSpace(lvl, uv_sp)\n            p_name = sp.LookupParameter(\"Name\")\n            if p_name:\n                p_name.Set(f\"Zona MEP {lvl.Name}\")\n            spaces_creados.append({\"nivel\": lvl.Name, \"id\": sp.Id.Value})\n        except Exception as e:\n            spaces_creados.append({\"nivel\": lvl.Name, \"error\": str(e)})\n\n        # Matafuego — NFPA 13: 1 por piso en pasillo junto a escalera\n        if inst_inc and sym_mat:\n            pt = XYZ(m_to_ft(x_mat), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_mat, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"matafuego\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n        # Tablero eléctrico seccional — 1 por piso en pasillo\n        if inst_elec and sym_tab:\n            pt = XYZ(m_to_ft(x_mat + 0.60), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_tab, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"tablero_seccional\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n    t.Commit()\n\ninstalaciones = []\nif inst_san:  instalaciones.append(\"Sanitaria\")\nif inst_elec: instalaciones.append(\"Eléctrica\")\nif inst_inc:  instalaciones.append(\"Incendio\")\n\nOUT = {\n    \"spaces_mep\": len(spaces_creados),\n    \"artefactos\": len(artefactos),\n    \"detalle\": artefactos,\n    \"instalaciones_activas\": instalaciones,\n    \"nota\": \"Completar redes de tuberías y conductos manualmente en Revit MEP.\",\n}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '07_instalaciones_mep'\n_PBG_NODE = 'Artefactos MEP v2'\n_PBG_KEY = '07_instalaciones_mep__00_artefactos_mep_v2'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nimport json\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Level, XYZ, UV, FamilySymbol,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType as ST\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo      = _ii(IN[0])\nfrente_m        = _fi(IN[1])\nfondo_m         = _fi(IN[2])\ncant_escaleras  = _ii(IN[3])\ncant_ascensores = _ii(IN[4])\ninst_san        = bool(IN[5])\ninst_elec       = bool(IN[6])\ninst_inc        = bool(IN[7])\n\n# ── Layout geometry ────────────────────────────────────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00; PASILLO_PROF = 1.20\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\ny_pasillo    = y_nucleo - PASILLO_PROF\n# Matafuego y tablero: contra pared del pasillo, lado izquierdo del núcleo\nx_mat = max(0.30, x_nucleo - 0.50)   # 0.50m antes del shaft\ny_mat = y_pasillo + 0.60              # en el pasillo, cerca del inicio del shaft\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_levels_tipo():\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return sorted(\n        [l for l in levels if l.Name.startswith(\"P\") and l.Name[1:].isdigit()],\n        key=lambda l: l.Elevation\n    )\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\ndef get_sym(categoria, keywords):\n    col = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(categoria).ToElements()\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in keywords)), None)\n    return match or (col[0] if col else None)\n\n# ── Symbols ────────────────────────────────────────────────────────────────────\n_KW_MAT  = (\"fire\",\"extintor\",\"matafuego\",\"extinguisher\",\"sprinkler\")\n_KW_TAB  = (\"panel\",\"tablero\",\"board\",\"electrical\",\"distribution\",\"cuadro\")\n\nsym_mat = get_sym(BuiltInCategory.OST_FireAlarmDevices,   _KW_MAT) or           get_sym(BuiltInCategory.OST_GenericModel,        _KW_MAT)\nsym_tab = get_sym(BuiltInCategory.OST_ElectricalEquipment, _KW_TAB) or           get_sym(BuiltInCategory.OST_GenericModel,         _KW_TAB)\n\nartefactos = []\nspaces_creados = []\n\nwith Transaction(doc, \"py-building-gen: Artefactos MEP v2\") as t:\n    t.Start()\n\n    # Activar símbolos\n    for sym in [sym_mat, sym_tab]:\n        if sym and not sym.IsActive:\n            sym.Activate()\n\n    for lvl in get_levels_tipo():\n        # MEP Space (para análisis de cargas)\n        uv_sp = UV(m_to_ft(frente_m * 0.5), m_to_ft(fondo_m * 0.5))\n        try:\n            sp = doc.Create.NewSpace(lvl, uv_sp)\n            p_name = sp.LookupParameter(\"Name\")\n            if p_name:\n                p_name.Set(f\"Zona MEP {lvl.Name}\")\n            spaces_creados.append({\"nivel\": lvl.Name, \"id\": sp.Id.Value})\n        except Exception as e:\n            spaces_creados.append({\"nivel\": lvl.Name, \"error\": str(e)})\n\n        # Matafuego — NFPA 13: 1 por piso en pasillo junto a escalera\n        if inst_inc and sym_mat:\n            pt = XYZ(m_to_ft(x_mat), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_mat, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"matafuego\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n        # Tablero eléctrico seccional — 1 por piso en pasillo\n        if inst_elec and sym_tab:\n            pt = XYZ(m_to_ft(x_mat + 0.60), m_to_ft(y_mat), lvl.Elevation + m_to_ft(1.50))\n            try:\n                inst = doc.Create.NewFamilyInstance(pt, sym_tab, lvl, ST.NonStructural)\n                artefactos.append({\"nivel\": lvl.Name, \"tipo\": \"tablero_seccional\", \"id\": inst.Id.Value})\n            except Exception:\n                pass\n\n    t.Commit()\n\ninstalaciones = []\nif inst_san:  instalaciones.append(\"Sanitaria\")\nif inst_elec: instalaciones.append(\"Eléctrica\")\nif inst_inc:  instalaciones.append(\"Incendio\")\n\nOUT = {\n    \"spaces_mep\": len(spaces_creados),\n    \"artefactos\": len(artefactos),\n    \"detalle\": artefactos,\n    \"instalaciones_activas\": instalaciones,\n    \"nota\": \"Completar redes de tuberías y conductos manualmente en Revit MEP.\",\n}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "e87b0644-67b2-4043-8a1d-fff69132b39b",
+      "Id": "ca585e83-f04d-4f3c-b3a8-d2bcce090d48",
       "Inputs": [
         {
-          "Id": "a60a1d5c-3405-4ba9-96c8-d701d48b1a3b",
+          "Id": "1644d57e-4ba7-4e18-85ec-155a7c19cccf",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -188,7 +188,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "bc66e2cd-9d3f-4f3c-a8e4-ff4a3981a568",
+          "Id": "0dca3765-ea41-4fe8-bf19-73acffff731e",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -197,7 +197,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c8cdfcba-14d3-40df-9568-a9b68ae6b02d",
+          "Id": "5fba04ed-8625-49a0-8feb-51f696a90d32",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -206,7 +206,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e1e163a3-63aa-4bcf-b3f5-69c241b1bd73",
+          "Id": "6e3a1df7-32cb-4f33-a93e-a180515548df",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -215,7 +215,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "585aa66f-03a5-4c26-8e2f-c19900623f8d",
+          "Id": "3ac51543-4e5a-4c7e-908c-cfdbc73a3c74",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -224,7 +224,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "233e3894-fdfc-489f-ac76-2727619a9480",
+          "Id": "8370cda1-da36-4d11-8a6c-167b7149c611",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -233,7 +233,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "47898899-58fa-49de-87fb-38453613af56",
+          "Id": "2ace19c0-b73f-4c22-8ee9-2ea9a9f05630",
           "Name": "IN[6]",
           "Description": "Input 6",
           "UsingDefaultValue": false,
@@ -242,7 +242,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "47c63f3c-1038-403c-a5a7-8a5051b24f1d",
+          "Id": "ea845112-83db-4691-9dad-f61babefd691",
           "Name": "IN[7]",
           "Description": "Input 7",
           "UsingDefaultValue": false,
@@ -253,7 +253,7 @@
       ],
       "Outputs": [
         {
-          "Id": "520d1885-ff02-4c3e-9b0d-7a754ed74cb4",
+          "Id": "60dfc2e9-5560-4d94-8c4b-9a6fe53c1ce5",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -269,11 +269,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "3fa6ce6c-d57e-4c2a-89a7-47120760693a",
+      "Id": "5b10538c-aa51-4598-99b9-81644b2b6936",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "52e9f328-8d80-49d3-a675-df3468bd56bd",
+          "Id": "c462cc75-e295-41c6-ae12-c77cf2223774",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -289,11 +289,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "8b3ea47d-6aa9-4862-98ca-bdce5eb5b1db",
+      "Id": "430c5d01-d33f-4f96-829d-eda3436b7b79",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b6f5df95-873e-4ee1-bd15-f613dcf7d160",
+          "Id": "0bb03ef7-cb11-4914-bbfd-16513a8d6893",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -309,11 +309,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "d9272436-7322-4c42-86c9-7471550992e6",
+      "Id": "5476f6dc-612a-444b-a264-931d470711d6",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a44b6656-0301-4040-91fb-49926c8fa6b0",
+          "Id": "2457c715-e4ed-4bb7-8f6a-2b4425635cec",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -329,11 +329,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "8408dc27-b46b-4e9b-a37b-5d022f77e118",
+      "Id": "c189c496-ccb0-4335-aeeb-e1c85f5dc7e4",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "946d2856-06fb-4385-985b-e2aca05dd9f0",
+          "Id": "e3696ec3-5274-46fd-85a8-e3f49bcf9364",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -349,11 +349,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "cbff2626-ba88-4b5f-8e9f-bca92f0e3980",
+      "Id": "43f336dd-9201-4307-8d21-cb40b04467b0",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "da4d6051-ee0b-41a7-8882-2b11b518e0fd",
+          "Id": "e7b00356-1a5e-4a24-b7c4-b8d56894a2c0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -368,14 +368,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    MEPSystemType, FilteredElementCollector,\n    Transaction, BuiltInCategory,\n)\nfrom Autodesk.Revit.DB.Plumbing import PipingSystemType\nfrom Autodesk.Revit.DB.Mechanical import MechanicalSystemType\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ninst_san  = bool(IN[0])\ninst_elec = bool(IN[1])\ninst_gas  = bool(IN[2])\ninst_inc  = bool(IN[3])\ninst_term = bool(IN[4])\n\nsistemas = []\n\ndef listar_sistemas(cls, nombre_sistema):\n    col = FilteredElementCollector(doc).OfClass(cls).ToElements()\n    return [{\"sistema\": nombre_sistema, \"tipo\": s.Name} for s in col]\n\nif inst_san or inst_inc:\n    sistemas += listar_sistemas(PipingSystemType, \"Plomería / Incendio\")\nif inst_term:\n    sistemas += listar_sistemas(MechanicalSystemType, \"Termomecánica\")\n\nOUT = sistemas if sistemas else [\"Sin sistemas MEP definidos en la plantilla\"]\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '07_instalaciones_mep'\n_PBG_NODE = 'Sistemas MEP'\n_PBG_KEY = '07_instalaciones_mep__01_sistemas_mep'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    MEPSystemType, FilteredElementCollector,\n    Transaction, BuiltInCategory,\n)\nfrom Autodesk.Revit.DB.Plumbing import PipingSystemType\nfrom Autodesk.Revit.DB.Mechanical import MechanicalSystemType\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\ninst_san  = bool(IN[0])\ninst_elec = bool(IN[1])\ninst_gas  = bool(IN[2])\ninst_inc  = bool(IN[3])\ninst_term = bool(IN[4])\n\nsistemas = []\n\ndef listar_sistemas(cls, nombre_sistema):\n    col = FilteredElementCollector(doc).OfClass(cls).ToElements()\n    return [{\"sistema\": nombre_sistema, \"tipo\": s.Name} for s in col]\n\nif inst_san or inst_inc:\n    sistemas += listar_sistemas(PipingSystemType, \"Plomería / Incendio\")\nif inst_term:\n    sistemas += listar_sistemas(MechanicalSystemType, \"Termomecánica\")\n\nOUT = sistemas if sistemas else [\"Sin sistemas MEP definidos en la plantilla\"]\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "2aa47d18-6ff5-4097-866a-023a176a6860",
+      "Id": "f2468a4b-9165-4721-a4ae-547b15074fd9",
       "Inputs": [
         {
-          "Id": "89da15d3-9ad1-461e-b4a6-d94b0ae4c82d",
+          "Id": "851bea2d-a180-4be6-976a-a2ba97a233c0",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -384,7 +384,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "13cc2bfc-0ee5-49c1-af08-798a7cec4023",
+          "Id": "7a33daaa-5eda-4b55-ab10-a69a97770bbe",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -393,7 +393,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f201f991-fad7-4705-bb1e-b2b195646c44",
+          "Id": "7dc4a01c-9754-469f-b322-8b746dc7c505",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -402,7 +402,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f8e6ff30-0a60-4cb6-806e-1129c0d8ea70",
+          "Id": "32e60afb-2843-453e-bb12-450b712eac9b",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -411,7 +411,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "717b408a-5df4-4b90-af8c-12d983ef8277",
+          "Id": "91266b2f-a7ac-4358-97a6-aab5ca0972c3",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -422,7 +422,7 @@
       ],
       "Outputs": [
         {
-          "Id": "535fdac0-3085-46ec-82f3-623b1ea2dbe3",
+          "Id": "7e511277-9893-499e-9f7a-99195ae3d5b9",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -437,108 +437,82 @@
   ],
   "Connectors": [
     {
-      "Start": "d4a4db4c-37eb-4850-852c-4dc6d5fb4c85",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "c39fe6a1-86ea-4882-8bf7-d3783cdc8db8",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "6ddad6e3-f643-4700-a6c1-176b6a8b703d",
+      "End": "1644d57e-4ba7-4e18-85ec-155a7c19cccf",
+      "Id": "18741a93-9d3c-4841-8412-9c313ed0d109",
+      "IsHidden": "False"
     },
     {
-      "Start": "74cabc3f-49eb-459b-8299-3e8fe02c46b3",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "1834befe-1d56-4e8e-a5a1-517c54e206ca",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "8b07b83c-c8c0-4b89-b861-b8fd21d997cc",
+      "End": "0dca3765-ea41-4fe8-bf19-73acffff731e",
+      "Id": "651566db-6b6c-4668-aa78-622b0fe5da98",
+      "IsHidden": "False"
     },
     {
-      "Start": "ceeeac3d-dbc0-4118-a454-3671e547f4a5",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "c3b5a20c-bc3c-4d1a-b061-75a607239fe1",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "14832460-837e-41a0-8c9a-0a087cbb37ec",
+      "End": "5fba04ed-8625-49a0-8feb-51f696a90d32",
+      "Id": "b310616c-5007-4a46-9411-a5f4b0b365a8",
+      "IsHidden": "False"
     },
     {
-      "Start": "5246be95-a3dc-45a0-9676-ae270df3374b",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "abe4fecf-de68-48e4-b037-45b6c13e10d4",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "3c5a3627-7a0a-4036-9280-4418762983db",
+      "End": "6e3a1df7-32cb-4f33-a93e-a180515548df",
+      "Id": "2b594e0d-6ae5-477f-840f-5b51766bee0f",
+      "IsHidden": "False"
     },
     {
-      "Start": "55d42344-461a-42b1-b4fc-f588d3245741",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "96f28a18-ad4a-4ebe-9e00-0754e7080682",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "1d7aa225-ccab-4a6b-a408-6f0ce008d3cd",
+      "End": "3ac51543-4e5a-4c7e-908c-cfdbc73a3c74",
+      "Id": "877d19dd-6ff4-4d84-9dde-677b5c0a323f",
+      "IsHidden": "False"
     },
     {
-      "Start": "6575f868-351a-4717-be8a-0c152bb5f2f5",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "2a4ad3b8-c986-48d8-9a6f-d11372ab987d",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "6fbd3e1e-1b73-4e5a-a25a-4912f1bda7e7",
+      "End": "8370cda1-da36-4d11-8a6c-167b7149c611",
+      "Id": "75d1a6f9-2944-4475-b4aa-e75c823e5dac",
+      "IsHidden": "False"
     },
     {
-      "Start": "34864b68-be88-404c-afce-ae817855fc8f",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "2b927de2-7e75-4fdf-a869-16a5c302e72c",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 6
+      "Start": "6bb7b797-c885-45c0-926f-2ba18f6415b0",
+      "End": "2ace19c0-b73f-4c22-8ee9-2ea9a9f05630",
+      "Id": "a9ed5287-82ab-4dce-abc8-abc2c7927201",
+      "IsHidden": "False"
     },
     {
-      "Start": "70f5be4d-6ac7-4037-a948-d63bcca5c7e3",
-      "End": "e87b0644-67b2-4043-8a1d-fff69132b39b",
-      "Id": "f992635f-77f3-47d1-9a1f-0546a4962dbb",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 7
+      "Start": "9bbed46d-d315-49d3-8324-0cff713f54e0",
+      "End": "ea845112-83db-4691-9dad-f61babefd691",
+      "Id": "1256156f-ed6f-42a4-a9a0-1d26282efca8",
+      "IsHidden": "False"
     },
     {
-      "Start": "3fa6ce6c-d57e-4c2a-89a7-47120760693a",
-      "End": "2aa47d18-6ff5-4097-866a-023a176a6860",
-      "Id": "b064d3a6-d92a-4322-9890-5d8a18069a39",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "c462cc75-e295-41c6-ae12-c77cf2223774",
+      "End": "851bea2d-a180-4be6-976a-a2ba97a233c0",
+      "Id": "5e95b2f8-2c7d-4867-afca-eced73e840b8",
+      "IsHidden": "False"
     },
     {
-      "Start": "8b3ea47d-6aa9-4862-98ca-bdce5eb5b1db",
-      "End": "2aa47d18-6ff5-4097-866a-023a176a6860",
-      "Id": "d97f6105-120b-495f-b13c-4e648cd397cc",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "0bb03ef7-cb11-4914-bbfd-16513a8d6893",
+      "End": "7a33daaa-5eda-4b55-ab10-a69a97770bbe",
+      "Id": "ed273ebc-9fd5-4dfe-9abe-a1bdae9514d2",
+      "IsHidden": "False"
     },
     {
-      "Start": "d9272436-7322-4c42-86c9-7471550992e6",
-      "End": "2aa47d18-6ff5-4097-866a-023a176a6860",
-      "Id": "dc7c2cb4-ece7-4bae-8c0a-fd176a513bbe",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "2457c715-e4ed-4bb7-8f6a-2b4425635cec",
+      "End": "7dc4a01c-9754-469f-b322-8b746dc7c505",
+      "Id": "22afa9a2-4d0e-4a44-ba48-63dae2d19fe4",
+      "IsHidden": "False"
     },
     {
-      "Start": "8408dc27-b46b-4e9b-a37b-5d022f77e118",
-      "End": "2aa47d18-6ff5-4097-866a-023a176a6860",
-      "Id": "3ea77e08-6a08-426b-a69a-59099dc15d72",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "e3696ec3-5274-46fd-85a8-e3f49bcf9364",
+      "End": "32e60afb-2843-453e-bb12-450b712eac9b",
+      "Id": "755aba94-f210-4b52-a0c6-253626540096",
+      "IsHidden": "False"
     },
     {
-      "Start": "cbff2626-ba88-4b5f-8e9f-bca92f0e3980",
-      "End": "2aa47d18-6ff5-4097-866a-023a176a6860",
-      "Id": "32ec6c05-bf11-4cf7-ab61-8e60b92bfac1",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "e7b00356-1a5e-4a24-b7c4-b8d56894a2c0",
+      "End": "91266b2f-a7ac-4358-97a6-aab5ca0972c3",
+      "Id": "dd032165-fee8-4781-93a5-6cc52dcb153d",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -569,7 +543,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "d4a4db4c-37eb-4850-852c-4dc6d5fb4c85",
+        "Id": "70583545-1583-4414-a1fa-674ebfe4954c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -579,7 +553,7 @@
         "Y": 0.0
       },
       {
-        "Id": "74cabc3f-49eb-459b-8299-3e8fe02c46b3",
+        "Id": "ab2d1bf1-6e6a-41b7-ba00-585c7f3b2300",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -589,7 +563,7 @@
         "Y": 130.0
       },
       {
-        "Id": "ceeeac3d-dbc0-4118-a454-3671e547f4a5",
+        "Id": "c8dc419d-ee2a-43b8-b016-baec81782c90",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -599,7 +573,7 @@
         "Y": 260.0
       },
       {
-        "Id": "5246be95-a3dc-45a0-9676-ae270df3374b",
+        "Id": "cb586f96-70ff-42de-a2a0-606740723c50",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_escaleras",
@@ -609,7 +583,7 @@
         "Y": 390.0
       },
       {
-        "Id": "55d42344-461a-42b1-b4fc-f588d3245741",
+        "Id": "5d8152ab-69ff-48a7-826e-84cb346fbcba",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_ascensores",
@@ -619,7 +593,7 @@
         "Y": 520.0
       },
       {
-        "Id": "6575f868-351a-4717-be8a-0c152bb5f2f5",
+        "Id": "561792ef-8b69-4274-b4c3-77d18360368d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_san",
@@ -629,7 +603,7 @@
         "Y": 650.0
       },
       {
-        "Id": "34864b68-be88-404c-afce-ae817855fc8f",
+        "Id": "38cec856-b590-4f6d-a54e-ff1d158cb9be",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_elec",
@@ -639,7 +613,7 @@
         "Y": 780.0
       },
       {
-        "Id": "70f5be4d-6ac7-4037-a948-d63bcca5c7e3",
+        "Id": "29edc342-4ab1-40e7-a4bd-0f8ba1183a3e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_inc",
@@ -649,7 +623,7 @@
         "Y": 910.0
       },
       {
-        "Id": "e87b0644-67b2-4043-8a1d-fff69132b39b",
+        "Id": "ca585e83-f04d-4f3c-b3a8-d2bcce090d48",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Artefactos MEP v2",
@@ -659,7 +633,7 @@
         "Y": 0.0
       },
       {
-        "Id": "3fa6ce6c-d57e-4c2a-89a7-47120760693a",
+        "Id": "5b10538c-aa51-4598-99b9-81644b2b6936",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_san",
@@ -669,7 +643,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "8b3ea47d-6aa9-4862-98ca-bdce5eb5b1db",
+        "Id": "430c5d01-d33f-4f96-829d-eda3436b7b79",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_elec",
@@ -679,7 +653,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "d9272436-7322-4c42-86c9-7471550992e6",
+        "Id": "5476f6dc-612a-444b-a264-931d470711d6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_gas",
@@ -689,7 +663,7 @@
         "Y": 1560.0
       },
       {
-        "Id": "8408dc27-b46b-4e9b-a37b-5d022f77e118",
+        "Id": "c189c496-ccb0-4335-aeeb-e1c85f5dc7e4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_inc",
@@ -699,7 +673,7 @@
         "Y": 1690.0
       },
       {
-        "Id": "cbff2626-ba88-4b5f-8e9f-bca92f0e3980",
+        "Id": "43f336dd-9201-4307-8d21-cb40b04467b0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "inst_term",
@@ -709,7 +683,7 @@
         "Y": 1820.0
       },
       {
-        "Id": "2aa47d18-6ff5-4097-866a-023a176a6860",
+        "Id": "f2468a4b-9165-4721-a4ae-547b15074fd9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Sistemas MEP",

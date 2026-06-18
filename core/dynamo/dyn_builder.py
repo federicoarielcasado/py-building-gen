@@ -18,6 +18,7 @@ Uso típico::
 from __future__ import annotations
 
 import json
+import re
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -35,6 +36,70 @@ def _fi(v, d=0.0): return float(v) if v is not None else float(d)
 def _ii(v, d=0):   return int(v)   if v is not None else int(d)
 def _si(v, d=""):  return str(v)   if v is not None else str(d)
 '''
+
+# Auto-reporte (Fase 1 de la verificación automatizada).
+#
+# Se inyecta en cada Python node para que, al correr en Revit, el nodo deje en
+# disco un JSON con su resultado (el valor de OUT) y las advertencias de Revit.
+# Un módulo Python externo (core.verificador) lee esos JSON y decide PASS/FAIL
+# comparando contra los parámetros del edificio — sin que nadie tenga que mirar
+# el modelo 3D a mano.
+#
+# El preámbulo escribe un reporte "started" ANTES del código de usuario; el
+# epílogo lo sobrescribe con "ok" DESPUÉS. Si el nodo falla a mitad de camino,
+# el reporte queda en "started" y el verificador lo interpreta como FALLO,
+# señalando exactamente qué nodo se rompió (típicamente: input que no llegó).
+#
+# Placeholders rellenados por PythonNode.node_dict: {dir_repr} {script_repr}
+# {node_repr} {key_repr}. El resto de llaves van duplicadas ({{ }}) para format().
+_REPORT_PREAMBLE = '''\
+# --- py-building-gen: auto-reporte (inicio) ---
+import os as _pbg_os, json as _pbg_json, datetime as _pbg_dt
+_PBG_DIR = {dir_repr}
+_PBG_SCRIPT = {script_repr}
+_PBG_NODE = {node_repr}
+_PBG_KEY = {key_repr}
+def _pbg_warnings():
+    try:
+        _d = globals().get("doc", None)
+        if _d is None:
+            return []
+        return [w.GetDescriptionText() for w in _d.GetWarnings()]
+    except Exception:
+        return []
+def _pbg_report(_status, _out=None):
+    try:
+        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)
+        _rec = {{
+            "script": _PBG_SCRIPT,
+            "nodo": _PBG_NODE,
+            "key": _PBG_KEY,
+            "status": _status,
+            "timestamp": _pbg_dt.datetime.now().isoformat(timespec="seconds"),
+            "out": _out,
+            "warnings": _pbg_warnings() if _status == "ok" else [],
+        }}
+        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + ".json"), "w", encoding="utf-8") as _f:
+            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)
+    except Exception:
+        pass
+_pbg_report("started")
+# --- fin auto-reporte (inicio) ---
+'''
+
+_REPORT_EPILOGUE = '''
+# --- py-building-gen: auto-reporte (cierre) ---
+try:
+    _pbg_report("ok", _out=globals().get("OUT", None))
+except Exception:
+    pass
+'''
+
+
+def _slug(texto: str) -> str:
+    """Convierte una etiqueta de nodo en una clave de archivo segura."""
+    s = re.sub(r"[^a-z0-9]+", "_", texto.lower().strip())
+    return s.strip("_") or "nodo"
 
 # Separación entre nodos en el canvas (píxeles del canvas de Dynamo)
 _COL_W = 300.0
@@ -72,7 +137,7 @@ class _BaseNode:
     x: float = 0.0
     y: float = 0.0
 
-    def node_dict(self) -> dict:
+    def node_dict(self, report_ctx: Optional[dict] = None) -> dict:
         raise NotImplementedError
 
     def view_dict(self) -> dict:
@@ -99,7 +164,7 @@ class CodeBlockNode(_BaseNode):
     def output_port_id(self) -> str:
         return self._out_id
 
-    def node_dict(self) -> dict:
+    def node_dict(self, report_ctx: Optional[dict] = None) -> dict:
         return {
             "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
             "NodeType": "CodeBlockNode",
@@ -142,7 +207,24 @@ class PythonNode(_BaseNode):
     def output_port_id(self) -> str:
         return self._out_id
 
-    def node_dict(self) -> dict:
+    def _build_code(self, report_ctx: Optional[dict]) -> str:
+        """Ensambla el código final del nodo: helpers + (auto-reporte) + usuario.
+
+        Si ``report_ctx`` está presente, envuelve el código de usuario con el
+        preámbulo/epílogo de auto-reporte. El código de usuario NO se indenta ni
+        se modifica: el reporte "started" se escribe antes y el "ok" después.
+        """
+        if not report_ctx:
+            return _INPUT_HELPERS + self.code
+        preamble = _REPORT_PREAMBLE.format(
+            dir_repr=repr(report_ctx["report_dir"]),
+            script_repr=repr(report_ctx["script"]),
+            node_repr=repr(report_ctx["node"]),
+            key_repr=repr(report_ctx["key"]),
+        )
+        return _INPUT_HELPERS + preamble + "\n" + self.code + "\n" + _REPORT_EPILOGUE
+
+    def node_dict(self, report_ctx: Optional[dict] = None) -> dict:
         inputs = [
             {
                 "Id": self._input_port_ids[i],
@@ -158,7 +240,7 @@ class PythonNode(_BaseNode):
         return {
             "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
             "NodeType": "ExtensionNode",
-            "Code": _INPUT_HELPERS + self.code,
+            "Code": self._build_code(report_ctx),
             "Engine": "PythonNet3",
             "EngineName": "PythonNet3",
             "VariableInputPorts": True,
@@ -195,7 +277,7 @@ class WatchNode(_BaseNode):
     def output_port_id(self) -> str:
         return self._out_id
 
-    def node_dict(self) -> dict:
+    def node_dict(self, report_ctx: Optional[dict] = None) -> dict:
         return {
             "ConcreteType": "Dynamo.Graph.Nodes.Watch, DynamoCore",
             "NodeType": "ExtensionNode",
@@ -269,6 +351,10 @@ class DynScript:
         self._connectors: list[_Connector] = []
         self._auto_col: int = 0   # columna actual para auto-layout
         self._auto_row: int = 0   # fila actual para auto-layout
+        # Directorio absoluto donde los Python nodes dejan su JSON de auto-reporte.
+        # Lo fija save() como hermano del .dyn (carpeta _reports/). Si es None
+        # (p.ej. to_dict() llamado en un test sin save), se usa "_reports".
+        self._report_dir: Optional[str] = None
 
     # ------------------------------------------------------------------
     # Agregar nodos
@@ -385,9 +471,26 @@ class DynScript:
     # Serialización
     # ------------------------------------------------------------------
 
+    def _report_ctx_for(self, node: PythonNode, py_index: int) -> dict:
+        """Contexto de auto-reporte para un Python node (clave única por nodo)."""
+        report_dir = self._report_dir if self._report_dir is not None else "_reports"
+        return {
+            "report_dir": report_dir,
+            "script": self.name,
+            "node": node.label,
+            "key": f"{self.name}__{py_index:02d}_{_slug(node.label)}",
+        }
+
     def to_dict(self) -> dict:
         """Retorna el documento .dyn completo como diccionario Python."""
-        nodes = [n.node_dict() for n in self._nodes]
+        nodes = []
+        py_index = 0
+        for n in self._nodes:
+            if isinstance(n, PythonNode):
+                nodes.append(n.node_dict(self._report_ctx_for(n, py_index)))
+                py_index += 1
+            else:
+                nodes.append(n.node_dict())
         connectors = [c.to_dict() for c in self._connectors]
         node_views = [n.view_dict() for n in self._nodes]
 
@@ -436,9 +539,15 @@ class DynScript:
         }
 
     def save(self, path: Path | str) -> Path:
-        """Escribe el archivo .dyn en disco y retorna el Path resultante."""
+        """Escribe el archivo .dyn en disco y retorna el Path resultante.
+
+        Fija el directorio de auto-reporte como ``<carpeta del .dyn>/_reports``
+        (ruta absoluta), de modo que al correr en Revit cada Python node sepa
+        dónde dejar su JSON de resultado.
+        """
         out = Path(path)
         out.parent.mkdir(parents=True, exist_ok=True)
+        self._report_dir = str((out.parent / "_reports").resolve())
         with open(out, "w", encoding="utf-8") as f:
             json.dump(self.to_dict(), f, indent=2, ensure_ascii=False)
         return out

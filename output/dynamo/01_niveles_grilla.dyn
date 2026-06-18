@@ -1,5 +1,5 @@
 {
-  "Uuid": "56c09f6b-790c-432e-b63e-1fa986d7b092",
+  "Uuid": "0a1f49a5-d9e2-4342-8137-ff9e90a10b34",
   "IsCustomNode": false,
   "Description": "Crea Levels y Grids en Revit 2027. Generado por py-building-gen. Ejecutar primero.",
   "Name": "01_niveles_grilla",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "f7d3ab0f-122e-455a-bc74-50fb9cb56f12",
+      "Id": "93d26002-08e1-44c0-9683-56ad7141d5be",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "dc9258be-8250-4648-aa4b-f1b5a447e736",
+          "Id": "7e147690-944e-4b4a-a1cb-51e21ddf06a9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "026cf3f8-e36a-4f34-9cd9-52ad59ef8ff0",
+      "Id": "0280ade4-6bbd-442f-b80b-4a992af7a555",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2abe3a44-7f58-4a5e-bf9c-305d0287b299",
+          "Id": "00659ecb-84ae-4e12-9843-27f0254b365c",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "2.8;",
-      "Id": "aff67eab-e349-4eab-acf1-9c5a31c40a4c",
+      "Id": "6a8b43b8-4849-4050-a4fa-7052db9930d0",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "9450b53b-2e8f-4b17-9d63-476c567e63a1",
+          "Id": "325592f1-4873-40ff-9166-d99ba03863fb",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "4dc14681-efaa-4697-8049-835cfd3c3ee5",
+      "Id": "b13ab7b6-23ad-4c94-bb6b-7f77ee0feee1",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "bb6be8af-8489-40f2-8dc9-1d362866d1e8",
+          "Id": "27048d16-26e4-4c00-833e-cc3b1c0e93a9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "0;",
-      "Id": "174965be-764b-4b2b-a8bf-df19b5bceda3",
+      "Id": "0ce4ee21-4787-4e66-b95d-5196487557ef",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "885b1156-d9c8-453b-8ba1-35988013bed8",
+          "Id": "b126067e-5bbb-4a9e-9561-01bddfd426cd",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "3d36b24c-dc93-4790-845e-0a3de9843a1f",
+      "Id": "782cdd41-6184-43b4-8a09-a1726e84e21e",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "274bdedd-7ac6-4830-8595-807510a31065",
+          "Id": "8981d5d0-e73a-438a-8cd0-54fae4af91a0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -132,14 +132,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitAPIUI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Level, Transaction, XYZ, Line, Grid,\n    UnitUtils, UnitTypeId,\n)\nimport Autodesk.Revit.DB as DB\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\nuidoc = DocumentManager.Instance.CurrentUIDocument\n\n# --- Parámetros desde nodos Code Block ---\npisos_tipo   = _ii(IN[0])\naltura_pb    = _fi(IN[1])   # metros\naltura_tipo  = _fi(IN[2])   # metros\ntiene_sub    = bool(IN[3])\ncant_sub     = _ii(IN[4])\ntiene_azotea = bool(IN[5])\n\ndef m_to_ft(m: float) -> float:\n    \"\"\"Convierte metros a pies (unidad interna de Revit).\"\"\"\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\nniveles_creados = []\n\nwith Transaction(doc, \"py-building-gen: Niveles\") as t:\n    t.Start()\n\n    # Subsuelos (debajo de +-0.00)\n    for i in range(cant_sub, 0, -1):\n        elev_m = -i * altura_tipo\n        nombre = f\"SS{i:02d}\"\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = nombre\n        niveles_creados.append({\"nombre\": nombre, \"elevacion_m\": elev_m})\n\n    # Planta baja (±0.00)\n    lvl_pb = Level.Create(doc, m_to_ft(0.0))\n    lvl_pb.Name = \"PB\"\n    niveles_creados.append({\"nombre\": \"PB\", \"elevacion_m\": 0.0})\n\n    # Pisos tipo\n    for i in range(1, pisos_tipo + 1):\n        elev_m = altura_pb + (i - 1) * altura_tipo\n        nombre = f\"P{i:02d}\"\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = nombre\n        niveles_creados.append({\"nombre\": nombre, \"elevacion_m\": elev_m})\n\n    # Azotea\n    if tiene_azotea:\n        elev_m = altura_pb + pisos_tipo * altura_tipo\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = \"AZO\"\n        niveles_creados.append({\"nombre\": \"AZO\", \"elevacion_m\": elev_m})\n\n    t.Commit()\n\nOUT = niveles_creados\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\_reports'\n_PBG_SCRIPT = '01_niveles_grilla'\n_PBG_NODE = 'Crear Niveles'\n_PBG_KEY = '01_niveles_grilla__00_crear_niveles'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitAPIUI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Level, Transaction, XYZ, Line, Grid,\n    UnitUtils, UnitTypeId,\n)\nimport Autodesk.Revit.DB as DB\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\nuidoc = DocumentManager.Instance.CurrentUIDocument\n\n# --- Parámetros desde nodos Code Block ---\npisos_tipo   = _ii(IN[0])\naltura_pb    = _fi(IN[1])   # metros\naltura_tipo  = _fi(IN[2])   # metros\ntiene_sub    = bool(IN[3])\ncant_sub     = _ii(IN[4])\ntiene_azotea = bool(IN[5])\n\ndef m_to_ft(m: float) -> float:\n    \"\"\"Convierte metros a pies (unidad interna de Revit).\"\"\"\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\nniveles_creados = []\n\nwith Transaction(doc, \"py-building-gen: Niveles\") as t:\n    t.Start()\n\n    # Subsuelos (debajo de +-0.00)\n    for i in range(cant_sub, 0, -1):\n        elev_m = -i * altura_tipo\n        nombre = f\"SS{i:02d}\"\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = nombre\n        niveles_creados.append({\"nombre\": nombre, \"elevacion_m\": elev_m})\n\n    # Planta baja (±0.00)\n    lvl_pb = Level.Create(doc, m_to_ft(0.0))\n    lvl_pb.Name = \"PB\"\n    niveles_creados.append({\"nombre\": \"PB\", \"elevacion_m\": 0.0})\n\n    # Pisos tipo\n    for i in range(1, pisos_tipo + 1):\n        elev_m = altura_pb + (i - 1) * altura_tipo\n        nombre = f\"P{i:02d}\"\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = nombre\n        niveles_creados.append({\"nombre\": nombre, \"elevacion_m\": elev_m})\n\n    # Azotea\n    if tiene_azotea:\n        elev_m = altura_pb + pisos_tipo * altura_tipo\n        lvl = Level.Create(doc, m_to_ft(elev_m))\n        lvl.Name = \"AZO\"\n        niveles_creados.append({\"nombre\": \"AZO\", \"elevacion_m\": elev_m})\n\n    t.Commit()\n\nOUT = niveles_creados\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "ed935501-d95a-4ca3-91e2-4ccfbaacf9fe",
+      "Id": "267b110c-f98e-4928-a551-2ac7bd579fa2",
       "Inputs": [
         {
-          "Id": "89781e27-f261-4ed6-a219-6648baa3f022",
+          "Id": "3461674a-f012-49bc-a209-31b3b050037f",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -148,7 +148,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f8c9564b-1926-47bd-bb71-c886d8c544bf",
+          "Id": "97a5918a-3ef9-4538-b73c-08b35de9347c",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -157,7 +157,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5962ef71-8d26-45b9-b501-3d661c8af701",
+          "Id": "ae24ea82-466f-4426-8918-251675b426dc",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -166,7 +166,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0da4b9d4-97a4-47d5-9b07-65e1d6a2ee4f",
+          "Id": "3aa9a18f-4717-44a2-b88b-2fdd2ce304f1",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -175,7 +175,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "30a4fd23-4f82-486e-a1cc-e72a72f3f424",
+          "Id": "75610a12-a223-4532-93af-e0eb8a941200",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -184,7 +184,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "87293b8e-357d-40a9-bac8-d7c46393370a",
+          "Id": "f27f157b-2d77-4c49-a8e7-68dfd43e9606",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -195,7 +195,7 @@
       ],
       "Outputs": [
         {
-          "Id": "04e7832a-c472-4dc1-a6fd-e75a3a851aca",
+          "Id": "c2782076-04fb-4845-be5c-f7f2a56024f5",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -211,11 +211,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "432f7523-93ea-4bf2-94fc-018bebba90dc",
+      "Id": "a62c8b4c-2ff9-4300-a8f1-db8acced4c1f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c2ce40d9-c5dc-44ab-bc1b-6227616b42e4",
+          "Id": "9eee1455-5558-4305-8ede-aa3a937910ff",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -231,11 +231,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "d187f9fa-86dc-4338-a073-53153f592f1f",
+      "Id": "00845cde-4890-4f3e-9237-742edda434c5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d4155431-eca9-4818-8496-f1cd80ecd7a9",
+          "Id": "c0cb1a73-e065-4c59-a516-44dbac87908a",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -250,14 +250,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Grid, Line, XYZ, Transaction,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\nPASO     = 5.0    # m — modulo objetivo entre ejes\nMIN_BAY  = 2.5    # m — bahia minima; si el resto es menor, se absorbe\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ejes(span, paso=PASO, min_bay=MIN_BAY):\n    \"\"\"Posiciones de eje en [0, span]: modulo de 5m + eje de cierre en el borde.\n\n    Siempre incluye 0 y span (medianeras/fachada). Si el ultimo paño quedaria\n    mas chico que min_bay, se fusiona con el anterior (evita bahias minusculas).\n    \"\"\"\n    if span <= paso + 1e-9:\n        return [0.0, round(span, 4)]\n    pos = []\n    x = 0.0\n    while x < span - 1e-6:\n        pos.append(round(x, 4))\n        x += paso\n    resto = span - pos[-1]\n    if resto < min_bay and len(pos) >= 2:\n        pos.pop()            # absorber: la ultima bahia queda paso+resto\n    pos.append(round(span, 4))\n    return pos\n\ndef es_grid_nuestro(nombre):\n    # Ejes de py-building-gen: una sola letra A-Z, o solo digitos\n    return (len(nombre) == 1 and nombre.isalpha()) or nombre.isdigit()\n\nxs = ejes(frente_m)   # ejes verticales (A, B, C…) a lo ancho del frente\nys = ejes(fondo_m)    # ejes horizontales (1, 2, 3…) a lo largo del fondo\ngrillas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Grilla\") as t:\n    t.Start()\n\n    # Idempotencia: borrar ejes previos de py-building-gen y reposicionarlos.\n    # (Grid.Create + asignar un nombre ya usado lanza error al re-correr.)\n    for g in list(FilteredElementCollector(doc).OfClass(Grid).ToElements()):\n        if es_grid_nuestro(g.Name):\n            try: doc.Delete(g.Id)\n            except Exception: pass\n\n    # Ejes verticales A, B, C … (x constante, corren en Y)\n    for i, x in enumerate(xs):\n        nombre = chr(ord(\"A\") + i)\n        p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)\n        p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    # Ejes horizontales 1, 2, 3 … (y constante, corren en X)\n    for i, y in enumerate(ys):\n        nombre = str(i + 1)\n        p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)\n        p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    t.Commit()\n\nOUT = {\n    \"ejes\": grillas_creadas,\n    \"total\": len(grillas_creadas),\n    \"frente_m_recibido\": frente_m,\n    \"fondo_m_recibido\": fondo_m,\n    \"x_ejes_m\": [round(v, 2) for v in xs],\n    \"y_ejes_m\": [round(v, 2) for v in ys],\n}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\_reports'\n_PBG_SCRIPT = '01_niveles_grilla'\n_PBG_NODE = 'Crear Grilla'\n_PBG_KEY = '01_niveles_grilla__01_crear_grilla'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\nfrom Autodesk.Revit.DB import (\n    Grid, Line, XYZ, Transaction,\n    FilteredElementCollector,\n    UnitUtils, UnitTypeId,\n)\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m = _fi(IN[0])\nfondo_m  = _fi(IN[1])\nPASO     = 5.0    # m — modulo objetivo entre ejes\nMIN_BAY  = 2.5    # m — bahia minima; si el resto es menor, se absorbe\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef ejes(span, paso=PASO, min_bay=MIN_BAY):\n    \"\"\"Posiciones de eje en [0, span]: modulo de 5m + eje de cierre en el borde.\n\n    Siempre incluye 0 y span (medianeras/fachada). Si el ultimo paño quedaria\n    mas chico que min_bay, se fusiona con el anterior (evita bahias minusculas).\n    \"\"\"\n    if span <= paso + 1e-9:\n        return [0.0, round(span, 4)]\n    pos = []\n    x = 0.0\n    while x < span - 1e-6:\n        pos.append(round(x, 4))\n        x += paso\n    resto = span - pos[-1]\n    if resto < min_bay and len(pos) >= 2:\n        pos.pop()            # absorber: la ultima bahia queda paso+resto\n    pos.append(round(span, 4))\n    return pos\n\ndef es_grid_nuestro(nombre):\n    # Ejes de py-building-gen: una sola letra A-Z, o solo digitos\n    return (len(nombre) == 1 and nombre.isalpha()) or nombre.isdigit()\n\nxs = ejes(frente_m)   # ejes verticales (A, B, C…) a lo ancho del frente\nys = ejes(fondo_m)    # ejes horizontales (1, 2, 3…) a lo largo del fondo\ngrillas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Grilla\") as t:\n    t.Start()\n\n    # Idempotencia: borrar ejes previos de py-building-gen y reposicionarlos.\n    # (Grid.Create + asignar un nombre ya usado lanza error al re-correr.)\n    for g in list(FilteredElementCollector(doc).OfClass(Grid).ToElements()):\n        if es_grid_nuestro(g.Name):\n            try: doc.Delete(g.Id)\n            except Exception: pass\n\n    # Ejes verticales A, B, C … (x constante, corren en Y)\n    for i, x in enumerate(xs):\n        nombre = chr(ord(\"A\") + i)\n        p1 = XYZ(m_to_ft(x), m_to_ft(-1.0), 0)\n        p2 = XYZ(m_to_ft(x), m_to_ft(fondo_m + 1.0), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    # Ejes horizontales 1, 2, 3 … (y constante, corren en X)\n    for i, y in enumerate(ys):\n        nombre = str(i + 1)\n        p1 = XYZ(m_to_ft(-1.0), m_to_ft(y), 0)\n        p2 = XYZ(m_to_ft(frente_m + 1.0), m_to_ft(y), 0)\n        g = Grid.Create(doc, Line.CreateBound(p1, p2))\n        g.Name = nombre\n        grillas_creadas.append(nombre)\n\n    t.Commit()\n\nOUT = {\n    \"ejes\": grillas_creadas,\n    \"total\": len(grillas_creadas),\n    \"frente_m_recibido\": frente_m,\n    \"fondo_m_recibido\": fondo_m,\n    \"x_ejes_m\": [round(v, 2) for v in xs],\n    \"y_ejes_m\": [round(v, 2) for v in ys],\n}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "98682b2f-024b-4d58-977a-b2926c26efa7",
+      "Id": "ddf9f8e0-34d5-4afc-aff9-5612e068a1e9",
       "Inputs": [
         {
-          "Id": "3016fee3-d2b5-4f24-a876-655e351ae1e0",
+          "Id": "49cf03af-cd86-40ca-8dd3-d53539d04ccd",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -266,7 +266,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "38be0b32-5b1e-47cc-a186-c919ece4d639",
+          "Id": "19d594d3-0ad2-4815-b74c-d7b9e1a71328",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -277,7 +277,7 @@
       ],
       "Outputs": [
         {
-          "Id": "90671c0f-5c5d-4f9f-9717-6bf988e620af",
+          "Id": "fcbc4bd1-e64b-46d0-9dfd-07a22c493d30",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -293,11 +293,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "ae28b4a1-4d94-47d5-9699-ce49e07607ff",
+      "Id": "e87dc70b-edb6-4f12-89d5-42fdb3544412",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d9ba1214-ce73-42b0-b482-8eff0399f4b4",
+          "Id": "df8783f0-cbcb-4fe3-8815-39f8106a515e",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -313,11 +313,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "80cef83e-517f-4c57-b338-61ebc3c34815",
+      "Id": "205d63e0-b8b4-4707-9183-05aebc0c371d",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "02b10a48-c9b8-4924-bde9-80f28646099b",
+          "Id": "c6c628b9-5e3d-4ff1-b94b-12402225abe6",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -332,14 +332,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector, Transaction,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = _ii(IN[0])\ntiene_azotea = bool(IN[1])\n\ndef get_vft(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_arq = get_vft(ViewFamily.FloorPlan)\nvft_est = get_vft(ViewFamily.StructuralPlan)   # planta estructural\nvft_mep = get_vft(ViewFamily.FloorPlan)         # reutiliza FloorPlan para MEP\n\nniveles = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\nif tiene_azotea:\n    niveles.append(\"AZO\")\n\nvistas = []\n\nwith Transaction(doc, \"py-building-gen: Plantas por disciplina\") as t:\n    t.Start()\n    for nom in niveles:\n        lvl = get_level(nom)\n        if lvl is None:\n            continue\n        for vft, prefijo in [(vft_arq, \"PLANTA\"), (vft_est, \"EST\"), (vft_mep, \"MEP\")]:\n            if vft is None:\n                continue\n            nombre_vista = f\"{prefijo} {nom}\"\n            # Verificar si ya existe una vista con ese nombre\n            existente = next(\n                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n                 if v.Name == nombre_vista), None\n            )\n            if existente:\n                vistas.append({\"nivel\": nom, \"tipo\": prefijo, \"id\": existente.Id.Value, \"nuevo\": False})\n                continue\n            vista = ViewPlan.Create(doc, vft.Id, lvl.Id)\n            vista.Name = nombre_vista\n            vistas.append({\"nivel\": nom, \"tipo\": prefijo, \"id\": vista.Id.Value, \"nuevo\": True})\n    t.Commit()\n\nOUT = {\"total\": len(vistas), \"detalle\": vistas}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\_reports'\n_PBG_SCRIPT = '01_niveles_grilla'\n_PBG_NODE = 'Plantas por Disciplina'\n_PBG_KEY = '01_niveles_grilla__02_plantas_por_disciplina'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    ViewPlan, ViewFamilyType, ViewFamily, Level,\n    FilteredElementCollector, Transaction,\n)\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\npisos_tipo   = _ii(IN[0])\ntiene_azotea = bool(IN[1])\n\ndef get_vft(familia):\n    tipos = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\n    return next((t for t in tipos if t.ViewFamily == familia), None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)\n\nvft_arq = get_vft(ViewFamily.FloorPlan)\nvft_est = get_vft(ViewFamily.StructuralPlan)   # planta estructural\nvft_mep = get_vft(ViewFamily.FloorPlan)         # reutiliza FloorPlan para MEP\n\nniveles = [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\nif tiene_azotea:\n    niveles.append(\"AZO\")\n\nvistas = []\n\nwith Transaction(doc, \"py-building-gen: Plantas por disciplina\") as t:\n    t.Start()\n    for nom in niveles:\n        lvl = get_level(nom)\n        if lvl is None:\n            continue\n        for vft, prefijo in [(vft_arq, \"PLANTA\"), (vft_est, \"EST\"), (vft_mep, \"MEP\")]:\n            if vft is None:\n                continue\n            nombre_vista = f\"{prefijo} {nom}\"\n            # Verificar si ya existe una vista con ese nombre\n            existente = next(\n                (v for v in FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()\n                 if v.Name == nombre_vista), None\n            )\n            if existente:\n                vistas.append({\"nivel\": nom, \"tipo\": prefijo, \"id\": existente.Id.Value, \"nuevo\": False})\n                continue\n            vista = ViewPlan.Create(doc, vft.Id, lvl.Id)\n            vista.Name = nombre_vista\n            vistas.append({\"nivel\": nom, \"tipo\": prefijo, \"id\": vista.Id.Value, \"nuevo\": True})\n    t.Commit()\n\nOUT = {\"total\": len(vistas), \"detalle\": vistas}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "db7c5ccc-d3c7-49cd-bc0b-5041c433b0ba",
+      "Id": "c7cc6724-fe6d-4e69-bf21-0bbf0d1d35da",
       "Inputs": [
         {
-          "Id": "6685e6e4-0217-48b3-949d-2e025c8b284b",
+          "Id": "3b8f7aab-5acd-4788-a026-39cb47a405d9",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -348,7 +348,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2bf87fdc-06d6-43bd-807e-41cfd278a703",
+          "Id": "4567cc6c-932d-4a7e-8f44-984a5cd6e53a",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -359,7 +359,7 @@
       ],
       "Outputs": [
         {
-          "Id": "ea2befe3-ac5a-4d69-98e5-1d73bc51a8d2",
+          "Id": "0d01f892-6aed-4653-95db-468e46e924ac",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -374,63 +374,63 @@
   ],
   "Connectors": [
     {
-      "Start": "dc9258be-8250-4648-aa4b-f1b5a447e736",
-      "End": "89781e27-f261-4ed6-a219-6648baa3f022",
-      "Id": "cf51435f-d671-4962-8355-b7f37299b3a4",
+      "Start": "7e147690-944e-4b4a-a1cb-51e21ddf06a9",
+      "End": "3461674a-f012-49bc-a209-31b3b050037f",
+      "Id": "452733c5-8b10-40d2-b426-98e2360af730",
       "IsHidden": "False"
     },
     {
-      "Start": "2abe3a44-7f58-4a5e-bf9c-305d0287b299",
-      "End": "f8c9564b-1926-47bd-bb71-c886d8c544bf",
-      "Id": "537bf23c-9d22-49bd-9785-162291f24574",
+      "Start": "00659ecb-84ae-4e12-9843-27f0254b365c",
+      "End": "97a5918a-3ef9-4538-b73c-08b35de9347c",
+      "Id": "e69312fa-63fa-4e00-b7db-8d134d63f4c6",
       "IsHidden": "False"
     },
     {
-      "Start": "9450b53b-2e8f-4b17-9d63-476c567e63a1",
-      "End": "5962ef71-8d26-45b9-b501-3d661c8af701",
-      "Id": "62321ced-5842-450b-a21e-be6881833b82",
+      "Start": "325592f1-4873-40ff-9166-d99ba03863fb",
+      "End": "ae24ea82-466f-4426-8918-251675b426dc",
+      "Id": "08d31c4e-f09a-480a-b78f-605557c1ceb1",
       "IsHidden": "False"
     },
     {
-      "Start": "bb6be8af-8489-40f2-8dc9-1d362866d1e8",
-      "End": "0da4b9d4-97a4-47d5-9b07-65e1d6a2ee4f",
-      "Id": "cab4eb1f-058e-4782-b5c3-1a5b47d9f7ec",
+      "Start": "27048d16-26e4-4c00-833e-cc3b1c0e93a9",
+      "End": "3aa9a18f-4717-44a2-b88b-2fdd2ce304f1",
+      "Id": "628c5ab7-2293-4cce-a4d4-443772c2546b",
       "IsHidden": "False"
     },
     {
-      "Start": "885b1156-d9c8-453b-8ba1-35988013bed8",
-      "End": "30a4fd23-4f82-486e-a1cc-e72a72f3f424",
-      "Id": "d2572327-63d4-42f7-a0c9-8210b8d4e6d8",
+      "Start": "b126067e-5bbb-4a9e-9561-01bddfd426cd",
+      "End": "75610a12-a223-4532-93af-e0eb8a941200",
+      "Id": "4867fde0-5586-4d60-aa16-9bee09a362e8",
       "IsHidden": "False"
     },
     {
-      "Start": "274bdedd-7ac6-4830-8595-807510a31065",
-      "End": "87293b8e-357d-40a9-bac8-d7c46393370a",
-      "Id": "6a8ebd1c-fe64-499e-968c-fd4066b48b28",
+      "Start": "8981d5d0-e73a-438a-8cd0-54fae4af91a0",
+      "End": "f27f157b-2d77-4c49-a8e7-68dfd43e9606",
+      "Id": "3e94fd34-ff4b-4311-bfe5-455a69b72b5d",
       "IsHidden": "False"
     },
     {
-      "Start": "c2ce40d9-c5dc-44ab-bc1b-6227616b42e4",
-      "End": "3016fee3-d2b5-4f24-a876-655e351ae1e0",
-      "Id": "a4741aac-cc20-4b5d-9d98-a04555b5a40e",
+      "Start": "9eee1455-5558-4305-8ede-aa3a937910ff",
+      "End": "49cf03af-cd86-40ca-8dd3-d53539d04ccd",
+      "Id": "9767987d-9005-4abd-814b-9945d592e366",
       "IsHidden": "False"
     },
     {
-      "Start": "d4155431-eca9-4818-8496-f1cd80ecd7a9",
-      "End": "38be0b32-5b1e-47cc-a186-c919ece4d639",
-      "Id": "9a914105-86ab-4a4a-9942-58a163ffc229",
+      "Start": "c0cb1a73-e065-4c59-a516-44dbac87908a",
+      "End": "19d594d3-0ad2-4815-b74c-d7b9e1a71328",
+      "Id": "79689893-5337-4ddb-bca7-b8a4471d10aa",
       "IsHidden": "False"
     },
     {
-      "Start": "d9ba1214-ce73-42b0-b482-8eff0399f4b4",
-      "End": "6685e6e4-0217-48b3-949d-2e025c8b284b",
-      "Id": "174cf3cb-7ddd-4b46-99db-1c04ea640c12",
+      "Start": "df8783f0-cbcb-4fe3-8815-39f8106a515e",
+      "End": "3b8f7aab-5acd-4788-a026-39cb47a405d9",
+      "Id": "9491df1f-f27c-4a0c-ab1f-6aef7d8a3ef8",
       "IsHidden": "False"
     },
     {
-      "Start": "02b10a48-c9b8-4924-bde9-80f28646099b",
-      "End": "2bf87fdc-06d6-43bd-807e-41cfd278a703",
-      "Id": "f8c42e13-ba4f-40ef-b10f-678a559476b6",
+      "Start": "c6c628b9-5e3d-4ff1-b94b-12402225abe6",
+      "End": "4567cc6c-932d-4a7e-8f44-984a5cd6e53a",
+      "Id": "651defda-1b60-4bc9-b1f9-56dca416578f",
       "IsHidden": "False"
     }
   ],
@@ -462,7 +462,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "f7d3ab0f-122e-455a-bc74-50fb9cb56f12",
+        "Id": "93d26002-08e1-44c0-9683-56ad7141d5be",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -472,7 +472,7 @@
         "Y": 0.0
       },
       {
-        "Id": "026cf3f8-e36a-4f34-9cd9-52ad59ef8ff0",
+        "Id": "0280ade4-6bbd-442f-b80b-4a992af7a555",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -482,7 +482,7 @@
         "Y": 130.0
       },
       {
-        "Id": "aff67eab-e349-4eab-acf1-9c5a31c40a4c",
+        "Id": "6a8b43b8-4849-4050-a4fa-7052db9930d0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_tipo_m",
@@ -492,7 +492,7 @@
         "Y": 260.0
       },
       {
-        "Id": "4dc14681-efaa-4697-8049-835cfd3c3ee5",
+        "Id": "b13ab7b6-23ad-4c94-bb6b-7f77ee0feee1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -502,7 +502,7 @@
         "Y": 390.0
       },
       {
-        "Id": "174965be-764b-4b2b-a8bf-df19b5bceda3",
+        "Id": "0ce4ee21-4787-4e66-b95d-5196487557ef",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_subsuelos",
@@ -512,7 +512,7 @@
         "Y": 520.0
       },
       {
-        "Id": "3d36b24c-dc93-4790-845e-0a3de9843a1f",
+        "Id": "782cdd41-6184-43b4-8a09-a1726e84e21e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -522,7 +522,7 @@
         "Y": 650.0
       },
       {
-        "Id": "ed935501-d95a-4ca3-91e2-4ccfbaacf9fe",
+        "Id": "267b110c-f98e-4928-a551-2ac7bd579fa2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Niveles",
@@ -532,7 +532,7 @@
         "Y": 0.0
       },
       {
-        "Id": "432f7523-93ea-4bf2-94fc-018bebba90dc",
+        "Id": "a62c8b4c-2ff9-4300-a8f1-db8acced4c1f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -542,7 +542,7 @@
         "Y": 910.0
       },
       {
-        "Id": "d187f9fa-86dc-4338-a073-53153f592f1f",
+        "Id": "00845cde-4890-4f3e-9237-742edda434c5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -552,7 +552,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "98682b2f-024b-4d58-977a-b2926c26efa7",
+        "Id": "ddf9f8e0-34d5-4afc-aff9-5612e068a1e9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Grilla",
@@ -562,7 +562,7 @@
         "Y": 910.0
       },
       {
-        "Id": "ae28b4a1-4d94-47d5-9699-ce49e07607ff",
+        "Id": "e87dc70b-edb6-4f12-89d5-42fdb3544412",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -572,7 +572,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "80cef83e-517f-4c57-b338-61ebc3c34815",
+        "Id": "205d63e0-b8b4-4707-9183-05aebc0c371d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -582,7 +582,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "db7c5ccc-d3c7-49cd-bc0b-5041c433b0ba",
+        "Id": "c7cc6724-fe6d-4e69-bf21-0bbf0d1d35da",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Plantas por Disciplina",

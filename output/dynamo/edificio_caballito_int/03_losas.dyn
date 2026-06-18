@@ -1,5 +1,5 @@
 {
-  "Uuid": "35af941b-e0b6-427d-9172-0542ec37dda9",
+  "Uuid": "e74fa133-9d47-47ca-94b9-1450b39cddbc",
   "IsCustomNode": false,
   "Description": "Crea losas HA por nivel con hueco de shaft para escalera y ascensor.",
   "Name": "03_losas",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "608af154-f03f-49a3-8a05-988272b08e57",
+      "Id": "7242b6da-6de2-4ed4-b630-530eb07820f5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "55d0c331-389c-4d7e-9634-9276baadcb73",
+          "Id": "6f5b912f-9bc9-431d-9830-7a4b4926b804",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "7f291da0-2376-4cae-b1a3-8ee33de2dddb",
+      "Id": "656d44a1-66be-49f2-8e1c-e779c3c4c733",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e06cc325-6e51-4929-8ab1-c34ef47e4cee",
+          "Id": "4cf72251-1a2b-4d13-96b0-7e558164ed6b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "e2ac29a6-d041-458c-bad0-fdf036827f76",
+      "Id": "818bead7-7066-4535-a17a-21059784bcb6",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "7ac014fb-f9ec-43a4-a629-44553c5be36d",
+          "Id": "2ee39a93-788c-477e-93bb-4f46b07b6652",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "true;",
-      "Id": "35c484af-5f6e-4eac-9e14-69a4a4e50d57",
+      "Id": "1bce9720-416a-4bd9-82fd-12b379943b3b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "5ba90d8a-c3f1-471f-a717-9518b195f9eb",
+          "Id": "a540d418-0121-4ee0-89d3-f7ad62b8df6f",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "30.0;",
-      "Id": "05904dff-6055-472a-86f4-ad4376e842c7",
+      "Id": "18cb6cc3-4800-41b7-9798-e839fb3e96d5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a9697358-e464-40cd-9a4f-36e8c841804e",
+          "Id": "0d90e215-cd4f-42d9-8c21-acbbcefa3f20",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -113,11 +113,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Losa HA H-21 - 30cm\";",
-      "Id": "59c63522-b5a3-4560-8f1f-0ceadfd4d3e3",
+      "Id": "a6807bdb-c61d-4ecd-8c31-bf91af6f1db4",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "60b6835b-2dcb-4f74-a146-55ed7d6b579a",
+          "Id": "ad6938d4-2f97-4dd7-acbf-ccbdf2d63b22",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -133,11 +133,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Losa azotea HA H-21 - 30cm\";",
-      "Id": "34665a37-445c-446a-a77e-84fa62699828",
+      "Id": "129d42e8-b2aa-4e93-9f36-a7466c43bbf3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8123ae65-9674-483c-b8d0-296d0920c609",
+          "Id": "42297cd7-3861-44c2-97f3-338b46ce2828",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -153,11 +153,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "1fe1c1c9-8ee9-4128-844d-301b65357e57",
+      "Id": "90b88b44-2d2b-4d36-9691-f00ee143ec44",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "5739d1a8-accc-4ad5-b398-5493e4a643b9",
+          "Id": "95e01943-3c80-4d69-aea0-fd0da207549b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -173,11 +173,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "1;",
-      "Id": "e4d9f623-d2e7-43a7-903f-abe7b57a1518",
+      "Id": "ca7bc901-0b2e-4817-8f17-bcc9fecdc6b2",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d808ac34-5512-4cd1-b213-74987109f8fe",
+          "Id": "6ed29065-46d2-4fff-a42b-608f8e659538",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -192,14 +192,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Floor, FloorType, Level, CurveLoop, Line, XYZ,\n    FilteredElementCollector, ElementCategoryFilter,\n    BuiltInCategory, Transaction,\n    UnitUtils, UnitTypeId,\n)\nimport System\nfrom System.Collections.Generic import List as NetList\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\npisos_tipo      = _ii(IN[2])\ntiene_azotea    = bool(IN[3])\nespesor_cm      = _fi(IN[4])\nnombre_losa     = _si(IN[5])\nnombre_losa_azo = _si(IN[6])\ncant_escaleras  = _ii(IN[7])\ncant_ascensores = _ii(IN[8])\n\n# ── Shaft geometry (same constants as Script 02) ──────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_floor_type(nombre_exacto):\n    cat_filter = ElementCategoryFilter(BuiltInCategory.OST_Floors)\n    tipos = (FilteredElementCollector(doc)\n             .OfClass(FloorType)\n             .WherePasses(cat_filter)\n             .ToElements())\n    match = next((t for t in tipos if t.Name == nombre_exacto), None)\n    if match:\n        return match\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"losa\")\n    match = next((t for t in tipos if any(k in t.Name.lower() for k in _kw)), None)\n    return match or tipos[0]\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef curve_loops_losa():\n    \"\"\"Contorno exterior + hueco de shaft (contra-horario + horario).\"\"\"\n    # Outer boundary — counter-clockwise\n    outer = CurveLoop()\n    pts_out = [\n        XYZ(m_to_ft(0),        m_to_ft(0),       0),\n        XYZ(m_to_ft(frente_m), m_to_ft(0),       0),\n        XYZ(m_to_ft(frente_m), m_to_ft(fondo_m), 0),\n        XYZ(m_to_ft(0),        m_to_ft(fondo_m), 0),\n    ]\n    for i in range(4):\n        outer.Append(Line.CreateBound(pts_out[i], pts_out[(i+1)%4]))\n\n    loops = [outer]\n\n    # Shaft hole — clockwise (inner loop)\n    if ancho_nucleo > 0.1:\n        x0 = m_to_ft(x_nucleo)\n        x1 = m_to_ft(x_nucleo + ancho_nucleo)\n        y0 = m_to_ft(y_nucleo)\n        y1 = m_to_ft(fondo_m)\n        shaft = CurveLoop()\n        pts_sh = [XYZ(x0,y0,0), XYZ(x0,y1,0), XYZ(x1,y1,0), XYZ(x1,y0,0)]\n        for i in range(4):\n            shaft.Append(Line.CreateBound(pts_sh[i], pts_sh[(i+1)%4]))\n        loops.append(shaft)\n\n    return loops\n\nft_tipo = get_floor_type(nombre_losa)\nft_azo  = get_floor_type(nombre_losa_azo)\nlosas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Losas v2\") as t:\n    t.Start()\n    for i in range(1, pisos_tipo + 1):\n        nom = f\"P{i:02d}\"\n        lvl = get_level(nom)\n        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_tipo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": nom, \"id\": losa.Id.Value})\n    if tiene_azotea:\n        lvl = get_level(\"AZO\")\n        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_azo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": \"AZO\", \"id\": losa.Id.Value})\n    t.Commit()\n\nOUT = {\"total\": len(losas_creadas), \"detalle\": losas_creadas}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '03_losas'\n_PBG_NODE = 'Crear Losas v2'\n_PBG_KEY = '03_losas__00_crear_losas_v2'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    Floor, FloorType, Level, CurveLoop, Line, XYZ,\n    FilteredElementCollector, ElementCategoryFilter,\n    BuiltInCategory, Transaction,\n    UnitUtils, UnitTypeId,\n)\nimport System\nfrom System.Collections.Generic import List as NetList\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\npisos_tipo      = _ii(IN[2])\ntiene_azotea    = bool(IN[3])\nespesor_cm      = _fi(IN[4])\nnombre_losa     = _si(IN[5])\nnombre_losa_azo = _si(IN[6])\ncant_escaleras  = _ii(IN[7])\ncant_ascensores = _ii(IN[8])\n\n# ── Shaft geometry (same constants as Script 02) ──────────────────────────────\nESC_ANCHO = 3.00; ESC_FONDO = 5.50; ASC_ANCHO = 2.00\nancho_nucleo = cant_escaleras * ESC_ANCHO + cant_ascensores * ASC_ANCHO\nx_nucleo     = (frente_m - ancho_nucleo) / 2.0\ny_nucleo     = fondo_m - ESC_FONDO\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_floor_type(nombre_exacto):\n    cat_filter = ElementCategoryFilter(BuiltInCategory.OST_Floors)\n    tipos = (FilteredElementCollector(doc)\n             .OfClass(FloorType)\n             .WherePasses(cat_filter)\n             .ToElements())\n    match = next((t for t in tipos if t.Name == nombre_exacto), None)\n    if match:\n        return match\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"losa\")\n    match = next((t for t in tipos if any(k in t.Name.lower() for k in _kw)), None)\n    return match or tipos[0]\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef curve_loops_losa():\n    \"\"\"Contorno de la losa como un único loop contra-horario.\n\n    El núcleo (escalera + ascensor) está contra la medianera de fondo, así que su\n    borde trasero coincide con la arista trasera de la losa. Un loop interior que\n    comparte esa arista NO es un hueco válido (Revit: \"curve loops intersect\").\n    Por eso el contorno se recorta en U alrededor del shaft en vez de perforarlo.\n    \"\"\"\n    F  = m_to_ft(frente_m)\n    D  = m_to_ft(fondo_m)\n\n    # Recorte en U sólo si el shaft existe y queda holgura a ambos lados.\n    margen = m_to_ft(0.02)\n    x0 = m_to_ft(x_nucleo)\n    x1 = m_to_ft(x_nucleo + ancho_nucleo)\n    yn = m_to_ft(y_nucleo)\n    notch = ancho_nucleo > 0.1 and x0 > margen and x1 < F - margen\n\n    if notch:\n        # CCW: perímetro con entrante rectangular en el borde de fondo.\n        pts = [\n            XYZ(0,  0,  0),\n            XYZ(F,  0,  0),\n            XYZ(F,  D,  0),\n            XYZ(x1, D,  0),\n            XYZ(x1, yn, 0),\n            XYZ(x0, yn, 0),\n            XYZ(x0, D,  0),\n            XYZ(0,  D,  0),\n        ]\n    else:\n        pts = [XYZ(0, 0, 0), XYZ(F, 0, 0), XYZ(F, D, 0), XYZ(0, D, 0)]\n\n    loop = CurveLoop()\n    n = len(pts)\n    for i in range(n):\n        loop.Append(Line.CreateBound(pts[i], pts[(i+1) % n]))\n\n    return [loop]\n\nft_tipo = get_floor_type(nombre_losa)\nft_azo  = get_floor_type(nombre_losa_azo)\nlosas_creadas = []\n\nwith Transaction(doc, \"py-building-gen: Losas v2\") as t:\n    t.Start()\n    for i in range(1, pisos_tipo + 1):\n        nom = f\"P{i:02d}\"\n        lvl = get_level(nom)\n        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_tipo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": nom, \"id\": losa.Id.Value})\n    if tiene_azotea:\n        lvl = get_level(\"AZO\")\n        losa = Floor.Create(doc, NetList[CurveLoop](curve_loops_losa()), ft_azo.Id, lvl.Id)\n        losas_creadas.append({\"nivel\": \"AZO\", \"id\": losa.Id.Value})\n    t.Commit()\n\nOUT = {\"total\": len(losas_creadas), \"detalle\": losas_creadas}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
+      "Id": "e049b9da-8ef6-45eb-bdc0-6647071d7732",
       "Inputs": [
         {
-          "Id": "bea2e8f1-f607-4b6b-b292-2841ac098e21",
+          "Id": "e4bcc325-a23f-4848-a642-62d4308c0f33",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -208,7 +208,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "98307efd-2237-4c55-b15f-b37023d0934a",
+          "Id": "1a3a40fd-c0da-426b-a859-e67f9003cf47",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -217,7 +217,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8ff2b2f2-c9c8-4440-ac22-2038d36a6a19",
+          "Id": "368e7957-6299-4b83-8fef-7f6a5d046e1b",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -226,7 +226,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "54b37caa-19cc-4715-b05b-85c180d80536",
+          "Id": "a0171496-38a2-4564-ba4e-cb6791dad39a",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -235,7 +235,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "dd7677a9-8d54-44bd-9a28-f525676a41c7",
+          "Id": "9b171c71-1163-4b8a-8055-a164aacca2ad",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -244,7 +244,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "11af7d16-d99b-40f5-b2d5-481e19f90142",
+          "Id": "5f07735c-59ac-46f7-9cc8-2085ab374178",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -253,7 +253,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ae890eff-3c2e-4ee8-befe-a85023880169",
+          "Id": "0de84fb7-ddc8-4f27-91e8-d367bf7d0cf0",
           "Name": "IN[6]",
           "Description": "Input 6",
           "UsingDefaultValue": false,
@@ -262,7 +262,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a236e596-23cf-4812-ab5d-d87d9d8ca1fe",
+          "Id": "800fae54-ecee-4cdf-85ab-0df6d7763994",
           "Name": "IN[7]",
           "Description": "Input 7",
           "UsingDefaultValue": false,
@@ -271,7 +271,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "53725d5b-acc9-4893-a0b7-49417c821d4c",
+          "Id": "463343d9-944c-42f9-9cbb-85732568bb23",
           "Name": "IN[8]",
           "Description": "Input 8",
           "UsingDefaultValue": false,
@@ -282,7 +282,7 @@
       ],
       "Outputs": [
         {
-          "Id": "f490200b-d458-431a-8f4e-814fc0d64c16",
+          "Id": "136bc8e2-e4b9-4ed3-b0f4-6bd73d12ecbb",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -297,76 +297,58 @@
   ],
   "Connectors": [
     {
-      "Start": "608af154-f03f-49a3-8a05-988272b08e57",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "91675bce-fea3-401f-af81-16d884f4eacf",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "6f5b912f-9bc9-431d-9830-7a4b4926b804",
+      "End": "e4bcc325-a23f-4848-a642-62d4308c0f33",
+      "Id": "e36b339b-410a-41cb-998b-9aed9a9d99fb",
+      "IsHidden": "False"
     },
     {
-      "Start": "7f291da0-2376-4cae-b1a3-8ee33de2dddb",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "d36fa4d7-0a64-407b-84d6-b785cd976b85",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "4cf72251-1a2b-4d13-96b0-7e558164ed6b",
+      "End": "1a3a40fd-c0da-426b-a859-e67f9003cf47",
+      "Id": "192b0717-a119-4870-88e1-f568db730745",
+      "IsHidden": "False"
     },
     {
-      "Start": "e2ac29a6-d041-458c-bad0-fdf036827f76",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "c5395954-619d-4c18-bcbc-af000623922f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "2ee39a93-788c-477e-93bb-4f46b07b6652",
+      "End": "368e7957-6299-4b83-8fef-7f6a5d046e1b",
+      "Id": "94b2b981-9f4c-4f7b-a3aa-580e37df22bb",
+      "IsHidden": "False"
     },
     {
-      "Start": "35c484af-5f6e-4eac-9e14-69a4a4e50d57",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "7715b152-ba5f-48da-8fac-a00d90c5c321",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "a540d418-0121-4ee0-89d3-f7ad62b8df6f",
+      "End": "a0171496-38a2-4564-ba4e-cb6791dad39a",
+      "Id": "1a57db99-559d-4063-b741-eaaeb0d125d9",
+      "IsHidden": "False"
     },
     {
-      "Start": "05904dff-6055-472a-86f4-ad4376e842c7",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "61f3a6c8-877b-4923-a2ef-b3b0de655a8f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "0d90e215-cd4f-42d9-8c21-acbbcefa3f20",
+      "End": "9b171c71-1163-4b8a-8055-a164aacca2ad",
+      "Id": "a1ddb1fc-b05b-494d-be0f-8bd6b9ac2b7c",
+      "IsHidden": "False"
     },
     {
-      "Start": "59c63522-b5a3-4560-8f1f-0ceadfd4d3e3",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "64f73908-80fa-461f-a578-9006a565f236",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "ad6938d4-2f97-4dd7-acbf-ccbdf2d63b22",
+      "End": "5f07735c-59ac-46f7-9cc8-2085ab374178",
+      "Id": "70915f9c-2c70-468c-8d7c-0351363e7071",
+      "IsHidden": "False"
     },
     {
-      "Start": "34665a37-445c-446a-a77e-84fa62699828",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "c9b159b4-d96e-4ad0-998f-33c1aac6e4df",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 6
+      "Start": "42297cd7-3861-44c2-97f3-338b46ce2828",
+      "End": "0de84fb7-ddc8-4f27-91e8-d367bf7d0cf0",
+      "Id": "063fdbe1-302c-4c61-a086-02f459a320bd",
+      "IsHidden": "False"
     },
     {
-      "Start": "1fe1c1c9-8ee9-4128-844d-301b65357e57",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "f02d99e8-595f-4c76-90e8-c12164c54532",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 7
+      "Start": "95e01943-3c80-4d69-aea0-fd0da207549b",
+      "End": "800fae54-ecee-4cdf-85ab-0df6d7763994",
+      "Id": "111d2901-d25d-4b97-afa3-682707adb846",
+      "IsHidden": "False"
     },
     {
-      "Start": "e4d9f623-d2e7-43a7-903f-abe7b57a1518",
-      "End": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
-      "Id": "f3990f7a-5eab-48e2-a6a4-3e46a2b9b0bf",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 8
+      "Start": "6ed29065-46d2-4fff-a42b-608f8e659538",
+      "End": "463343d9-944c-42f9-9cbb-85732568bb23",
+      "Id": "4c41a4fe-9af4-4e80-8a1b-ae0a38889bb3",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -397,7 +379,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "608af154-f03f-49a3-8a05-988272b08e57",
+        "Id": "7242b6da-6de2-4ed4-b630-530eb07820f5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -407,7 +389,7 @@
         "Y": 0.0
       },
       {
-        "Id": "7f291da0-2376-4cae-b1a3-8ee33de2dddb",
+        "Id": "656d44a1-66be-49f2-8e1c-e779c3c4c733",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -417,7 +399,7 @@
         "Y": 130.0
       },
       {
-        "Id": "e2ac29a6-d041-458c-bad0-fdf036827f76",
+        "Id": "818bead7-7066-4535-a17a-21059784bcb6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -427,7 +409,7 @@
         "Y": 260.0
       },
       {
-        "Id": "35c484af-5f6e-4eac-9e14-69a4a4e50d57",
+        "Id": "1bce9720-416a-4bd9-82fd-12b379943b3b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_azotea",
@@ -437,7 +419,7 @@
         "Y": 390.0
       },
       {
-        "Id": "05904dff-6055-472a-86f4-ad4376e842c7",
+        "Id": "18cb6cc3-4800-41b7-9798-e839fb3e96d5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "espesor_cm",
@@ -447,7 +429,7 @@
         "Y": 520.0
       },
       {
-        "Id": "59c63522-b5a3-4560-8f1f-0ceadfd4d3e3",
+        "Id": "a6807bdb-c61d-4ecd-8c31-bf91af6f1db4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_losa",
@@ -457,7 +439,7 @@
         "Y": 650.0
       },
       {
-        "Id": "34665a37-445c-446a-a77e-84fa62699828",
+        "Id": "129d42e8-b2aa-4e93-9f36-a7466c43bbf3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_losa_azo",
@@ -467,7 +449,7 @@
         "Y": 780.0
       },
       {
-        "Id": "1fe1c1c9-8ee9-4128-844d-301b65357e57",
+        "Id": "90b88b44-2d2b-4d36-9691-f00ee143ec44",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_escaleras",
@@ -477,7 +459,7 @@
         "Y": 910.0
       },
       {
-        "Id": "e4d9f623-d2e7-43a7-903f-abe7b57a1518",
+        "Id": "ca7bc901-0b2e-4817-8f17-bcc9fecdc6b2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "cant_ascensores",
@@ -487,7 +469,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "97aac74d-f4e2-4899-ab11-d3b33a108ff4",
+        "Id": "e049b9da-8ef6-45eb-bdc0-6647071d7732",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Losas v2",

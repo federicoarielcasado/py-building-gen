@@ -1,5 +1,5 @@
 {
-  "Uuid": "e341acfe-fdcc-4931-972b-69d444cd3693",
+  "Uuid": "5c2a5a4c-5727-4a47-aa98-87c23efc6493",
   "IsCustomNode": false,
   "Description": "Crea columnas (con reducción de sección), vigas y zapatas aisladas según CIRSOC 201-2005.",
   "Name": "04_estructura",
@@ -13,11 +13,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "492a0931-172f-4268-a18a-e23d1d1ce16d",
+      "Id": "dcc5be4b-a5c8-4a4c-ad8c-d087c99321a0",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "316b9772-6f5d-426b-a093-94531af5b417",
+          "Id": "dbda287b-675f-4267-808c-103de76aa789",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -33,11 +33,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "e3f30dc8-990c-461b-ac88-cafe991eebf0",
+      "Id": "458ac089-9bdc-45c3-9bfa-2550e466a07f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "6f1d08bd-af33-42df-9ffe-a0027943b9a4",
+          "Id": "ac062c0e-4f7b-45cb-b070-99d33e851a19",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -53,11 +53,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "35;",
-      "Id": "ff776f28-3432-481d-a1bf-713aabc8386e",
+      "Id": "6e901747-bbe2-4c63-9947-33b9c9394ef5",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "0bd56df5-b05c-47f4-b5ac-e80e721ab8f1",
+          "Id": "d5db83b8-7f4e-4f49-89be-4a47398d70c5",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -73,11 +73,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "bc854dee-1e02-4294-b98c-c1f1975aabe2",
+      "Id": "bf3a1455-f6e9-452c-b6e2-d3a84a1d4139",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c83237fc-83ea-4446-bcd4-818a26398e51",
+          "Id": "57778816-eecb-4142-a0f4-636fa8352a65",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -93,11 +93,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Columna HA 35x35cm\";",
-      "Id": "bd972c4b-4a1b-4627-90cc-3c39ffb9194b",
+      "Id": "373128ae-c937-4eb6-95a6-947cc8d71203",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "82126ed3-68bb-4a43-8ce4-7e4fd270898c",
+          "Id": "3b3b3b42-7604-4510-8d94-918bdb04469f",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -112,14 +112,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nlado_col_cm     = _fi(IN[2])\npisos_tipo      = _ii(IN[3])\nnombre_col_tipo = _si(IN[4])\npaso_m          = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_all_col_syms():\n    return list(FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralColumns)\n           .ToElements())\n\ndef get_col_symbol():\n    col = get_all_col_syms()\n    match = next((s for s in col if s.Name == nombre_col_tipo), None)\n    if match:\n        return match\n    _kw = (\"concrete\",\"hormigon\",\"hormigón\",\"ha \",\"h.a\",\"rectangular\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef set_section(sym, lado_m):\n    lado_ft = m_to_ft(lado_m)\n    for n in (\"b\",\"Ancho\",\"Width\",\"w\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft); break\n            except Exception: pass\n    for n in (\"h\",\"Alto\",\"Depth\",\"d\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft); break\n            except Exception: pass\n\n# ── Secciones: inferior (pisos bajos) y superior (pisos altos, −5cm) ─────────\n# Cada grupo usa su propio FamilySymbol para que la sección no se pise.\nlado_inf_m = lado_col_cm / 100.0\nlado_sup_m = max(0.25, lado_inf_m - 0.05)\npiso_corte = pisos_tipo // 2 + 1\nmisma_seccion = (lado_inf_m == lado_sup_m)\n\nnombre_inf = f\"Col HA {lado_inf_m*100:.0f}x{lado_inf_m*100:.0f}cm\"\nnombre_sup = f\"Col HA {lado_sup_m*100:.0f}x{lado_sup_m*100:.0f}cm\"\n\nsym_base = get_col_symbol()\ncolumnas  = []\n\nif sym_base:\n    with Transaction(doc, \"py-building-gen: Columnas v2\") as t:\n        t.Start()\n\n        todos = get_all_col_syms()\n\n        # Tipo inferior\n        sym_inf = next((s for s in todos if s.Name == nombre_inf), None)\n        if sym_inf is None:\n            sym_inf = sym_base.Duplicate(nombre_inf)\n            set_section(sym_inf, lado_inf_m)\n        if not sym_inf.IsActive:\n            sym_inf.Activate()\n\n        # Tipo superior (solo si difiere del inferior)\n        if misma_seccion:\n            sym_sup = sym_inf\n        else:\n            sym_sup = next((s for s in todos if s.Name == nombre_sup), None)\n            if sym_sup is None:\n                sym_sup = sym_base.Duplicate(nombre_sup)\n                set_section(sym_sup, lado_sup_m)\n            if not sym_sup.IsActive:\n                sym_sup.Activate()\n\n        for idx_piso, nombre_nivel in enumerate(\n            [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n        ):\n            lvl = get_level(nombre_nivel)\n            sym_local = sym_sup if idx_piso >= piso_corte else sym_inf\n            x = 0.0\n            while x <= frente_m + 0.001:\n                y = 0.0\n                while y <= fondo_m + 0.001:\n                    pt = XYZ(m_to_ft(x), m_to_ft(y), 0)\n                    inst = doc.Create.NewFamilyInstance(pt, sym_local, lvl, StructuralType.Column)\n                    columnas.append(inst.Id.Value)\n                    y += paso_m\n                x += paso_m\n\n        t.Commit()\n\nOUT = {\n    \"total\": len(columnas),\n    \"seccion_inferior\": f\"{lado_inf_m*100:.0f}x{lado_inf_m*100:.0f}cm (pisos 1-{piso_corte-1})\",\n    \"seccion_superior\": f\"{lado_sup_m*100:.0f}x{lado_sup_m*100:.0f}cm (pisos {piso_corte}-{pisos_tipo})\",\n}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '04_estructura'\n_PBG_NODE = 'Crear Columnas v2'\n_PBG_KEY = '04_estructura__00_crear_columnas_v2'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nlado_col_cm     = _fi(IN[2])\npisos_tipo      = _ii(IN[3])\nnombre_col_tipo = _si(IN[4])\npaso_m          = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_all_col_syms():\n    return list(FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralColumns)\n           .ToElements())\n\ndef get_col_symbol():\n    col = get_all_col_syms()\n    match = next((s for s in col if s.Name == nombre_col_tipo), None)\n    if match:\n        return match\n    _kw = (\"concrete\",\"hormigon\",\"hormigón\",\"ha \",\"h.a\",\"rectangular\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\ndef set_section(sym, lado_m):\n    lado_ft = m_to_ft(lado_m)\n    for n in (\"b\",\"Ancho\",\"Width\",\"w\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft); break\n            except Exception: pass\n    for n in (\"h\",\"Alto\",\"Depth\",\"d\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft); break\n            except Exception: pass\n\n# ── Secciones: inferior (pisos bajos) y superior (pisos altos, −5cm) ─────────\n# Cada grupo usa su propio FamilySymbol para que la sección no se pise.\nlado_inf_m = lado_col_cm / 100.0\nlado_sup_m = max(0.25, lado_inf_m - 0.05)\npiso_corte = pisos_tipo // 2 + 1\nmisma_seccion = (lado_inf_m == lado_sup_m)\n\nnombre_inf = f\"Col HA {lado_inf_m*100:.0f}x{lado_inf_m*100:.0f}cm\"\nnombre_sup = f\"Col HA {lado_sup_m*100:.0f}x{lado_sup_m*100:.0f}cm\"\n\nsym_base = get_col_symbol()\ncolumnas  = []\n\nif sym_base:\n    with Transaction(doc, \"py-building-gen: Columnas v2\") as t:\n        t.Start()\n\n        todos = get_all_col_syms()\n\n        # Tipo inferior\n        sym_inf = next((s for s in todos if s.Name == nombre_inf), None)\n        if sym_inf is None:\n            sym_inf = sym_base.Duplicate(nombre_inf)\n            set_section(sym_inf, lado_inf_m)\n        if not sym_inf.IsActive:\n            sym_inf.Activate()\n\n        # Tipo superior (solo si difiere del inferior)\n        if misma_seccion:\n            sym_sup = sym_inf\n        else:\n            sym_sup = next((s for s in todos if s.Name == nombre_sup), None)\n            if sym_sup is None:\n                sym_sup = sym_base.Duplicate(nombre_sup)\n                set_section(sym_sup, lado_sup_m)\n            if not sym_sup.IsActive:\n                sym_sup.Activate()\n\n        for idx_piso, nombre_nivel in enumerate(\n            [\"PB\"] + [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]\n        ):\n            lvl = get_level(nombre_nivel)\n            sym_local = sym_sup if idx_piso >= piso_corte else sym_inf\n            x = 0.0\n            while x <= frente_m + 0.001:\n                y = 0.0\n                while y <= fondo_m + 0.001:\n                    pt = XYZ(m_to_ft(x), m_to_ft(y), 0)\n                    inst = doc.Create.NewFamilyInstance(pt, sym_local, lvl, StructuralType.Column)\n                    columnas.append(inst.Id.Value)\n                    y += paso_m\n                x += paso_m\n\n        t.Commit()\n\nOUT = {\n    \"total\": len(columnas),\n    \"seccion_inferior\": f\"{lado_inf_m*100:.0f}x{lado_inf_m*100:.0f}cm (pisos 1-{piso_corte-1})\",\n    \"seccion_superior\": f\"{lado_sup_m*100:.0f}x{lado_sup_m*100:.0f}cm (pisos {piso_corte}-{pisos_tipo})\",\n}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "40561158-f732-43af-a39f-1cb01bb82f58",
+      "Id": "20c0cfd9-0701-4077-b60f-604ecd64b97c",
       "Inputs": [
         {
-          "Id": "e16dbaa8-4d3e-4880-acaa-d2787d39b599",
+          "Id": "eae6bf8b-04ed-4799-94f6-a191010ca1f5",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -128,7 +128,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "47479be0-a343-4809-b34c-2737b8142cac",
+          "Id": "357ca6d5-0a91-48a9-806c-d256df9f4102",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -137,7 +137,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "43240d53-5cfc-47d2-82b8-de211a3c4da8",
+          "Id": "149e5ade-47f9-4439-aaaf-27f871a155d5",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -146,7 +146,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "43251a7a-c230-4dfd-ac63-4002b92cff56",
+          "Id": "333f8e95-ef46-4ee7-8e56-b93caf7f8b54",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -155,7 +155,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a7aab42f-ab38-4cac-beaa-2385e3d49ee4",
+          "Id": "17a85d62-a425-4dfa-aea3-3d3691952d59",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -166,7 +166,7 @@
       ],
       "Outputs": [
         {
-          "Id": "0de26246-b793-46d1-9c79-9b3e28be5257",
+          "Id": "56c55f20-3102-496a-b777-9d68ac31446a",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -182,11 +182,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "41924def-1d15-4b62-a7f0-67c49d74fb48",
+      "Id": "a59873cb-7453-4ed1-ab98-44f85c77cc41",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "17dd273f-3885-4245-9924-e690ca6ea65e",
+          "Id": "8d4b9002-ba8e-4946-8acd-b604ab761d96",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -202,11 +202,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "2529ccfd-2d97-46c8-991f-f5b3615a7b92",
+      "Id": "3b827814-af22-4ff2-be13-01231d7d2df1",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c181b840-7671-4b08-a2bc-b329aa6a60b9",
+          "Id": "70f15eea-e544-4667-8cf3-8d22657230c0",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -222,11 +222,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "45;",
-      "Id": "399ee95e-2ab6-4af9-9dc7-641299fe6aaf",
+      "Id": "2a7c6e73-8159-4df2-aec2-aa0d83535d6b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "28290398-e100-4932-801e-a410c27bc56a",
+          "Id": "ea7b2064-0d83-4a48-ba59-721001102b19",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -242,11 +242,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "85;",
-      "Id": "7f32865e-b9a8-45bf-8787-f22a37e77159",
+      "Id": "0ec615bb-1bd1-4445-ba6d-aa75c8b049ca",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "525656b1-6528-4c70-b4bf-12ae3007ab23",
+          "Id": "bcb256d0-ca4e-4cb0-958f-95dffe011332",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -262,11 +262,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "6;",
-      "Id": "931ebc59-bdf2-4986-a80f-745a10d1b04d",
+      "Id": "7129c299-fe74-4276-8ed8-e7786a04e430",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "43465c82-eaee-4cf7-acfd-293553fbc3d9",
+          "Id": "0cfb87d3-e5df-46bd-8548-acae6f1503ff",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -282,11 +282,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Viga HA 45x85cm\";",
-      "Id": "0d2aeb07-c77b-443a-9045-d3e678ad3df0",
+      "Id": "6b899746-b7f4-4c89-a60d-b263c8fc37db",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c5f92980-e825-413c-866f-ab389ad0d8a4",
+          "Id": "c72a8152-864b-4c31-9d61-4dc8ae047daa",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -301,14 +301,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ, Line,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nancho_cm        = _fi(IN[2])\nalto_cm         = _fi(IN[3])\npisos_tipo      = _ii(IN[4])\nnombre_viga_tipo = _si(IN[5])   # \"Viga HA 45x85cm\"  (creado por 00_familias.dyn)\npaso_m          = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_beam_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFraming)\n           .ToElements())\n    # 1° intento: tipo exacto creado por 00_familias.dyn\n    match = next((s for s in col if s.Name == nombre_viga_tipo), None)\n    if match:\n        return match\n    # 2° intento: familia con keyword de hormigón\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"h.a\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_beam_symbol()\nvigas = []\n\nif sym:\n    try:\n        sym.LookupParameter(\"b\").Set(m_to_ft(ancho_cm / 100))\n        sym.LookupParameter(\"h\").Set(m_to_ft(alto_cm  / 100))\n    except Exception:\n        pass\n\n    if not sym.IsActive:\n        sym.Activate()\n\n    with Transaction(doc, \"py-building-gen: Vigas\") as t:\n        t.Start()\n\n        for nombre_nivel in [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]:\n            lvl = get_level(nombre_nivel)\n\n            # Vigas en dirección X (paralelas al frente) — una por eje Y\n            y = 0.0\n            while y <= fondo_m + 0.001:\n                x = 0.0\n                while x + paso_m <= frente_m + 0.001:\n                    p1 = XYZ(m_to_ft(x),        m_to_ft(y), 0)\n                    p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), 0)\n                    inst = doc.Create.NewFamilyInstance(\n                        Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                    )\n                    vigas.append(inst.Id.Value)\n                    x += paso_m\n                y += paso_m\n\n            # Vigas en dirección Y (paralelas al fondo)\n            x = 0.0\n            while x <= frente_m + 0.001:\n                y = 0.0\n                while y + paso_m <= fondo_m + 0.001:\n                    p1 = XYZ(m_to_ft(x), m_to_ft(y),        0)\n                    p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), 0)\n                    inst = doc.Create.NewFamilyInstance(\n                        Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                    )\n                    vigas.append(inst.Id.Value)\n                    y += paso_m\n                x += paso_m\n\n        t.Commit()\n\nOUT = {\"total_vigas\": len(vigas), \"seccion\": f\"{ancho_cm:.0f}x{alto_cm:.0f}cm\"}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '04_estructura'\n_PBG_NODE = 'Crear Vigas'\n_PBG_KEY = '04_estructura__01_crear_vigas'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ, Line,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\n\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\ndoc  = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nancho_cm        = _fi(IN[2])\nalto_cm         = _fi(IN[3])\npisos_tipo      = _ii(IN[4])\nnombre_viga_tipo = _si(IN[5])   # \"Viga HA 45x85cm\"  (creado por 00_familias.dyn)\npaso_m          = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_beam_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFraming)\n           .ToElements())\n    # 1° intento: tipo exacto creado por 00_familias.dyn\n    match = next((s for s in col if s.Name == nombre_viga_tipo), None)\n    if match:\n        return match\n    # 2° intento: familia con keyword de hormigón\n    _kw = (\"concrete\", \"hormigon\", \"hormigón\", \"ha \", \"h.a\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    match = next((l for l in levels if l.Name == nombre), None)\n    return match or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_beam_symbol()\nvigas = []\n\nif sym:\n    try:\n        sym.LookupParameter(\"b\").Set(m_to_ft(ancho_cm / 100))\n        sym.LookupParameter(\"h\").Set(m_to_ft(alto_cm  / 100))\n    except Exception:\n        pass\n\n    if not sym.IsActive:\n        sym.Activate()\n\n    with Transaction(doc, \"py-building-gen: Vigas\") as t:\n        t.Start()\n\n        for nombre_nivel in [f\"P{i:02d}\" for i in range(1, pisos_tipo + 1)]:\n            lvl = get_level(nombre_nivel)\n            # La curva de una viga vive en coordenadas del modelo: el Level solo\n            # fija el \"Nivel de referencia\", NO la altura física. Sin este z las\n            # vigas de todos los pisos se apilan en z=0 → \"ejemplares idénticos\".\n            z = lvl.Elevation\n\n            # Vigas en dirección X (paralelas al frente) — una por eje Y\n            y = 0.0\n            while y <= fondo_m + 0.001:\n                x = 0.0\n                while x + paso_m <= frente_m + 0.001:\n                    p1 = XYZ(m_to_ft(x),        m_to_ft(y), z)\n                    p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), z)\n                    inst = doc.Create.NewFamilyInstance(\n                        Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                    )\n                    vigas.append(inst.Id.Value)\n                    x += paso_m\n                y += paso_m\n\n            # Vigas en dirección Y (paralelas al fondo)\n            x = 0.0\n            while x <= frente_m + 0.001:\n                y = 0.0\n                while y + paso_m <= fondo_m + 0.001:\n                    p1 = XYZ(m_to_ft(x), m_to_ft(y),        z)\n                    p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), z)\n                    inst = doc.Create.NewFamilyInstance(\n                        Line.CreateBound(p1, p2), sym, lvl, StructuralType.Beam\n                    )\n                    vigas.append(inst.Id.Value)\n                    y += paso_m\n                x += paso_m\n\n        t.Commit()\n\nOUT = {\"total_vigas\": len(vigas), \"seccion\": f\"{ancho_cm:.0f}x{alto_cm:.0f}cm\"}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "5c6c6578-0316-4828-a49e-931799d53d41",
+      "Id": "1cbf8ba4-0c6f-45a8-bf76-cc7c39bd5c23",
       "Inputs": [
         {
-          "Id": "aab39ac1-a307-41cd-876f-c921db66b717",
+          "Id": "7dabfd60-1162-4971-8fdb-32484d8bef1d",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -317,7 +317,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "783756b8-1367-41b7-90aa-64cc5c31edb0",
+          "Id": "9282deff-903e-48e2-9284-6725425ccfd0",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -326,7 +326,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d081c41c-c336-4471-8a03-6aa5b42a20fb",
+          "Id": "ac3e7255-c8b0-4ca9-bf5c-7b63e5870b11",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -335,7 +335,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "73c868c8-b8a7-4aab-900a-06c76c939484",
+          "Id": "46716aa7-df1c-441b-9116-25412dc3ac9e",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -344,7 +344,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1f4abd98-398d-4a18-bad2-5197b40892a4",
+          "Id": "a754f35e-bd51-49dd-9222-5f9aa1a3183c",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -353,7 +353,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "4ecacd08-a684-45c6-af2c-1c914583a94d",
+          "Id": "e3410a4d-e6f0-40e7-8c44-095cf397264d",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -364,7 +364,7 @@
       ],
       "Outputs": [
         {
-          "Id": "76c4d4fc-cb6d-4504-a9c3-ba6e103e032e",
+          "Id": "985fc9a5-ed7b-4afd-b58b-2a44820c1123",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -380,11 +380,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "dd1bd533-9e54-4aca-b4a3-19064c16bf4c",
+      "Id": "51fb6a23-21be-4c2d-b66c-d41aa52fb72f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b826717f-15b8-4fb4-aa48-9d24006e07c4",
+          "Id": "57be955d-b84c-4afc-9cec-74818590807e",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -400,11 +400,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "26707a25-9f58-441d-b0ee-246ee8dfe6c8",
+      "Id": "c5a60224-fe6b-4f81-b50f-a1d6af96ab01",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e68395ab-bb89-4f9d-869d-506ce422a364",
+          "Id": "31b735a2-4d59-43ef-991d-c8b17b2aa206",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -420,11 +420,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "45;",
-      "Id": "a02274f5-a331-48b5-a249-c26eee9ed031",
+      "Id": "724ce97b-4266-438f-a1ab-8ed834627bf3",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3030ee98-c456-494e-bbd9-0c349900c85b",
+          "Id": "515de66f-30ff-4d6c-9b3d-3dfa940ad677",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -440,11 +440,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "85;",
-      "Id": "c5c0bace-b881-4f0a-a626-a534b7d9ec8a",
+      "Id": "cbc86fed-91f1-45e4-87e0-aa584e8b3696",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "6dd884b9-0c03-44b8-9f4f-c44ea32cd66a",
+          "Id": "f2749eba-762a-440c-b0cc-2c9f2b55603e",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -460,11 +460,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "0e1f5283-e066-4679-a18f-6fe20c590913",
+      "Id": "8740f723-8ec0-47e2-8178-6dd1202b7356",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "9635021e-c828-432a-831a-54e8d63fb1d8",
+          "Id": "cac09a02-672a-4f7f-bafa-4a87661e7e8b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -480,11 +480,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "\"Viga HA 45x85cm\";",
-      "Id": "c5c32ac3-63ec-4101-abc0-daf0aa859b1c",
+      "Id": "79e44bfb-d807-4c6e-84bd-34cb3ebb62dc",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "93746ea3-f795-4ba9-ad7c-4d2ef5b183c4",
+          "Id": "9ffbce4b-f1a7-4747-b6d7-6523143aef00",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -499,14 +499,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ, Line,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nancho_vf_cm     = _fi(IN[2])   # sección viga de fundación (CIRSOC: ≥ 30×60cm)\nalto_vf_cm      = _fi(IN[3])\ntiene_subsuelo  = bool(IN[4])\nnombre_viga_tipo = _si(IN[5])\npaso_m          = 5.0\nZ_OFFSET        = -0.30           # m — centro viga a 30cm bajo nivel de fundación\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_beam_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFraming)\n           .ToElements())\n    match = next((s for s in col if s.Name == nombre_viga_tipo), None)\n    if match: return match\n    _kw = (\"concrete\",\"hormigon\",\"hormigón\",\"ha \",\"h.a\",\"rectangular\")\n    return next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_beam_symbol()\nvigas_fund = []\n\nif sym:\n    try:\n        sym.LookupParameter(\"b\").Set(m_to_ft(ancho_vf_cm / 100))\n        sym.LookupParameter(\"h\").Set(m_to_ft(alto_vf_cm  / 100))\n    except Exception:\n        pass\n    if not sym.IsActive:\n        sym.Activate()\n\n    lvl_fund = get_level(\"SS01\" if tiene_subsuelo else \"PB\")\n\n    with Transaction(doc, \"py-building-gen: Vigas de fundación\") as t:\n        t.Start()\n        z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)\n\n        # Dirección X (paralelas al frente)\n        y = 0.0\n        while y <= fondo_m + 0.001:\n            x = 0.0\n            while x + paso_m <= frente_m + 0.001:\n                p1 = XYZ(m_to_ft(x),          m_to_ft(y), z)\n                p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), z)\n                inst = doc.Create.NewFamilyInstance(Line.CreateBound(p1, p2), sym, lvl_fund, StructuralType.Beam)\n                vigas_fund.append(inst.Id.Value)\n                x += paso_m\n            y += paso_m\n\n        # Dirección Y (paralelas al fondo)\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y + paso_m <= fondo_m + 0.001:\n                p1 = XYZ(m_to_ft(x), m_to_ft(y),          z)\n                p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), z)\n                inst = doc.Create.NewFamilyInstance(Line.CreateBound(p1, p2), sym, lvl_fund, StructuralType.Beam)\n                vigas_fund.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n\n        t.Commit()\n\nOUT = {\"total_vf\": len(vigas_fund), \"nivel\": \"SS01\" if tiene_subsuelo else \"PB\",\n       \"seccion\": f\"{ancho_vf_cm:.0f}x{alto_vf_cm:.0f}cm\"}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '04_estructura'\n_PBG_NODE = 'Vigas de Fundación'\n_PBG_KEY = '04_estructura__02_vigas_de_fundaci_n'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ, Line,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m        = _fi(IN[0])\nfondo_m         = _fi(IN[1])\nancho_vf_cm     = _fi(IN[2])   # sección viga de fundación (CIRSOC: ≥ 30×60cm)\nalto_vf_cm      = _fi(IN[3])\ntiene_subsuelo  = bool(IN[4])\nnombre_viga_tipo = _si(IN[5])\npaso_m          = 5.0\nZ_OFFSET        = -0.30           # m — centro viga a 30cm bajo nivel de fundación\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_beam_symbol():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFraming)\n           .ToElements())\n    match = next((s for s in col if s.Name == nombre_viga_tipo), None)\n    if match: return match\n    _kw = (\"concrete\",\"hormigon\",\"hormigón\",\"ha \",\"h.a\",\"rectangular\")\n    return next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_beam_symbol()\nvigas_fund = []\n\nif sym:\n    try:\n        sym.LookupParameter(\"b\").Set(m_to_ft(ancho_vf_cm / 100))\n        sym.LookupParameter(\"h\").Set(m_to_ft(alto_vf_cm  / 100))\n    except Exception:\n        pass\n    if not sym.IsActive:\n        sym.Activate()\n\n    lvl_fund = get_level(\"SS01\" if tiene_subsuelo else \"PB\")\n\n    with Transaction(doc, \"py-building-gen: Vigas de fundación\") as t:\n        t.Start()\n        z = lvl_fund.Elevation + m_to_ft(Z_OFFSET)\n\n        # Dirección X (paralelas al frente)\n        y = 0.0\n        while y <= fondo_m + 0.001:\n            x = 0.0\n            while x + paso_m <= frente_m + 0.001:\n                p1 = XYZ(m_to_ft(x),          m_to_ft(y), z)\n                p2 = XYZ(m_to_ft(x + paso_m), m_to_ft(y), z)\n                inst = doc.Create.NewFamilyInstance(Line.CreateBound(p1, p2), sym, lvl_fund, StructuralType.Beam)\n                vigas_fund.append(inst.Id.Value)\n                x += paso_m\n            y += paso_m\n\n        # Dirección Y (paralelas al fondo)\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y + paso_m <= fondo_m + 0.001:\n                p1 = XYZ(m_to_ft(x), m_to_ft(y),          z)\n                p2 = XYZ(m_to_ft(x), m_to_ft(y + paso_m), z)\n                inst = doc.Create.NewFamilyInstance(Line.CreateBound(p1, p2), sym, lvl_fund, StructuralType.Beam)\n                vigas_fund.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n\n        t.Commit()\n\nOUT = {\"total_vf\": len(vigas_fund), \"nivel\": \"SS01\" if tiene_subsuelo else \"PB\",\n       \"seccion\": f\"{ancho_vf_cm:.0f}x{alto_vf_cm:.0f}cm\"}\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
+      "Id": "029859c2-1674-4210-9753-3bb9ab062c1d",
       "Inputs": [
         {
-          "Id": "2555f96c-d292-41ec-995d-66f4284c4fcc",
+          "Id": "0ba3d9c9-64b3-4f6a-8202-02d5a47a6b7e",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -515,7 +515,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "31697156-4af3-435e-896a-907d5f0aa710",
+          "Id": "b2a19e56-e6b0-47b5-905a-32e536bf6890",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -524,7 +524,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "95a6555b-df7f-4ff0-ae61-bccc3f1dae88",
+          "Id": "1bfc187f-6bb3-4c0f-8382-5e4d8ab6891d",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -533,7 +533,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0d02ce5c-012a-45b6-8a36-c249f3a102c5",
+          "Id": "0f70345c-ee35-4fe1-ac48-36f17f39ece3",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -542,7 +542,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b42642e9-d3a7-41e2-a5bc-251cb169d92e",
+          "Id": "82545a05-52e6-4417-b8c1-3c5a33ef7ede",
           "Name": "IN[4]",
           "Description": "Input 4",
           "UsingDefaultValue": false,
@@ -551,7 +551,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2a154430-2424-4814-a241-461f65b1edfa",
+          "Id": "cf47757d-dbd3-4604-bedc-ca925d917941",
           "Name": "IN[5]",
           "Description": "Input 5",
           "UsingDefaultValue": false,
@@ -562,7 +562,7 @@
       ],
       "Outputs": [
         {
-          "Id": "989f4f5c-27fe-4cc0-8dac-6209ff0edbcf",
+          "Id": "c89c073e-d29d-40ea-8f5b-4b11792bd356",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -578,11 +578,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "10.0;",
-      "Id": "0335f815-b6c7-4283-af26-c5d19f770cc3",
+      "Id": "a13bba8a-7e04-41b7-a8c1-d9710ec07392",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b2f71cf5-4a02-4277-bbef-8c520d431eec",
+          "Id": "eada47bf-048c-4f51-ab64-41d4c0ce8777",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -598,11 +598,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "24.0;",
-      "Id": "4ee6008e-00ed-486f-ab15-a52aefc22df8",
+      "Id": "21a5673b-6966-438d-9728-8023ec6858cf",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2fa26a16-ae09-429f-979c-1b0fa3f0da1e",
+          "Id": "3f3624a1-353f-4083-8c7d-2967c08e6b56",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -617,12 +617,12 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "120;",
-      "Id": "95db0c68-fca1-4b10-86fe-4032185e6efd",
+      "Code": "245;",
+      "Id": "c9940698-50e8-4141-a140-e8a326c8e078",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e5e34549-83d0-4e15-8986-52defba0c831",
+          "Id": "2686ace8-a922-4611-8ac4-b4351945f889",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -638,11 +638,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "3.5;",
-      "Id": "9f053741-480a-4843-a962-eaf3bca49a4b",
+      "Id": "28681894-5d04-4d32-81d7-5aa2f44ae8d1",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "fd97f032-2bce-421a-b0ff-45e6d596aa85",
+          "Id": "470e29e5-a04b-465f-9ff8-3eb497db3d87",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -658,11 +658,31 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "false;",
-      "Id": "a0e8634b-a58d-42e2-8c02-fbdab4129022",
+      "Id": "b33eaf04-3de8-4909-9f5a-73c8aec3803c",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a2380965-c3a4-41c8-b762-dcee6f1899df",
+          "Id": "bd922955-8eba-47be-a6d1-5b23700b9fcd",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Zapata HA 245x245cm\";",
+      "Id": "e4c16aa9-befc-4e80-8132-8f8c9e750ef6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0b873fe1-a3fb-43fb-b5b1-65eeb037d3da",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -677,14 +697,14 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "ExtensionNode",
-      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m       = _fi(IN[0])\nfondo_m        = _fi(IN[1])\nlado_zapata_cm = _fi(IN[2])   # lado de la zapata cuadrada (predimensionado)\naltura_pb      = _fi(IN[3])\ntiene_subsuelo = bool(IN[4])\npaso_m         = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_foundation_sym():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFoundation)\n           .ToElements())\n    _kw = (\"pad\",\"isolated\",\"zapata\",\"footing\",\"aislada\",\"foundation\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_foundation_sym()\nzapatas = []\n\nif sym:\n    # Tamaño de zapata\n    lado_ft = m_to_ft(lado_zapata_cm / 100.0)\n    for n in (\"Width\",\"Ancho\",\"b\",\"w\",\"Length\",\"Largo\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft)\n            except Exception: pass\n    for n in (\"Thickness\",\"Espesor\",\"h\",\"d\",\"Depth\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(m_to_ft(0.50)); break   # espesor zapata: 0.50m\n            except Exception: pass\n    if not sym.IsActive:\n        sym.Activate()\n\n    # Nivel de fundación: PB si no hay subsuelo, SS01 si hay\n    nom_fund = \"SS01\" if tiene_subsuelo else \"PB\"\n    lvl_fund = get_level(nom_fund)\n\n    with Transaction(doc, \"py-building-gen: Zapatas\") as t:\n        t.Start()\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y <= fondo_m + 0.001:\n                pt = XYZ(m_to_ft(x), m_to_ft(y), lvl_fund.Elevation)\n                inst = doc.Create.NewFamilyInstance(pt, sym, lvl_fund, StructuralType.Footing)\n                zapatas.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n        t.Commit()\n\nOUT = {\n    \"total\": len(zapatas),\n    \"lado_cm\": lado_zapata_cm,\n    \"nivel\": nom_fund,\n}\n",
+      "Code": "def _fi(v, d=0.0): return float(v) if v is not None else float(d)\ndef _ii(v, d=0):   return int(v)   if v is not None else int(d)\ndef _si(v, d=\"\"):  return str(v)   if v is not None else str(d)\n# --- py-building-gen: auto-reporte (inicio) ---\nimport os as _pbg_os, json as _pbg_json, datetime as _pbg_dt\n_PBG_DIR = 'C:\\\\Users\\\\feder\\\\OneDrive\\\\Escritorio\\\\py-building-gen\\\\output\\\\dynamo\\\\edificio_caballito_int\\\\_reports'\n_PBG_SCRIPT = '04_estructura'\n_PBG_NODE = 'Crear Zapatas'\n_PBG_KEY = '04_estructura__03_crear_zapatas'\ndef _pbg_warnings():\n    try:\n        _d = globals().get(\"doc\", None)\n        if _d is None:\n            return []\n        return [w.GetDescriptionText() for w in _d.GetWarnings()]\n    except Exception:\n        return []\ndef _pbg_report(_status, _out=None):\n    try:\n        _pbg_os.makedirs(_PBG_DIR, exist_ok=True)\n        _rec = {\n            \"script\": _PBG_SCRIPT,\n            \"nodo\": _PBG_NODE,\n            \"key\": _PBG_KEY,\n            \"status\": _status,\n            \"timestamp\": _pbg_dt.datetime.now().isoformat(timespec=\"seconds\"),\n            \"out\": _out,\n            \"warnings\": _pbg_warnings() if _status == \"ok\" else [],\n        }\n        with open(_pbg_os.path.join(_PBG_DIR, _PBG_KEY + \".json\"), \"w\", encoding=\"utf-8\") as _f:\n            _pbg_json.dump(_rec, _f, ensure_ascii=False, indent=2, default=str)\n    except Exception:\n        pass\n_pbg_report(\"started\")\n# --- fin auto-reporte (inicio) ---\n\nimport clr\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import (\n    FamilySymbol, Level, XYZ,\n    FilteredElementCollector, BuiltInCategory,\n    Transaction, UnitUtils, UnitTypeId,\n)\nfrom Autodesk.Revit.DB.Structure import StructuralType\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nfrente_m       = _fi(IN[0])\nfondo_m        = _fi(IN[1])\nlado_zapata_cm = _fi(IN[2])   # lado de la zapata cuadrada (predimensionado)\naltura_pb      = _fi(IN[3])\ntiene_subsuelo = bool(IN[4])\nnombre_zapata  = _si(IN[5], \"\")   # tipo exacto creado por 00_familias.dyn\npaso_m         = 5.0\n\ndef m_to_ft(m):\n    return UnitUtils.ConvertToInternalUnits(m, UnitTypeId.Meters)\n\ndef get_foundation_sym():\n    col = (FilteredElementCollector(doc)\n           .OfClass(FamilySymbol)\n           .OfCategory(BuiltInCategory.OST_StructuralFoundation)\n           .ToElements())\n    # 1° intento: tipo exacto resuelto/creado por 00_familias.dyn\n    match = next((s for s in col if s.Name == nombre_zapata), None)\n    if match:\n        return match\n    _kw = (\"pad\",\"isolated\",\"zapata\",\"footing\",\"aislada\",\"foundation\")\n    match = next((s for s in col if any(k in s.FamilyName.lower() for k in _kw)), None)\n    return match or (col[0] if col else None)\n\ndef get_level(nombre):\n    levels = FilteredElementCollector(doc).OfClass(Level).ToElements()\n    return next((l for l in levels if l.Name == nombre), None)            or sorted(levels, key=lambda l: l.Elevation)[0]\n\nsym = get_foundation_sym()\nzapatas = []\nnom_fund = \"SS01\" if tiene_subsuelo else \"PB\"   # nivel de fundación (def. siempre)\n\nif sym:\n    # Tamaño de zapata\n    lado_ft = m_to_ft(lado_zapata_cm / 100.0)\n    for n in (\"Width\",\"Ancho\",\"b\",\"w\",\"Length\",\"Largo\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(lado_ft)\n            except Exception: pass\n    for n in (\"Thickness\",\"Espesor\",\"h\",\"d\",\"Depth\"):\n        p = sym.LookupParameter(n)\n        if p and not p.IsReadOnly:\n            try: p.Set(m_to_ft(0.50)); break   # espesor zapata: 0.50m\n            except Exception: pass\n    if not sym.IsActive:\n        sym.Activate()\n\n    # Nivel de fundación: PB si no hay subsuelo, SS01 si hay\n    lvl_fund = get_level(nom_fund)\n\n    with Transaction(doc, \"py-building-gen: Zapatas\") as t:\n        t.Start()\n        x = 0.0\n        while x <= frente_m + 0.001:\n            y = 0.0\n            while y <= fondo_m + 0.001:\n                pt = XYZ(m_to_ft(x), m_to_ft(y), lvl_fund.Elevation)\n                inst = doc.Create.NewFamilyInstance(pt, sym, lvl_fund, StructuralType.Footing)\n                zapatas.append(inst.Id.Value)\n                y += paso_m\n            x += paso_m\n        t.Commit()\n\nif sym:\n    OUT = {\n        \"total\": len(zapatas),\n        \"lado_cm\": lado_zapata_cm,\n        \"nivel\": nom_fund,\n        \"familia\": sym.FamilyName,\n    }\nelse:\n    OUT = {\n        \"total\": 0,\n        \"resultado\": \"No se encontro familia de fundacion (OST_StructuralFoundation) cargada en el modelo.\",\n        \"accion_requerida\": (\n            \"Cargar una familia de zapata/base estructural (p.ej. \"\n            \"'Base estructural rectangular' o 'Footing-Rectangular') desde \"\n            \"Insertar -> Cargar familia, luego volver a correr 04_estructura.dyn.\"\n        ),\n    }\n\n\n# --- py-building-gen: auto-reporte (cierre) ---\ntry:\n    _pbg_report(\"ok\", _out=globals().get(\"OUT\", None))\nexcept Exception:\n    pass\n",
       "Engine": "PythonNet3",
       "EngineName": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "5277113d-6480-4e65-a625-1e625d9d1a3c",
+      "Id": "3a86ac88-2c55-4f22-af99-a7fefacc43da",
       "Inputs": [
         {
-          "Id": "96628367-5956-47b1-8249-54504110ea53",
+          "Id": "9398fc4e-3a7e-4f63-ad4f-86e2685850f1",
           "Name": "IN[0]",
           "Description": "Input 0",
           "UsingDefaultValue": false,
@@ -693,7 +713,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d21004f2-0416-4ee1-b5ee-42369369b835",
+          "Id": "09c0f926-a603-4197-89ef-22a4d35bd508",
           "Name": "IN[1]",
           "Description": "Input 1",
           "UsingDefaultValue": false,
@@ -702,7 +722,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "10ba6335-2cfa-435b-ab6b-3ef73e25a4d5",
+          "Id": "2a5b4c86-2458-40db-ab27-61324da87933",
           "Name": "IN[2]",
           "Description": "Input 2",
           "UsingDefaultValue": false,
@@ -711,7 +731,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a99ada21-a37c-4d99-ae32-7201b0f445fc",
+          "Id": "56c4d97c-1727-4d83-ae1b-704f4c76212f",
           "Name": "IN[3]",
           "Description": "Input 3",
           "UsingDefaultValue": false,
@@ -720,9 +740,18 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2d1b8d4e-cbf5-4e6c-83d2-3188388b0dba",
+          "Id": "8bd32012-80ff-4dec-b466-2afb38737149",
           "Name": "IN[4]",
           "Description": "Input 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "883edcb9-a52a-4cf0-87a0-356635d06c15",
+          "Name": "IN[5]",
+          "Description": "Input 5",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -731,7 +760,7 @@
       ],
       "Outputs": [
         {
-          "Id": "9e1c585b-417c-401c-a412-9a159ed23546",
+          "Id": "16faebb8-2404-4fef-93c1-cdfae72d7683",
           "Name": "OUT",
           "Description": "",
           "UsingDefaultValue": false,
@@ -746,180 +775,142 @@
   ],
   "Connectors": [
     {
-      "Start": "492a0931-172f-4268-a18a-e23d1d1ce16d",
-      "End": "40561158-f732-43af-a39f-1cb01bb82f58",
-      "Id": "45ccbd4e-0ba8-42ab-9d5e-06e388ca9b52",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "dbda287b-675f-4267-808c-103de76aa789",
+      "End": "eae6bf8b-04ed-4799-94f6-a191010ca1f5",
+      "Id": "6410d489-ae01-4a8d-8a23-b99e21123286",
+      "IsHidden": "False"
     },
     {
-      "Start": "e3f30dc8-990c-461b-ac88-cafe991eebf0",
-      "End": "40561158-f732-43af-a39f-1cb01bb82f58",
-      "Id": "5fa528d9-dee4-4e71-ae77-a23f2f493a3f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "ac062c0e-4f7b-45cb-b070-99d33e851a19",
+      "End": "357ca6d5-0a91-48a9-806c-d256df9f4102",
+      "Id": "69e062ce-64e8-4bf2-9d03-59552cbcdf4b",
+      "IsHidden": "False"
     },
     {
-      "Start": "ff776f28-3432-481d-a1bf-713aabc8386e",
-      "End": "40561158-f732-43af-a39f-1cb01bb82f58",
-      "Id": "c33eaf1e-534c-4514-833b-57a60e0d2154",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "d5db83b8-7f4e-4f49-89be-4a47398d70c5",
+      "End": "149e5ade-47f9-4439-aaaf-27f871a155d5",
+      "Id": "009dbd27-a5be-4d47-a6c5-6aca7ac445a0",
+      "IsHidden": "False"
     },
     {
-      "Start": "bc854dee-1e02-4294-b98c-c1f1975aabe2",
-      "End": "40561158-f732-43af-a39f-1cb01bb82f58",
-      "Id": "0e63bd3d-9b0b-4014-8dd5-8f9d0ff81c6f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "57778816-eecb-4142-a0f4-636fa8352a65",
+      "End": "333f8e95-ef46-4ee7-8e56-b93caf7f8b54",
+      "Id": "a936c1e2-5554-4534-a6c1-26680b986a57",
+      "IsHidden": "False"
     },
     {
-      "Start": "bd972c4b-4a1b-4627-90cc-3c39ffb9194b",
-      "End": "40561158-f732-43af-a39f-1cb01bb82f58",
-      "Id": "4ea97dcf-ee5c-4157-a3de-af8ed435d0cb",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "3b3b3b42-7604-4510-8d94-918bdb04469f",
+      "End": "17a85d62-a425-4dfa-aea3-3d3691952d59",
+      "Id": "23855bf6-c549-4543-afa5-55860520dba6",
+      "IsHidden": "False"
     },
     {
-      "Start": "41924def-1d15-4b62-a7f0-67c49d74fb48",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "ea0a42d2-b8b9-4bf2-926a-908e97595cd5",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "8d4b9002-ba8e-4946-8acd-b604ab761d96",
+      "End": "7dabfd60-1162-4971-8fdb-32484d8bef1d",
+      "Id": "4ceec32c-31d5-43f1-a3ab-b309dcdcb49d",
+      "IsHidden": "False"
     },
     {
-      "Start": "2529ccfd-2d97-46c8-991f-f5b3615a7b92",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "6275deb8-2ce6-44e9-9324-20828a8f070f",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "70f15eea-e544-4667-8cf3-8d22657230c0",
+      "End": "9282deff-903e-48e2-9284-6725425ccfd0",
+      "Id": "845e490d-ca84-427b-b439-164e602a4c78",
+      "IsHidden": "False"
     },
     {
-      "Start": "399ee95e-2ab6-4af9-9dc7-641299fe6aaf",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "3dddb735-980e-4eba-bfc1-bbef9ab4cb59",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "ea7b2064-0d83-4a48-ba59-721001102b19",
+      "End": "ac3e7255-c8b0-4ca9-bf5c-7b63e5870b11",
+      "Id": "ccd2c98a-346a-4cfd-ac73-008447bbfa1e",
+      "IsHidden": "False"
     },
     {
-      "Start": "7f32865e-b9a8-45bf-8787-f22a37e77159",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "254e5b7e-9f4b-44c5-ba93-bf8cb520c941",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "bcb256d0-ca4e-4cb0-958f-95dffe011332",
+      "End": "46716aa7-df1c-441b-9116-25412dc3ac9e",
+      "Id": "6ae9f1bb-655f-45e2-9bc0-85ab691e5fda",
+      "IsHidden": "False"
     },
     {
-      "Start": "931ebc59-bdf2-4986-a80f-745a10d1b04d",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "2b7f265a-e465-4533-9969-d33af8877570",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "0cfb87d3-e5df-46bd-8548-acae6f1503ff",
+      "End": "a754f35e-bd51-49dd-9222-5f9aa1a3183c",
+      "Id": "75dc4297-dfd1-4adb-ad22-3403d2c405e9",
+      "IsHidden": "False"
     },
     {
-      "Start": "0d2aeb07-c77b-443a-9045-d3e678ad3df0",
-      "End": "5c6c6578-0316-4828-a49e-931799d53d41",
-      "Id": "302d1d4c-eac6-4467-a7ce-55d5c3f843bc",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "c72a8152-864b-4c31-9d61-4dc8ae047daa",
+      "End": "e3410a4d-e6f0-40e7-8c44-095cf397264d",
+      "Id": "f9f19b1c-417d-4e59-9d5c-d1d759471c81",
+      "IsHidden": "False"
     },
     {
-      "Start": "dd1bd533-9e54-4aca-b4a3-19064c16bf4c",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "68aeff11-271f-48b0-8786-d8b9a1921fe3",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "57be955d-b84c-4afc-9cec-74818590807e",
+      "End": "0ba3d9c9-64b3-4f6a-8202-02d5a47a6b7e",
+      "Id": "1f049619-cbc7-4842-bf47-1c4fae7bc6bd",
+      "IsHidden": "False"
     },
     {
-      "Start": "26707a25-9f58-441d-b0ee-246ee8dfe6c8",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "aecb71eb-9ef4-433e-a60a-8a79497ab7e2",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "31b735a2-4d59-43ef-991d-c8b17b2aa206",
+      "End": "b2a19e56-e6b0-47b5-905a-32e536bf6890",
+      "Id": "d06a4cac-bdcb-40cd-951f-91efccd3d381",
+      "IsHidden": "False"
     },
     {
-      "Start": "a02274f5-a331-48b5-a249-c26eee9ed031",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "04fc10c7-c9e2-4dcf-94be-5a116dcc63c7",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "515de66f-30ff-4d6c-9b3d-3dfa940ad677",
+      "End": "1bfc187f-6bb3-4c0f-8382-5e4d8ab6891d",
+      "Id": "bf387788-d410-4877-8a06-d4af9d4a2a27",
+      "IsHidden": "False"
     },
     {
-      "Start": "c5c0bace-b881-4f0a-a626-a534b7d9ec8a",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "f6d72ad0-39b6-4d1e-a845-17af31347fe7",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "f2749eba-762a-440c-b0cc-2c9f2b55603e",
+      "End": "0f70345c-ee35-4fe1-ac48-36f17f39ece3",
+      "Id": "ae5904b5-aeb6-4233-bc18-da16c4229e3a",
+      "IsHidden": "False"
     },
     {
-      "Start": "0e1f5283-e066-4679-a18f-6fe20c590913",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "7ade7e22-3074-44d2-99d8-257baa0e0340",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "cac09a02-672a-4f7f-bafa-4a87661e7e8b",
+      "End": "82545a05-52e6-4417-b8c1-3c5a33ef7ede",
+      "Id": "8dcbe163-7f2a-4b6e-8faa-ea519bca5fe9",
+      "IsHidden": "False"
     },
     {
-      "Start": "c5c32ac3-63ec-4101-abc0-daf0aa859b1c",
-      "End": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
-      "Id": "8c31c84a-137b-4917-b1e7-7c97c0bf57ef",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 5
+      "Start": "9ffbce4b-f1a7-4747-b6d7-6523143aef00",
+      "End": "cf47757d-dbd3-4604-bedc-ca925d917941",
+      "Id": "2aa55fed-094f-4331-b011-ee66c957801b",
+      "IsHidden": "False"
     },
     {
-      "Start": "0335f815-b6c7-4283-af26-c5d19f770cc3",
-      "End": "5277113d-6480-4e65-a625-1e625d9d1a3c",
-      "Id": "ea16b860-cc49-45d0-b517-87e37e465909",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 0
+      "Start": "eada47bf-048c-4f51-ab64-41d4c0ce8777",
+      "End": "9398fc4e-3a7e-4f63-ad4f-86e2685850f1",
+      "Id": "3a6cdeef-7abf-4982-b4a9-e0455bf293a1",
+      "IsHidden": "False"
     },
     {
-      "Start": "4ee6008e-00ed-486f-ab15-a52aefc22df8",
-      "End": "5277113d-6480-4e65-a625-1e625d9d1a3c",
-      "Id": "d1f4862b-4e54-4f6f-ae71-87e13b433733",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 1
+      "Start": "3f3624a1-353f-4083-8c7d-2967c08e6b56",
+      "End": "09c0f926-a603-4197-89ef-22a4d35bd508",
+      "Id": "50baacaa-d71b-4ab5-858b-49c54c98215c",
+      "IsHidden": "False"
     },
     {
-      "Start": "95db0c68-fca1-4b10-86fe-4032185e6efd",
-      "End": "5277113d-6480-4e65-a625-1e625d9d1a3c",
-      "Id": "9f309568-8e10-408b-8c1d-9ebe14dc2e73",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 2
+      "Start": "2686ace8-a922-4611-8ac4-b4351945f889",
+      "End": "2a5b4c86-2458-40db-ab27-61324da87933",
+      "Id": "f4cf0c09-139f-4940-a832-77150ff746b7",
+      "IsHidden": "False"
     },
     {
-      "Start": "9f053741-480a-4843-a962-eaf3bca49a4b",
-      "End": "5277113d-6480-4e65-a625-1e625d9d1a3c",
-      "Id": "c7b40ce6-a9a0-42f0-a777-424cc8acd20b",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 3
+      "Start": "470e29e5-a04b-465f-9ff8-3eb497db3d87",
+      "End": "56c4d97c-1727-4d83-ae1b-704f4c76212f",
+      "Id": "849de1a4-9b51-4dcd-b489-830078420750",
+      "IsHidden": "False"
     },
     {
-      "Start": "a0e8634b-a58d-42e2-8c02-fbdab4129022",
-      "End": "5277113d-6480-4e65-a625-1e625d9d1a3c",
-      "Id": "43feb375-747a-4c5c-b453-1c8cba0eb176",
-      "PortType": 0,
-      "StartIndex": 0,
-      "EndIndex": 4
+      "Start": "bd922955-8eba-47be-a6d1-5b23700b9fcd",
+      "End": "8bd32012-80ff-4dec-b466-2afb38737149",
+      "Id": "4c602e8b-a3b6-49b2-9e0e-bd468b5199cf",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0b873fe1-a3fb-43fb-b5b1-65eeb037d3da",
+      "End": "883edcb9-a52a-4cf0-87a0-356635d06c15",
+      "Id": "ea193091-7e82-47d5-926a-178e3757afb4",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
@@ -950,7 +941,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "492a0931-172f-4268-a18a-e23d1d1ce16d",
+        "Id": "dcc5be4b-a5c8-4a4c-ad8c-d087c99321a0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -960,7 +951,7 @@
         "Y": 0.0
       },
       {
-        "Id": "e3f30dc8-990c-461b-ac88-cafe991eebf0",
+        "Id": "458ac089-9bdc-45c3-9bfa-2550e466a07f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -970,7 +961,7 @@
         "Y": 130.0
       },
       {
-        "Id": "ff776f28-3432-481d-a1bf-713aabc8386e",
+        "Id": "6e901747-bbe2-4c63-9947-33b9c9394ef5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "lado_col_cm",
@@ -980,7 +971,7 @@
         "Y": 260.0
       },
       {
-        "Id": "bc854dee-1e02-4294-b98c-c1f1975aabe2",
+        "Id": "bf3a1455-f6e9-452c-b6e2-d3a84a1d4139",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -990,7 +981,7 @@
         "Y": 390.0
       },
       {
-        "Id": "bd972c4b-4a1b-4627-90cc-3c39ffb9194b",
+        "Id": "373128ae-c937-4eb6-95a6-947cc8d71203",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_col",
@@ -1000,7 +991,7 @@
         "Y": 520.0
       },
       {
-        "Id": "40561158-f732-43af-a39f-1cb01bb82f58",
+        "Id": "20c0cfd9-0701-4077-b60f-604ecd64b97c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Columnas v2",
@@ -1010,7 +1001,7 @@
         "Y": 0.0
       },
       {
-        "Id": "41924def-1d15-4b62-a7f0-67c49d74fb48",
+        "Id": "a59873cb-7453-4ed1-ab98-44f85c77cc41",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1020,7 +1011,7 @@
         "Y": 780.0
       },
       {
-        "Id": "2529ccfd-2d97-46c8-991f-f5b3615a7b92",
+        "Id": "3b827814-af22-4ff2-be13-01231d7d2df1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1030,7 +1021,7 @@
         "Y": 910.0
       },
       {
-        "Id": "399ee95e-2ab6-4af9-9dc7-641299fe6aaf",
+        "Id": "2a7c6e73-8159-4df2-aec2-aa0d83535d6b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "ancho_viga_cm",
@@ -1040,7 +1031,7 @@
         "Y": 1040.0
       },
       {
-        "Id": "7f32865e-b9a8-45bf-8787-f22a37e77159",
+        "Id": "0ec615bb-1bd1-4445-ba6d-aa75c8b049ca",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "alto_viga_cm",
@@ -1050,7 +1041,7 @@
         "Y": 1170.0
       },
       {
-        "Id": "931ebc59-bdf2-4986-a80f-745a10d1b04d",
+        "Id": "7129c299-fe74-4276-8ed8-e7786a04e430",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "pisos_tipo",
@@ -1060,7 +1051,7 @@
         "Y": 1300.0
       },
       {
-        "Id": "0d2aeb07-c77b-443a-9045-d3e678ad3df0",
+        "Id": "6b899746-b7f4-4c89-a60d-b263c8fc37db",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_viga",
@@ -1070,7 +1061,7 @@
         "Y": 1430.0
       },
       {
-        "Id": "5c6c6578-0316-4828-a49e-931799d53d41",
+        "Id": "1cbf8ba4-0c6f-45a8-bf76-cc7c39bd5c23",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Vigas",
@@ -1080,7 +1071,7 @@
         "Y": 780.0
       },
       {
-        "Id": "dd1bd533-9e54-4aca-b4a3-19064c16bf4c",
+        "Id": "51fb6a23-21be-4c2d-b66c-d41aa52fb72f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1090,7 +1081,7 @@
         "Y": 1690.0
       },
       {
-        "Id": "26707a25-9f58-441d-b0ee-246ee8dfe6c8",
+        "Id": "c5a60224-fe6b-4f81-b50f-a1d6af96ab01",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1100,7 +1091,7 @@
         "Y": 1820.0
       },
       {
-        "Id": "a02274f5-a331-48b5-a249-c26eee9ed031",
+        "Id": "724ce97b-4266-438f-a1ab-8ed834627bf3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "ancho_vf_cm",
@@ -1110,7 +1101,7 @@
         "Y": 1950.0
       },
       {
-        "Id": "c5c0bace-b881-4f0a-a626-a534b7d9ec8a",
+        "Id": "cbc86fed-91f1-45e4-87e0-aa584e8b3696",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "alto_vf_cm",
@@ -1120,7 +1111,7 @@
         "Y": 2080.0
       },
       {
-        "Id": "0e1f5283-e066-4679-a18f-6fe20c590913",
+        "Id": "8740f723-8ec0-47e2-8178-6dd1202b7356",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -1130,7 +1121,7 @@
         "Y": 2210.0
       },
       {
-        "Id": "c5c32ac3-63ec-4101-abc0-daf0aa859b1c",
+        "Id": "79e44bfb-d807-4c6e-84bd-34cb3ebb62dc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "nombre_viga",
@@ -1140,7 +1131,7 @@
         "Y": 2340.0
       },
       {
-        "Id": "1d611a5c-fe98-49a9-8a01-96f0ebb645c2",
+        "Id": "029859c2-1674-4210-9753-3bb9ab062c1d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Vigas de Fundación",
@@ -1150,7 +1141,7 @@
         "Y": 1690.0
       },
       {
-        "Id": "0335f815-b6c7-4283-af26-c5d19f770cc3",
+        "Id": "a13bba8a-7e04-41b7-a8c1-d9710ec07392",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "frente_m",
@@ -1160,7 +1151,7 @@
         "Y": 2600.0
       },
       {
-        "Id": "4ee6008e-00ed-486f-ab15-a52aefc22df8",
+        "Id": "21a5673b-6966-438d-9728-8023ec6858cf",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "fondo_m",
@@ -1170,7 +1161,7 @@
         "Y": 2730.0
       },
       {
-        "Id": "95db0c68-fca1-4b10-86fe-4032185e6efd",
+        "Id": "c9940698-50e8-4141-a140-e8a326c8e078",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "lado_zapata_cm",
@@ -1180,7 +1171,7 @@
         "Y": 2860.0
       },
       {
-        "Id": "9f053741-480a-4843-a962-eaf3bca49a4b",
+        "Id": "28681894-5d04-4d32-81d7-5aa2f44ae8d1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "altura_pb_m",
@@ -1190,7 +1181,7 @@
         "Y": 2990.0
       },
       {
-        "Id": "a0e8634b-a58d-42e2-8c02-fbdab4129022",
+        "Id": "b33eaf04-3de8-4909-9f5a-73c8aec3803c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "tiene_subsuelo",
@@ -1200,7 +1191,17 @@
         "Y": 3120.0
       },
       {
-        "Id": "5277113d-6480-4e65-a625-1e625d9d1a3c",
+        "Id": "e4c16aa9-befc-4e80-8132-8f8c9e750ef6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "nombre_zapata",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 3250.0
+      },
+      {
+        "Id": "3a86ac88-2c55-4f22-af99-a7fefacc43da",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Crear Zapatas",
