@@ -36,11 +36,34 @@ El problema tiene dos mitades, y se resuelven por separado:
    - **Genéricos (todo nodo):** `"started"` → error; advertencias de Revit →
      warning; nodo que corrió pero creó **0 elementos** → warning (fallo
      silencioso típico; warning y no error porque algunos nodos crean 0 legítimo).
-   - **Cuantitativos (exactos, por script):** compara el conteo real contra el que
-     predicen los `ParametrosEdificio`. Implementado para `01_niveles_grilla`
-     (niveles, ejes, plantas). Detecta el bug histórico de "el input nunca llegó a
-     Revit" mirando `frente_m_recibido`. Los demás scripts se cubren con las dos
-     capas anteriores (corrió + creó >0) hasta que se les agregue un `_check_*`.
+   - **Específicos por script:** compara el resultado real contra el que predicen
+     los `ParametrosEdificio`. Hay dos estilos según qué tan derivable es el
+     conteo. **Exactos** (`_cmp`), donde la cantidad sale limpia de los params:
+     - `01_niveles_grilla` — niveles, ejes de grilla, plantas. Detecta el bug
+       histórico de "el input nunca llegó a Revit" mirando `frente_m_recibido`.
+     - `03_losas` — una losa por piso tipo + azotea.
+     - `04_estructura` — columnas `(pisos+1)·nx·ny`, vigas de entrepiso, vigas de
+       fundación y zapatas `nx·ny`, sobre la grilla estructural de 5 m (paso fijo
+       inclusive, **distinta** a la grilla de niveles). Marca error si falta la
+       familia de fundación cargada.
+     - `06_escaleras_ascensores` — ascensores `== cant_ascensores`; tramos de
+       escalera `cajas·pisos` (o `cajas` en la rama fallback sin `StairsType`).
+       Las escaleras con error se reportan aparte.
+     - `07_instalaciones_mep` — un MEP Space por piso tipo; artefactos
+       `pisos·(incendio? + eléctrica?)`.
+     - `08_vistas` — una planta por PB + pisos tipo + azotea.
+     - `09_sheets` — 13 láminas A3 IRAM (error explícito si falta el title block).
+     - `10_schedules` — 7 tablas de cómputo.
+
+     **De cobertura por nivel**, donde la geometría es compleja y replicar el
+     conteo exacto sería frágil: se verifica que SÍ haya elementos en *todos* los
+     niveles esperados (el síntoma del bug de conectores era geometría solo en PB
+     / solo defaults):
+     - `02_muros_perimetrales` y `05_aberturas` — cobertura PB + pisos tipo.
+     - `11_habitaciones` — rooms en cada piso tipo, sin entradas con `error`.
+     - `09b_anotaciones` — detecta el error de dimensiones sin la vista PLANTA PB.
+
+     Todos los nodos pasan además por la capa genérica (corrió + creó >0).
 
 ### Uso — el ciclo sin revisar a mano
 
@@ -75,8 +98,10 @@ Usar `_buscar(reportes, script, "<substring del label del nodo>")` para ubicar e
 reporte y `_cmp(...)` para comparar esperado vs. real. Modelo a seguir:
 `_check_niveles`.
 
-> ⚠️ Si un chequeo replica lógica del generador (como `_ejes()` espeja la función
-> embebida en `gen_niveles._CODE_GRILLA`), mantener ambas copias en sync.
+> ⚠️ Si un chequeo replica lógica del generador, mantener ambas copias en sync:
+> `_ejes()` espeja la grilla de `gen_niveles._CODE_GRILLA`; `_nodos_estructura()`
+> espeja los loops de paso fijo de `gen_estructura` (columnas/vigas/zapatas).
+> Son grillas distintas — no intercambiarlas.
 
 ---
 

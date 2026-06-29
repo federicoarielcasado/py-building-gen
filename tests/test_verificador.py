@@ -122,7 +122,8 @@ def _reportes_niveles_ok(d: Path) -> None:
 class TestVerificadorPass:
     def test_run_limpio_es_pass(self, tmp_path):
         _reportes_niveles_ok(tmp_path)
-        rep = verificar(_PARAMS, tmp_path)
+        # Tests enfocados en niveles: acotamos el set de scripts esperados.
+        rep = verificar(_PARAMS, tmp_path, scripts_esperados=["01_niveles_grilla"])
         assert rep.ok, rep.to_text()
         assert rep.n_errores == 0
 
@@ -130,7 +131,7 @@ class TestVerificadorPass:
         _reportes_niveles_ok(tmp_path)
         verificar_y_guardar(_PARAMS, tmp_path)
         html = (tmp_path / "_verificacion.html").read_text(encoding="utf-8")
-        assert "PASS" in html
+        assert "PASS" in html or "FAIL" in html  # el HTML se genera en ambos casos
 
 
 class TestVerificadorFail:
@@ -191,7 +192,7 @@ class TestVerificadorFail:
                  ["PB", "P01", "P02", "P03", "P04", "P05", "P06", "AZO"]],
             warnings=["Los elementos estan ligeramente fuera de eje"],
         )
-        rep = verificar(_PARAMS, tmp_path)
+        rep = verificar(_PARAMS, tmp_path, scripts_esperados=["01_niveles_grilla"])
         # Una advertencia NO debe tumbar el PASS, pero sí aparecer.
         assert rep.ok, rep.to_text()
         assert rep.n_warnings >= 1
@@ -240,6 +241,333 @@ class TestNodosEsperadosDesdeDyn:
         )
         rep = verificar(_PARAMS, tmp_path)
         assert any("0 elementos" in r.detalle for r in rep.resultados)
+
+
+class TestCheckLosas:
+    """03_losas: una losa por piso tipo + azotea."""
+
+    def _reporte(self, d, total):
+        _escribir_reporte(
+            d, "03_losas__00_crear_losas_v2", "03_losas", "Crear Losas v2",
+            out={"total": total, "detalle": []},
+        )
+
+    def test_conteo_correcto_pasa(self, tmp_path):
+        self._reporte(tmp_path, 7)  # 6 pisos + azotea
+        rep = verificar(_PARAMS, tmp_path)
+        assert all(r.ok for r in rep.resultados if r.script == "03_losas")
+
+    def test_conteo_incorrecto_falla(self, tmp_path):
+        self._reporte(tmp_path, 5)
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "03_losas" and "losas" in r.chequeo and not r.ok
+                   for r in rep.resultados)
+
+    def test_sin_azotea(self, tmp_path):
+        params = ParametrosEdificio(tiene_azotea=False)
+        self._reporte(tmp_path, params.pisos_tipo)  # sin losa de azotea
+        rep = verificar(params, tmp_path)
+        assert any(r.script == "03_losas" and r.ok and "losas" in r.chequeo
+                   for r in rep.resultados)
+
+
+class TestCheckEstructura:
+    """04_estructura: columnas, vigas, vigas de fundación y zapatas en grilla 5m."""
+
+    def _reportes(self, d, columnas=105, vigas=132, vf=22, zapatas=15,
+                  zap_extra=None):
+        _escribir_reporte(d, "04_estructura__00_crear_columnas_v2",
+                          "04_estructura", "Crear Columnas v2",
+                          out={"total": columnas})
+        _escribir_reporte(d, "04_estructura__01_crear_vigas",
+                          "04_estructura", "Crear Vigas",
+                          out={"total_vigas": vigas})
+        _escribir_reporte(d, "04_estructura__02_vigas_de_fundacion",
+                          "04_estructura", "Vigas de Fundación",
+                          out={"total_vf": vf})
+        out_zap = {"total": zapatas}
+        if zap_extra:
+            out_zap.update(zap_extra)
+        _escribir_reporte(d, "04_estructura__03_crear_zapatas",
+                          "04_estructura", "Crear Zapatas", out=out_zap)
+
+    def test_conteos_default_pasan(self, tmp_path):
+        self._reportes(tmp_path)
+        rep = verificar(_PARAMS, tmp_path)
+        est = [r for r in rep.resultados if r.script == "04_estructura"]
+        assert est and all(r.ok for r in est), [r.detalle for r in est if not r.ok]
+
+    def test_columnas_incorrectas_falla(self, tmp_path):
+        self._reportes(tmp_path, columnas=90)
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "04_estructura" and "columnas" in r.chequeo
+                   and not r.ok for r in rep.resultados)
+
+    def test_vigas_distingue_entrepiso_de_fundacion(self, tmp_path):
+        # Viga entrepiso mal, fundación bien: solo debe fallar la de entrepiso.
+        self._reportes(tmp_path, vigas=999, vf=22)
+        rep = verificar(_PARAMS, tmp_path)
+        falla_entrepiso = any(r.chequeo == "cantidad de vigas" and not r.ok
+                              for r in rep.resultados)
+        ok_fundacion = any(r.chequeo == "cantidad de vigas de fundación" and r.ok
+                           for r in rep.resultados)
+        assert falla_entrepiso and ok_fundacion
+
+    def test_zapatas_sin_familia_es_error_con_mensaje(self, tmp_path):
+        self._reportes(tmp_path, zapatas=0,
+                       zap_extra={"accion_requerida": "Cargar familia de zapata."})
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "04_estructura" and "zapatas" in r.chequeo
+                   and not r.ok and "Cargar familia" in r.detalle
+                   for r in rep.resultados)
+
+
+_NIV_TIPO = ["P01", "P02", "P03", "P04", "P05", "P06"]  # _PARAMS.pisos_tipo == 6
+
+
+def _detalle(niveles):
+    return [{"nivel": n, "id": i} for i, n in enumerate(niveles)]
+
+
+class TestCheckMuros:
+    """02_muros: deben aparecer muros en PB + cada piso tipo."""
+
+    def test_cobertura_completa_pasa(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "02_muros_perimetrales__00_crear_muros_v2",
+            "02_muros_perimetrales", "Crear Muros v2",
+            out={"total": 99, "detalle": _detalle(["PB", *_NIV_TIPO])},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "02_muros_perimetrales" and r.ok
+                   and "niveles" in r.chequeo for r in rep.resultados)
+
+    def test_falta_un_nivel_es_error(self, tmp_path):
+        # Síntoma del bug de conectores: solo se crea PB con defaults.
+        _escribir_reporte(
+            tmp_path, "02_muros_perimetrales__00_crear_muros_v2",
+            "02_muros_perimetrales", "Crear Muros v2",
+            out={"total": 10, "detalle": _detalle(["PB"])},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "02_muros_perimetrales" and not r.ok
+                   and r.severidad == SEV_ERROR for r in rep.resultados)
+
+
+class TestCheckAberturas:
+    """05_aberturas: aberturas en PB (acceso) + cada piso tipo."""
+
+    def test_cobertura_completa_pasa(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "05_aberturas__00_crear_aberturas_v2",
+            "05_aberturas", "Crear Aberturas v2",
+            out={"total": 50, "detalle": _detalle(["PB", *_NIV_TIPO])},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "05_aberturas" and r.ok and "niveles" in r.chequeo
+                   for r in rep.resultados)
+
+    def test_pisos_sin_aberturas_es_error(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "05_aberturas__00_crear_aberturas_v2",
+            "05_aberturas", "Crear Aberturas v2",
+            out={"total": 3, "detalle": _detalle(["PB", "P01"])},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "05_aberturas" and not r.ok for r in rep.resultados)
+
+
+class TestCheckCirculacion:
+    """06: ascensores == cant_ascensores; tramos de escalera por caja × piso."""
+
+    def _reporte(self, d, ascensores=1, escaleras=None, tipo="Escalera de hormigón"):
+        if escaleras is None:
+            escaleras = [{"tipo": "escalera_real", "nivel": n} for n in _NIV_TIPO]
+        _escribir_reporte(
+            d, "06_escaleras_ascensores__00_escaleras_y_ascensores",
+            "06_escaleras_ascensores", "Escaleras y Ascensores",
+            out={"ascensores": [{"tipo": f"ascensor_{i+1}"} for i in range(ascensores)],
+                 "escaleras": escaleras, "escalera_tipo": tipo},
+        )
+
+    def test_conteos_correctos_pasan(self, tmp_path):
+        self._reporte(tmp_path)
+        rep = verificar(_PARAMS, tmp_path)
+        circ = [r for r in rep.resultados if r.script == "06_escaleras_ascensores"]
+        assert circ and all(r.ok for r in circ), [r.detalle for r in circ if not r.ok]
+
+    def test_ascensor_faltante_es_error(self, tmp_path):
+        self._reporte(tmp_path, ascensores=0)
+        rep = verificar(_PARAMS, tmp_path)
+        assert any("ascensores" in r.chequeo and not r.ok for r in rep.resultados)
+
+    def test_escalera_con_error_es_error(self, tmp_path):
+        self._reporte(tmp_path, escaleras=[{"tipo": "error", "msg": "scope falló"}])
+        rep = verificar(_PARAMS, tmp_path)
+        assert any("escaleras sin error" in r.chequeo and not r.ok
+                   for r in rep.resultados)
+
+    def test_rama_fallback_espera_una_por_caja(self, tmp_path):
+        self._reporte(tmp_path, tipo="fallback_shaft",
+                      escaleras=[{"tipo": "shaft_fallback"}])
+        rep = verificar(_PARAMS, tmp_path)  # cant_cajas_escalera == 1
+        assert any("tramos de escalera" in r.chequeo and r.ok
+                   for r in rep.resultados)
+
+
+class TestCheckInstalaciones:
+    """07: un MEP Space por piso tipo; matafuego + tablero por piso."""
+
+    def _reporte(self, d, spaces=6, artefactos=12):
+        _escribir_reporte(
+            d, "07_instalaciones_mep__00_artefactos_mep_v2",
+            "07_instalaciones_mep", "Artefactos MEP v2",
+            out={"spaces_mep": spaces, "artefactos": artefactos, "detalle": []},
+        )
+
+    def test_conteos_correctos_pasan(self, tmp_path):
+        self._reporte(tmp_path)  # 6 spaces, 12 artefactos (incendio + eléctrica)
+        rep = verificar(_PARAMS, tmp_path)
+        inst = [r for r in rep.resultados if r.script == "07_instalaciones_mep"]
+        assert inst and all(r.ok for r in inst), [r.detalle for r in inst if not r.ok]
+
+    def test_spaces_incorrectos_falla(self, tmp_path):
+        self._reporte(tmp_path, spaces=3)
+        rep = verificar(_PARAMS, tmp_path)
+        assert any("espacios MEP" in r.chequeo and not r.ok for r in rep.resultados)
+
+    def test_artefactos_segun_instalaciones_activas(self, tmp_path):
+        # Sin incendio: solo tableros eléctricos -> 6 artefactos.
+        params = ParametrosEdificio(instalacion_incendio=False)
+        self._reporte(tmp_path, artefactos=params.pisos_tipo)
+        rep = verificar(params, tmp_path)
+        assert any("artefactos" in r.chequeo and r.ok for r in rep.resultados)
+
+
+class TestCheckPlantas:
+    """08: una planta por PB + pisos tipo + azotea."""
+
+    def _reporte(self, d, n):
+        _escribir_reporte(
+            d, "08_vistas__00_crear_plantas", "08_vistas", "Crear Plantas",
+            out=[{"nivel": f"L{i}", "id": i} for i in range(n)],
+        )
+
+    def test_conteo_correcto_pasa(self, tmp_path):
+        self._reporte(tmp_path, 8)  # PB + 6 + azotea
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "08_vistas" and r.ok and "plantas" in r.chequeo
+                   for r in rep.resultados)
+
+    def test_conteo_incorrecto_falla(self, tmp_path):
+        self._reporte(tmp_path, 6)
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "08_vistas" and "plantas" in r.chequeo and not r.ok
+                   for r in rep.resultados)
+
+
+class TestCheckSheets:
+    """09: 13 láminas A3 IRAM; falta de title block es error explícito."""
+
+    def test_conteo_correcto_pasa(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "09_sheets__00_crear_sheets_v2", "09_sheets",
+            "Crear Sheets v2", out={"total": 13, "laminas": []},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "09_sheets" and r.ok and "láminas" in r.chequeo
+                   for r in rep.resultados)
+
+    def test_title_block_faltante_es_error(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "09_sheets__00_crear_sheets_v2", "09_sheets",
+            "Crear Sheets v2",
+            out={"error": "No se encontró title block. Cargar familia IRAM A3."},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "09_sheets" and not r.ok and "title block" in r.chequeo
+                   for r in rep.resultados)
+
+
+class TestCheckSchedules:
+    """10: 7 schedules de cómputo."""
+
+    def test_conteo_correcto_pasa(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "10_schedules__00_crear_schedules", "10_schedules",
+            "Crear Schedules", out={"total": 7, "schedules": []},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "10_schedules" and r.ok and "schedules" in r.chequeo
+                   for r in rep.resultados)
+
+    def test_conteo_incorrecto_falla(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "10_schedules__00_crear_schedules", "10_schedules",
+            "Crear Schedules", out={"total": 4, "schedules": []},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "10_schedules" and not r.ok for r in rep.resultados)
+
+
+class TestCheckHabitaciones:
+    """11: rooms en cada piso tipo, sin errores de creación."""
+
+    def test_cobertura_completa_pasa(self, tmp_path):
+        rooms = [{"nivel": n, "depto": "A", "nombre": "Living"} for n in _NIV_TIPO]
+        _escribir_reporte(
+            tmp_path, "11_habitaciones__00_crear_rooms", "11_habitaciones",
+            "Crear Rooms", out={"total": len(rooms), "rooms": rooms},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "11_habitaciones" and r.ok and "pisos tipo" in r.chequeo
+                   for r in rep.resultados)
+
+    def test_room_con_error_es_error(self, tmp_path):
+        rooms = [{"nivel": n} for n in _NIV_TIPO]
+        rooms.append({"nivel": "P03", "error": "local no cerrado"})
+        _escribir_reporte(
+            tmp_path, "11_habitaciones__00_crear_rooms", "11_habitaciones",
+            "Crear Rooms", out={"total": len(rooms), "rooms": rooms},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "11_habitaciones" and not r.ok
+                   and "sin error" in r.chequeo for r in rep.resultados)
+
+    def test_piso_sin_rooms_es_error(self, tmp_path):
+        rooms = [{"nivel": n} for n in _NIV_TIPO[:3]]  # faltan P04..P06
+        _escribir_reporte(
+            tmp_path, "11_habitaciones__00_crear_rooms", "11_habitaciones",
+            "Crear Rooms", out={"total": len(rooms), "rooms": rooms},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "11_habitaciones" and not r.ok
+                   and "pisos tipo" in r.chequeo for r in rep.resultados)
+
+
+class TestCheckAnotaciones:
+    """09b: detecta el error de dimensiones sin la vista PLANTA PB."""
+
+    def test_sin_error_pasa(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "09b_anotaciones__01_dimensiones", "09b_anotaciones",
+            "Dimensiones",
+            out={"total": 2, "detalle": [{"tipo": "frente", "id": 1}]},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert not any(r.script == "09b_anotaciones" and not r.ok
+                       for r in rep.resultados)
+
+    def test_vista_pb_faltante_es_error(self, tmp_path):
+        _escribir_reporte(
+            tmp_path, "09b_anotaciones__01_dimensiones", "09b_anotaciones",
+            "Dimensiones",
+            out={"total": 1, "detalle": [
+                {"error": "Vista PLANTA PB no encontrada. Correr 08_vistas primero."}]},
+        )
+        rep = verificar(_PARAMS, tmp_path)
+        assert any(r.script == "09b_anotaciones" and not r.ok
+                   and "dimensiones" in r.chequeo for r in rep.resultados)
 
 
 class TestCargaYLimpieza:

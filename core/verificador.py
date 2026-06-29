@@ -383,8 +383,309 @@ def _check_niveles(params: ParametrosEdificio, reportes: list[dict]) -> list[Res
     return res
 
 
+def _check_losas(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "03_losas"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "losas")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        # gen_arquitectura._CODE_LOSAS: una losa por piso tipo (P01..Pn) + azotea.
+        esp = params.pisos_tipo + (1 if params.tiene_azotea else 0)
+        res.append(_cmp(script, "cantidad de losas", esp, out.get("total")))
+    return res
+
+
+# Grilla estructural replicada de gen_estructura (paso fijo de 5m, INCLUSIVE
+# del borde: `while x <= span + eps`). Es DISTINTA a la grilla de niveles
+# (_ejes), que agrega un eje de cierre en el límite. No mezclar las dos.
+_PASO_ESTRUCTURA = 5.0
+
+
+def _nodos_estructura(span: float, paso: float = _PASO_ESTRUCTURA) -> int:
+    """Cantidad de posiciones 0, paso, 2·paso … ≤ span (espejo de los loops
+    de columnas/vigas/zapatas en gen_estructura)."""
+    n = 0
+    x = 0.0
+    while x <= span + 1e-3:
+        n += 1
+        x += paso
+    return n
+
+
+def _check_estructura(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "04_estructura"
+    res: list[Resultado] = []
+    nx = _nodos_estructura(params.frente)   # nodos de grilla en X
+    ny = _nodos_estructura(params.fondo)    # nodos de grilla en Y
+    # Tramos de viga entre nodos (segmentos) por dirección, por nivel.
+    vigas_por_nivel = (nx - 1) * ny + nx * (ny - 1)
+
+    # --- Columnas: un nodo de grilla por (PB + pisos tipo) ---
+    rep = _buscar(reportes, script, "columnas")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        esp = (params.pisos_tipo + 1) * nx * ny   # PB + P01..Pn
+        res.append(_cmp(script, "cantidad de columnas", esp, out.get("total")))
+
+    # --- Vigas de entrepiso: tramos × pisos tipo (sin PB) ---
+    rep = _buscar(reportes, script, "crear vigas")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        esp = params.pisos_tipo * vigas_por_nivel
+        res.append(_cmp(script, "cantidad de vigas", esp, out.get("total_vigas")))
+
+    # --- Vigas de fundación: tramos en un único nivel de cimentación ---
+    rep = _buscar(reportes, script, "fundaci")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        res.append(_cmp(script, "cantidad de vigas de fundación",
+                        vigas_por_nivel, out.get("total_vf")))
+
+    # --- Zapatas: un nodo de grilla en el nivel de fundación ---
+    rep = _buscar(reportes, script, "zapatas")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        esp = nx * ny
+        real = out.get("total")
+        # Caso conocido: falta la familia de fundación cargada en el modelo.
+        if real == 0 and isinstance(out, dict) and out.get("accion_requerida"):
+            res.append(Resultado(
+                script, "cantidad de zapatas", False, SEV_ERROR,
+                f"0 de {esp} — {out['accion_requerida']}",
+            ))
+        else:
+            res.append(_cmp(script, "cantidad de zapatas", esp, real))
+
+    return res
+
+
+# --- Helpers de cobertura por nivel ----------------------------------------
+# Varios scripts (muros, aberturas, rooms) crean geometría compleja cuyo conteo
+# exacto es frágil de replicar, pero cuyo síntoma de falla clásico (el bug de
+# conectores: inputs en None ⇒ solo defaults / solo PB) se detecta verificando
+# que SÍ hayan aparecido elementos en TODOS los niveles esperados.
+
+def _niveles_en(detalle) -> set[str]:
+    """Conjunto de niveles presentes en una lista de detalle ``[{"nivel": …}]``."""
+    if not isinstance(detalle, list):
+        return set()
+    return {d["nivel"] for d in detalle
+            if isinstance(d, dict) and d.get("nivel")}
+
+
+def _niveles_tipo(params: ParametrosEdificio) -> list[str]:
+    """Nombres de los niveles de piso tipo: ``P01 … Pn``."""
+    return [f"P{i:02d}" for i in range(1, params.pisos_tipo + 1)]
+
+
+def _check_cobertura_niveles(
+    script: str, rep: Optional[dict], esperados: set[str], etiqueta: str
+) -> list[Resultado]:
+    """Verifica que el detalle del reporte cubra todos los niveles esperados."""
+    res: list[Resultado] = []
+    if not (rep and rep.get("status") == "ok"):
+        return res
+    out = rep.get("out") or {}
+    detalle = out.get("detalle") if isinstance(out, dict) else None
+    presentes = _niveles_en(detalle)
+    faltan = sorted(esperados - presentes)
+    total = len(detalle) if isinstance(detalle, list) else 0
+    if faltan:
+        res.append(Resultado(
+            script, f"{etiqueta} en todos los niveles", False, SEV_ERROR,
+            f"sin {etiqueta} en: {', '.join(faltan)} — "
+            f"¿solo se generaron defaults? (input desconectado)",
+        ))
+    else:
+        res.append(Resultado(
+            script, f"{etiqueta} en todos los niveles", True, SEV_INFO,
+            f"{len(presentes)} nivel(es) cubierto(s), {total} elemento(s) en total",
+        ))
+    return res
+
+
+def _check_muros(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    # gen_arquitectura._CODE_MUROS crea muros en PB + cada piso tipo.
+    rep = _buscar(reportes, "02_muros_perimetrales", "muros")
+    esperados = {"PB", *_niveles_tipo(params)}
+    return _check_cobertura_niveles("02_muros_perimetrales", rep, esperados, "muros")
+
+
+def _check_aberturas(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    # PB lleva la puerta de acceso al edificio; cada piso tipo, ventanas y puertas.
+    rep = _buscar(reportes, "05_aberturas", "aberturas")
+    esperados = {"PB", *_niveles_tipo(params)}
+    return _check_cobertura_niveles("05_aberturas", rep, esperados, "aberturas")
+
+
+def _check_circulacion(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "06_escaleras_ascensores"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "ascensores")
+    if not (rep and rep.get("status") == "ok"):
+        return res
+    out = rep.get("out") or {}
+
+    # --- Ascensores: un shaft por ascensor (conteo limpio y derivable) ---
+    asc = out.get("ascensores") or []
+    res.append(_cmp(script, "cantidad de ascensores",
+                    params.cant_ascensores, len(asc)))
+
+    # --- Escaleras: separar las que fallaron de las creadas ---
+    esc = out.get("escaleras") or []
+    errs = [e for e in esc if isinstance(e, dict)
+            and (e.get("tipo") == "error" or "msg" in e or "error" in e)]
+    ok_esc = [e for e in esc if e not in errs]
+    if errs:
+        msg = errs[0].get("msg") or errs[0].get("error") or "?"
+        res.append(Resultado(
+            script, "escaleras sin error", False, SEV_ERROR,
+            f"{len(errs)} de {len(esc)} escalera(s) fallaron: {str(msg)[:80]}",
+        ))
+    else:
+        # Rama escalera real: un tramo por (caja × piso tipo). Rama fallback
+        # (sin StairsType en el template): un shaft por caja.
+        if out.get("escalera_tipo") == "fallback_shaft":
+            esp = params.cant_cajas_escalera
+        else:
+            esp = params.cant_cajas_escalera * params.pisos_tipo
+        res.append(_cmp(script, "tramos de escalera", esp, len(ok_esc)))
+    return res
+
+
+def _check_instalaciones(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "07_instalaciones_mep"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "artefactos")
+    if not (rep and rep.get("status") == "ok"):
+        return res
+    out = rep.get("out") or {}
+
+    # MEP Space: uno por nivel de piso tipo (get_levels_tipo ⇒ P01..Pn).
+    res.append(_cmp(script, "espacios MEP (1 por piso tipo)",
+                    params.pisos_tipo, out.get("spaces_mep")))
+
+    # Artefactos por piso tipo: matafuego (si incendio) + tablero (si eléctrica).
+    por_piso = (1 if params.instalacion_incendio else 0) \
+        + (1 if params.instalacion_electrica else 0)
+    res.append(_cmp(script, "artefactos (matafuegos + tableros)",
+                    params.pisos_tipo * por_piso, out.get("artefactos")))
+    return res
+
+
+def _check_plantas(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    # gen_vistas._CODE_PLANTAS: una planta por PB + pisos tipo + azotea.
+    script = "08_vistas"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "plantas")
+    if rep and rep.get("status") == "ok":
+        n_real = len(rep.get("out") or [])
+        esp = 1 + params.pisos_tipo + (1 if params.tiene_azotea else 0)
+        res.append(_cmp(script, "cantidad de plantas (vistas)", esp, n_real))
+    return res
+
+
+# Cantidad fija de láminas en gen_sheets.config_laminas (independiente de params:
+# las sheets se crean aunque la vista no exista). Mantener en sync con ese config.
+_N_LAMINAS = 13
+# Cantidad fija de schedules en gen_sheets.config (10_schedules).
+_N_SCHEDULES = 7
+
+
+def _check_sheets(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "09_sheets"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "sheets")
+    if not (rep and rep.get("status") == "ok"):
+        return res
+    out = rep.get("out") or {}
+    if isinstance(out, dict) and out.get("error"):
+        # Caso conocido: falta el title block IRAM A3 cargado en el modelo.
+        res.append(Resultado(
+            script, "title block presente", False, SEV_ERROR, str(out["error"]),
+        ))
+    else:
+        res.append(_cmp(script, "cantidad de láminas", _N_LAMINAS, out.get("total")))
+    return res
+
+
+def _check_schedules(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    script = "10_schedules"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "schedules")
+    if rep and rep.get("status") == "ok":
+        out = rep.get("out") or {}
+        res.append(_cmp(script, "cantidad de schedules", _N_SCHEDULES, out.get("total")))
+    return res
+
+
+def _check_habitaciones(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    # gen_habitaciones crea Room objects por zona, en cada depto, en cada piso tipo.
+    # El conteo exacto depende de la habitabilidad (NewRoom falla si el local no
+    # está cerrado), así que verificamos cobertura por piso + ausencia de errores.
+    script = "11_habitaciones"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "rooms")
+    if not (rep and rep.get("status") == "ok"):
+        return res
+    out = rep.get("out") or {}
+    rooms = out.get("rooms") if isinstance(out, dict) else None
+    if not isinstance(rooms, list):
+        return res
+    errs = [r for r in rooms if isinstance(r, dict) and "error" in r]
+    if errs:
+        res.append(Resultado(
+            script, "rooms sin error", False, SEV_ERROR,
+            f"{len(errs)} room(s) no se pudieron crear (¿local no cerrado?): "
+            f"{str(errs[0].get('error'))[:80]}",
+        ))
+    presentes = _niveles_en(rooms)
+    faltan = sorted(set(_niveles_tipo(params)) - presentes)
+    if faltan:
+        res.append(Resultado(
+            script, "rooms en todos los pisos tipo", False, SEV_ERROR,
+            f"sin rooms en: {', '.join(faltan)} — ¿input desconectado?",
+        ))
+    elif not errs:
+        res.append(Resultado(
+            script, "rooms en todos los pisos tipo", True, SEV_INFO,
+            f"{len(presentes)} piso(s) cubierto(s), {len(rooms)} room(s) en total",
+        ))
+    return res
+
+
+def _check_anotaciones(params: ParametrosEdificio, reportes: list[dict]) -> list[Resultado]:
+    # gen_anotaciones: room tags, dimensiones y tags de aberturas. Los conteos
+    # dependen de scripts previos (11, 05); el genérico ya avisa si algún nodo
+    # creó 0. Acá detectamos el error conocido: dimensiones que no encuentran la
+    # vista PLANTA PB (08_vistas no se corrió antes).
+    script = "09b_anotaciones"
+    res: list[Resultado] = []
+    rep = _buscar(reportes, script, "dimensiones")
+    if rep and rep.get("status") == "ok":
+        detalle = (rep.get("out") or {}).get("detalle") or []
+        errs = [d for d in detalle if isinstance(d, dict) and "error" in d]
+        if errs:
+            res.append(Resultado(
+                script, "dimensiones creadas", False, SEV_ERROR,
+                str(errs[0].get("error"))[:90],
+            ))
+    return res
+
+
 _CHECKS_ESPECIFICOS = {
     "01_niveles_grilla": _check_niveles,
+    "02_muros_perimetrales": _check_muros,
+    "03_losas": _check_losas,
+    "04_estructura": _check_estructura,
+    "05_aberturas": _check_aberturas,
+    "06_escaleras_ascensores": _check_circulacion,
+    "07_instalaciones_mep": _check_instalaciones,
+    "08_vistas": _check_plantas,
+    "09_sheets": _check_sheets,
+    "10_schedules": _check_schedules,
+    "11_habitaciones": _check_habitaciones,
+    "09b_anotaciones": _check_anotaciones,
 }
 
 

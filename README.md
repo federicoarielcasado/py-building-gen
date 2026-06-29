@@ -32,7 +32,7 @@ python generar.py              # 1. genera .dyn + limpia reportes viejos
 python generar.py --verificar  # 3. PASS/FAIL + _verificacion.html (exit 1 si falla)
 ```
 
-La verificación cubre los 10 scripts en tres capas: **cobertura** (cada nodo de cada script debe haber corrido — se deriva de los propios `.dyn`), **genérica** (nodo que se rompió, advertencias de Revit, nodo que creó 0 elementos) y **cuantitativa exacta** (conteos contra los parámetros; implementada para `01_niveles_grilla`, extensible al resto). Detalle en [`docs/dev/verificacion_automatizada.md`](docs/dev/verificacion_automatizada.md).
+La verificación cubre los 10 scripts en tres capas: **cobertura** (cada nodo de cada script debe haber corrido — se deriva de los propios `.dyn`), **genérica** (nodo que se rompió, advertencias de Revit, nodo que creó 0 elementos) y **específica por script** (compara el resultado contra los parámetros del proyecto). Los **11 scripts** tienen chequeo específico: conteo exacto donde la cantidad sale limpia de los params (niveles, losas, estructura, escaleras/ascensores, instalaciones, vistas, sheets, schedules) o cobertura por nivel donde la geometría es compleja (muros, aberturas, habitaciones, anotaciones). Detalle en [`docs/dev/verificacion_automatizada.md`](docs/dev/verificacion_automatizada.md).
 
 > La ejecución headless de los `.dyn` (correrlos sin apretar Run) está pendiente: RevitBatchProcessor aún no soporta Revit 2027. Mientras tanto la verificación funciona igual, corras los scripts a mano o en batch.
 
@@ -650,7 +650,7 @@ py-building-gen/
 | Cómputo y presupuesto | openpyxl · reportlab |
 | Geoespacial | shapely · pyproj · ezdxf |
 | Visualización previa | matplotlib |
-| Tests | pytest (89 tests) |
+| Tests | pytest (96 tests) |
 
 ---
 
